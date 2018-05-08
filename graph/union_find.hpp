@@ -12,14 +12,16 @@ namespace pcl { namespace graph {
     class union_find {
         private:
             std::vector<int> parent_of, rank_of;
+            size_t size_;
 
         public:
-            union_find(int n) : parent_of(n, -1), rank_of(n, 0) {}
+            union_find(int n) : parent_of(n, -1), rank_of(n, 0), size_(n) {}
 
             void unite(int a, int b) {
                 int pa = find(a), pb = find(b);
                 if (pa == pb) return;
                 assert(pa != pb);
+                --size_;
 
                 int np, nc;
                 if (rank_of[pa] == rank_of[pb]) {
@@ -37,6 +39,10 @@ namespace pcl { namespace graph {
             int find(int a) {
                 if (parent_of[a] == -1) return a;
                 return parent_of[a] = find(parent_of[a]);
+            }
+
+            size_t size() const {
+                return size_;
             }
     };
 } }
