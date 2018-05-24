@@ -12,7 +12,7 @@ namespace pcl { namespace structure {
     class union_find {
       private:
         std::vector<int> parent_of, rank_of;
-        size_t size_;
+        std::size_t size_;
 
       public:
         union_find(int n)
@@ -47,7 +47,7 @@ namespace pcl { namespace structure {
             return parent_of[a] = find(parent_of[a]);
         }
 
-        size_t size() const { return size_; }
+        std::size_t size() const { return size_; }
     };
 }} // namespace pcl::structure
 
