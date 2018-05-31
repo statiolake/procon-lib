@@ -45,6 +45,14 @@ namespace pcl { namespace math { namespace algorithm {
         }
         return result;
     }
+
+    template <typename T>
+    constexpr bool is_prime(T val) {
+        for (T i = 1; i <= sqrt(val); i++) {
+            if (val % i == 0) return false;
+        }
+        return true;
+    }
 }}} // namespace pcl::math::algorithm
 
 #endif /* F8BF9740_A133_EE18_1629_F4FE4326E750 */
