@@ -7,25 +7,25 @@
 
 namespace pcl { namespace math { namespace algorithm {
     template <typename T>
-    T gcd(T a, T b) {
+    constexpr T gcd(T a, T b) {
         return b == 0 ? a : gcd(b, a % b);
     }
 
     template <typename T>
-    T lcm(T a, T b) {
+    constexpr T lcm(T a, T b) {
         return a / gcd(a, b) * b;
     }
 
     template <typename T>
-    std::pair<T, T> ext_gcd(T a, T b) {
-        if (b == 0) return make_pair(1, 0);
+    constexpr std::pair<T, T> ext_gcd(T a, T b) {
+        if (b == 0) return std::make_pair(1, 0);
         T xd, yd;
         tie(xd, yd) = ext_gcd(b, a % b);
-        return make_pair(yd, xd - (a / b) * yd);
+        return std::make_pair(yd, xd - (a / b) * yd);
     }
 
     template <typename T>
-    std::vector<T> get_primes(T N) {
+    constexpr std::vector<T> get_primes(T N) {
         std::vector<T> result;
         std::vector<bool> is_not_prime(N);
         for (T i = 2; i <= N; i++) {
@@ -37,7 +37,7 @@ namespace pcl { namespace math { namespace algorithm {
     }
 
     template <typename T>
-    T pow(T x, int n) {
+    constexpr T pow(T x, int n) {
         T result = 1;
         while (n > 0) {
             if (n & 1) result *= x;
