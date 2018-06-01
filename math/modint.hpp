@@ -3,92 +3,74 @@
 #include "algorithm.hpp"
 namespace pcl { namespace math {
     template <typename T, T MOD>
-    class modint;
-
-    template <typename T, T MOD>
-    modint<T, MOD> operator+(modint<T, MOD> const &lhs,
-                             modint<T, MOD> const &rhs);
-
-    template <typename T, T MOD>
-    modint<T, MOD> operator-(modint<T, MOD> const &lhs,
-                             modint<T, MOD> const &rhs);
-
-    template <typename T, T MOD>
-    modint<T, MOD> operator*(modint<T, MOD> const &lhs,
-                             modint<T, MOD> const &rhs);
-
-    template <typename T, T MOD>
-    modint<T, MOD> operator/(modint<T, MOD> const &lhs,
-                             modint<T, MOD> const &rhs);
-
-    template <typename T, T MOD>
     class modint {
+        static_assert(pcl::math::algorithm::is_prime(MOD),
+                      "MOD used in modint must be a prime.");
+
       private:
         T value;
-        friend modint operator+<T, MOD>(modint const &lhs, modint const &rhs);
-        friend modint operator-<T, MOD>(modint const &lhs, modint const &rhs);
-        friend modint operator*<T, MOD>(modint const &lhs, modint const &rhs);
-        friend modint operator/<T, MOD>(modint const &lhs, modint const &rhs);
 
       public:
         modint() {}
-        modint(T const &init)
-            : value(init % MOD) {}
-        modint(modint const &other) { value = other.value; }
-
-        operator T() { return value; }
-
-        modint &operator=(modint const &other) {
-            value = other.value;
-            return *this;
+        modint(T &&init)
+            : value(std::forward<T>(init)) {
+            if (value < 0) value += MOD;
         }
-        modint &operator=(T value) {
-            this->value = value % MOD;
-            return *this;
-        }
-        modint &operator+=(modint<T, MOD> const &other) {
+
+        explicit operator T() { return value; }
+
+        modint &operator+=(modint const &other) {
             value += other.value;
-            value %= MOD;
+            if (value >= MOD) value -= MOD;
             return *this;
         }
-        modint &operator-=(modint<T, MOD> const &other) {
+        modint &operator-=(modint const &other) {
+            if (value < other.value) value += MOD;
             value -= other.value;
-            value %= MOD;
             return *this;
         }
-        modint &operator*=(modint<T, MOD> const &other) {
+        modint &operator*=(modint const &other) {
             value *= other.value;
             value %= MOD;
             return *this;
         }
-        modint &operator/=(modint<T, MOD> const &other) {
-            *this = *this / other;
+        modint &operator/=(modint const &other) {
+            auto mul = pcl::math::algorithm::pow(other, MOD - 2);
+            *this *= mul;
+            return *this;
+        }
+        modint operator<(modint const &other) const {
+            return value < other.value;
+        }
+        modint operator>(modint const &other) const { return other < *this; }
+        modint operator==(modint const &other) const {
+            return value == other.value;
+        }
+        modint operator!=(modint const &other) const {
+            return !(*this == other);
+        }
+
+        modint &operator=(T &&v) {
+            if ((value = std::forward<T>(v)) < 0) value += MOD;
             return *this;
         }
     };
 
     template <typename T, T MOD>
-    modint<T, MOD> operator+(modint<T, MOD> const &lhs,
-                             modint<T, MOD> const &rhs) {
-        return modint<T, MOD>((lhs.value + rhs.value) % MOD);
-    }
-
-    template <typename T, T MOD>
-    modint<T, MOD> operator-(modint<T, MOD> const &lhs,
-                             modint<T, MOD> const &rhs) {
-        return modint<T, MOD>((lhs.value + MOD - rhs.value) % MOD);
-    }
-
-    template <typename T, T MOD>
-    modint<T, MOD> operator*(modint<T, MOD> const &lhs,
-                             modint<T, MOD> const &rhs) {
-        return modint<T, MOD>((lhs.value * rhs.value) % MOD);
+    modint<T, MOD> operator+(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
+        return lhs += rhs;
     }
     template <typename T, T MOD>
-    modint<T, MOD> operator/(modint<T, MOD> const &lhs,
-                             modint<T, MOD> const &rhs) {
-        auto mul = pcl::math::algorithm::pow(rhs, MOD - 2);
-        return lhs * mul;
+    modint<T, MOD> operator-(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
+        return lhs -= rhs;
+    }
+    template <typename T, T MOD>
+    modint<T, MOD> operator*(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
+        return lhs *= rhs;
+    }
+    template <typename T, T MOD>
+    modint<T, MOD> operator/(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
+        return lhs /= rhs;
     }
 }}     // namespace pcl::math
 #endif /* B6BA11FA_D133_EE7D_1599_B1BF5D17E883 */
