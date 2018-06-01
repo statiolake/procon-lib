@@ -2,18 +2,16 @@
 #define B6BA11FA_D133_EE7D_1599_B1BF5D17E883
 #include "algorithm.hpp"
 namespace pcl { namespace math {
-    template <typename T = ll, T MOD = 1000000007>
+    template <typename T = ll, T MOD = 1'000'000'007>
     class modint {
-        static_assert(pcl::math::algorithm::is_prime(MOD),
-                      "MOD used in modint must be a prime.");
-
       private:
         T value;
 
       public:
         modint() {}
-        modint(T &&init)
-            : value(std::forward<T>(init)) {
+        template <typename U>
+        modint(U &&init)
+            : value(std::forward<U>(init)) {
             if (value < 0) value += MOD;
         }
 
@@ -50,8 +48,9 @@ namespace pcl { namespace math {
             return !(*this == other);
         }
 
-        modint &operator=(T &&v) {
-            if ((value = std::forward<T>(v)) < 0) value += MOD;
+        template <typename U>
+        modint &operator=(U &&v) {
+            if ((value = std::forward<U>(v)) < 0) value += MOD;
             return *this;
         }
     };
