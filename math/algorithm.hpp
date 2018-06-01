@@ -49,7 +49,9 @@ namespace pcl { namespace math { namespace algorithm {
 
     template <typename T>
     constexpr bool is_prime(T val) {
-        for (T i = 1; i <= sqrt(val); i++) {
+        // msvc fails if use sqrt(val) instead of val
+        // maybe msvc has no constexpr sqrt function.
+        for (T i = 2; i < val; i++) {
             if (val % i == 0) return false;
         }
         return true;
