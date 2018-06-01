@@ -2,7 +2,7 @@
 #define B6BA11FA_D133_EE7D_1599_B1BF5D17E883
 #include "algorithm.hpp"
 namespace pcl { namespace math {
-    template <typename T, T MOD>
+    template <typename T = ll, T MOD = 1000000007>
     class modint {
         static_assert(pcl::math::algorithm::is_prime(MOD),
                       "MOD used in modint must be a prime.");
