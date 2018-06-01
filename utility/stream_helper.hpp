@@ -36,4 +36,7 @@ namespace pcl { namespace utility {
     }
 }} // namespace pcl::utility
 
+// so that overloaded operators can be found
+using namespace pcl::utility;
+
 #endif /* end of include guard: STREAM_HELPER_HPP_DNIKPKZJ */
