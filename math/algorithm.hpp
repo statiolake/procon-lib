@@ -17,11 +17,13 @@ namespace pcl { namespace math { namespace algorithm {
     }
 
     template <typename T>
-    constexpr std::pair<T, T> ext_gcd(T a, T b) {
-        if (b == 0) return std::make_pair(1, 0);
-        T xd, yd;
-        tie(xd, yd) = ext_gcd(b, a % b);
-        return std::make_pair(yd, xd - (a / b) * yd);
+    constexpr T extgcd(T a, T b, T &xd, T &yd) {
+        if (b == 0) {
+            xd = 1, yd = 0;
+            return a;
+        }
+        T gcd = extgcd(b, a % b, yd, xd);
+        yd -= (a / b) * xd;
     }
 
     template <typename T>
