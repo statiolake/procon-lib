@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 namespace pcl { namespace utility {
-    // useful for debug printing
     template <typename T>
     std::ostream &operator<<(std::ostream &os, std::vector<T> const &v) {
         for (size_t i = 0; i < v.size(); i++) {
@@ -22,14 +21,12 @@ namespace pcl { namespace utility {
         return os;
     }
 
-    // useful for getting input
     template <typename T>
     std::istream &operator>>(std::istream &is, std::vector<T> &v) {
         for (size_t i = 0; i < v.size(); i++) is >> v[i];
         return is;
     }
 
-    // useful for getting input
     template <typename T>
     std::istream &operator>>(std::istream &is,
                              std::vector<std::vector<T>> &v) {
