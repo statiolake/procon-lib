@@ -6,11 +6,12 @@
 namespace pcl { namespace utility {
     template <typename T>
     std::ostream &operator<<(std::ostream &os, std::vector<T> const &v) {
+        os << '[';
         for (size_t i = 0; i < v.size(); i++) {
             if (i != 0) os << ", ";
             os << v[i];
         }
-        os << std::endl;
+        os << ']';
         return os;
     }
 
