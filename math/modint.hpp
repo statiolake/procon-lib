@@ -6,6 +6,10 @@ namespace pcl { namespace math {
     class modint {
       private:
         T value;
+        static inline T inv(T a) { return inv_impl(a, MOD); }
+        static T inv_impl(T a, T b) {
+            return (a == 1 ? 1 : (1 - b * inv_impl(b % a, a)) / a + b);
+        }
 
       public:
         modint() {}
@@ -33,8 +37,8 @@ namespace pcl { namespace math {
             return *this;
         }
         modint &operator/=(modint const &other) {
-            auto mul = pcl::math::algorithm::pow(other, MOD - 2);
-            *this *= mul;
+            auto i = inv(other.value);
+            *this *= i;
             return *this;
         }
         modint operator<(modint const &other) const {
