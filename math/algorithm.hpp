@@ -24,6 +24,7 @@ namespace pcl { namespace math { namespace algorithm {
         }
         T gcd = extgcd(b, a % b, yd, xd);
         yd -= (a / b) * xd;
+        return gcd;
     }
 
     template <typename T>
