@@ -11,13 +11,13 @@
 namespace pcl { namespace structure {
     class union_find {
       private:
-        std::vector<int> parent_of, rank_of;
+        std::vector<int>
+            parent_or_rank_of; // positive: parent, negative: (rank + 1)
         std::size_t size_;
 
       public:
         union_find(int n)
-            : parent_of(n, -1)
-            , rank_of(n, 0)
+            : parent_or_rank_of(n, -1)
             , size_(n) {}
 
         void unite(int a, int b) {
@@ -27,11 +27,11 @@ namespace pcl { namespace structure {
             --size_;
 
             int np, nc;
-            if (rank_of[pa] == rank_of[pb]) {
+            if (parent_or_rank_of[pa] == parent_or_rank_of[pb]) {
                 np = pa;
                 nc = pb;
-                rank_of[np]++;
-            } else if (rank_of[pa] < rank_of[pb]) {
+                parent_or_rank_of[np]--;
+            } else if (parent_or_rank_of[pa] > parent_or_rank_of[pb]) {
                 np = pb;
                 nc = pa;
             } else {
@@ -39,12 +39,12 @@ namespace pcl { namespace structure {
                 nc = pb;
             }
 
-            parent_of[nc] = np;
+            parent_or_rank_of[nc] = np;
         }
 
         int find(int a) {
-            if (parent_of[a] == -1) return a;
-            return parent_of[a] = find(parent_of[a]);
+            if (parent_or_rank_of[a] < 0) return a;
+            return parent_or_rank_of[a] = find(parent_or_rank_of[a]);
         }
 
         std::size_t size() const { return size_; }
