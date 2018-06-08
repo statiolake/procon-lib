@@ -27,14 +27,15 @@ namespace pcl { namespace math { namespace algorithm {
         return gcd;
     }
 
+    /// verified with aoj:0009
     template <typename T>
-    constexpr std::vector<T> get_primes(T N) {
+    std::vector<T> get_primes(T N) {
         std::vector<T> result;
         std::vector<bool> is_not_prime(N);
         for (T i = 2; i <= N; i++) {
             if (is_not_prime[i]) continue;
             result.push_back(i);
-            for (T j = i + i; j <= N; j++) is_not_prime[j] = true;
+            for (T j = i + i; j <= N; j += i) is_not_prime[j] = true;
         }
         return result;
     }
