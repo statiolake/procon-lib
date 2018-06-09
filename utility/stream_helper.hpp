@@ -16,13 +16,6 @@ namespace pcl { namespace utility {
     }
 
     template <typename T>
-    std::ostream &operator<<(std::ostream &os,
-                             std::vector<std::vector<T>> const &v) {
-        for (auto const &x : v) os << x;
-        return os;
-    }
-
-    template <typename T>
     std::istream &operator>>(std::istream &is, std::vector<T> &v) {
         for (size_t i = 0; i < v.size(); i++) is >> v[i];
         return is;
