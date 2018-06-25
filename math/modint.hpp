@@ -21,7 +21,7 @@ class modint {
         if (value < 0) value += MOD;
     }
 
-    explicit operator T() { return value; }
+    explicit operator T() const { return value; }
 
     modint &operator+=(modint const &other) {
         value += other.value;
@@ -43,14 +43,18 @@ class modint {
         *this *= i;
         return *this;
     }
-    modint operator<(modint const &other) const {
-        return value < other.value;
-    }
-    modint operator>(modint const &other) const { return other < *this; }
     modint operator==(modint const &other) const {
         return value == other.value;
     }
     modint operator!=(modint const &other) const { return !(*this == other); }
+    modint operator<(modint const &other) const {
+        return value < other.value;
+    }
+    modint operator>(modint const &other) const { return other < *this; }
+    bool operator<=(modint const &other) const {
+        return *this < other || *this == other;
+    }
+    bool operator>=(modint const &other) const { return other <= *this; }
 
     template <typename U>
     modint &operator=(U &&v) {
