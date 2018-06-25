@@ -12,7 +12,9 @@ class modint {
     }
 
   public:
-    modint() {}
+    modint()
+        : value() {}
+
     template <typename U>
     modint(U &&init)
         : value(std::forward<U>(init)) {
@@ -53,6 +55,18 @@ class modint {
     template <typename U>
     modint &operator=(U &&v) {
         if ((value = std::forward<U>(v)) < 0) value += MOD;
+        return *this;
+    }
+
+    modint &operator++() {
+        value++;
+        if (value == MOD) value = 0;
+        return *this;
+    }
+
+    modint &operator--() {
+        if (value == 0) value = MOD;
+        value--;
         return *this;
     }
 };
