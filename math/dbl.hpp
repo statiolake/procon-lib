@@ -182,4 +182,8 @@ std::ostream &operator<<(std::ostream &os, dbl const &d) {
 }
 } // namespace pcl
 
+namespace std {
+pcl::dbl sqrt(pcl::dbl a) { return pcl::dbl(sqrt((double)a)); }
+} // namespace std
+
 #endif /* E6D6F3A3_3133_EE7A_22DB_4696842CE1C5 */
