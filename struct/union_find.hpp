@@ -23,7 +23,6 @@ class union_find {
     void unite(int a, int b) {
         int pa = find(a), pb = find(b);
         if (pa == pb) return;
-        assert(pa != pb);
         --size_;
 
         int np, nc;

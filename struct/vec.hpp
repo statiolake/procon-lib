@@ -13,32 +13,23 @@ struct _xyz_base {
     std::valarray<T> v;
     _xyz_base(std::valarray<T> const &init)
         : v(init) {
-        if (v.size() != D) {
-            PD(std::cerr << "length of initializer for vec must be the same "
-                            "with the dimension of vec; expected "
-                         << D << " but got " << init.size() << std::endl);
-            assert(false);
-        }
+        ASSERT_NE(v.size(), D,
+                  "length of initializer for vec must be the same with the "
+                  "dimension of vec.");
     }
 
     _xyz_base(std::valarray<T> &&init)
         : v(std::move(init)) {
-        if (v.size() != D) {
-            PD(std::cerr << "length of initializer for vec must be the same "
-                            "with the dimension of vec; expected "
-                         << D << " but got " << init.size() << std::endl);
-            assert(false);
-        }
+        ASSERT_NE(v.size(), D,
+                  "length of initializer_list for vec must be the same with "
+                  "the dimension of vec.");
     }
 
     _xyz_base(std::initializer_list<T> &init)
         : v(init) {
-        if (init.size() != D) {
-            PD(std::cerr << "length of initialize_list for vec must be "
-                            "the same with the dimension of vec; expected "
-                         << D << " but got " << init.size() << std::endl);
-            assert(false);
-        }
+        ASSERT_NE(v.size(), D,
+                  "length of initializer_list for vec must be the same with "
+                  "the dimension of vec.");
     }
 
     _xyz_base()
@@ -95,12 +86,12 @@ struct vec : public _xyz<T, D, D == 3> {
     }
 
     T &operator[](std::size_t at) {
-        assert(at < D);
+        ASSERT_RANGE(0, at, D, "");
         return this->v[at];
     }
 
     T const &operator[](std::size_t at) const {
-        assert(at < D);
+        ASSERT_RANGE(0, at, D, "");
         return this->v[at];
     }
 
@@ -128,13 +119,29 @@ struct vec : public _xyz<T, D, D == 3> {
 #undef DERIVE_OP_COMPOUND_ASSIGN
 #undef DERIVE_OP_COMPOUND_ASSIGN_SCALAR
 
-    T distance() const { return std::sqrt(dot(*this)); }
+    T length() const { return std::sqrt(dott); }
 
     T dot(vec const &other) const {
         T sum{};
         for (std::size_t i = 0; i < D; i++) { sum += (*this)[i] * other[i]; }
         return sum;
     }
+
+    auto cross(vec const &o) const
+        -> std::enable_if<D == 2, vec<T, 1>>::type {
+        auto const &t = *this;
+        return {t[0] * o[1] - t[1] * o[0]};
+    }
+
+    auto cross(vec const &o) const -> std::enable_if<D == 3, vec>::type {
+        return {x * o.y - o.x * y, z * o.x - x * o.z, x * o.y - y * o.x};
+    }
+
+    bool is_parallel(vec const &other) const {
+        return (*this).cross(other).length() == 0;
+    }
+
+    vec normalized() const { return *this / length(); }
 };
 
 #define DERIVE_OP(op)                                            \
