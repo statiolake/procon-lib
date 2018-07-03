@@ -14,12 +14,12 @@ void updmin(T &a, T const &b) {
     a = std::min(a, b);
 }
 
-template <typename T>
-bool in_range(T const &begin, T const &mid, T const &end) {
+template <typename T, typename U, typename V>
+bool in_range(T const &begin, U const &mid, V const &end) {
     return begin <= mid && mid < end;
 }
-template <typename T>
-bool in_range(T const &begin, std::initializer_list<T> list, T const &end) {
+template <typename T, typename U, typename V>
+bool in_range(T const &begin, std::initializer_list<U> list, V const &end) {
     auto p = std::minmax_element(list.begin(), list.end());
     return begin <= *p.first && *p.second < end;
 }
