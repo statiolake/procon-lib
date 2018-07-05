@@ -52,109 +52,44 @@ dbl operator-(dbl lhs, dbl const &rhs) { return (lhs -= rhs); }
 dbl operator*(dbl lhs, dbl const &rhs) { return (lhs *= rhs); }
 dbl operator/(dbl lhs, dbl const &rhs) { return (lhs /= rhs); }
 
-template <typename Number>
-auto operator+(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, dbl>::type {
-    return (dbl(lhs) + rhs);
-}
-template <typename Number>
-auto operator-(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, dbl>::type {
-    return (dbl(lhs) - rhs);
-}
-template <typename Number>
-auto operator*(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, dbl>::type {
-    return (dbl(lhs) * rhs);
-}
-template <typename Number>
-auto operator/(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, dbl>::type {
-    return (dbl(lhs) / rhs);
-}
+#define DERIVE_OP_SCALAR_LHS(op)                                            \
+    template <typename Number>                                              \
+    auto operator op(Number const &lhs, dbl const &rhs)                     \
+        ->                                                                  \
+        typename std::enable_if<std::is_scalar<Number>::value, dbl>::type { \
+        return dbl(lhs) op rhs;                                             \
+    }
+#define DERIVE_OP_SCALAR_RHS(op)                                            \
+    template <typename Number>                                              \
+    auto operator op(dbl const &lhs, Number const &rhs)                     \
+        ->                                                                  \
+        typename std::enable_if<std::is_scalar<Number>::value, dbl>::type { \
+        return lhs op dbl(rhs);                                             \
+    }
 
-template <typename Number>
-auto operator+(dbl lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, dbl>::type {
-    return (lhs + dbl(rhs));
-}
-template <typename Number>
-auto operator-(dbl lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, dbl>::type {
-    return (lhs - dbl(rhs));
-}
-template <typename Number>
-auto operator*(dbl lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, dbl>::type {
-    return (lhs * dbl(rhs));
-}
-template <typename Number>
-auto operator/(dbl lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, dbl>::type {
-    return (lhs / dbl(rhs));
-}
+DERIVE_OP_SCALAR_LHS(+)
+DERIVE_OP_SCALAR_LHS(-)
+DERIVE_OP_SCALAR_LHS(*)
+DERIVE_OP_SCALAR_LHS(/)
+DERIVE_OP_SCALAR_LHS(==)
+DERIVE_OP_SCALAR_LHS(!=)
+DERIVE_OP_SCALAR_LHS(<)
+DERIVE_OP_SCALAR_LHS(>)
+DERIVE_OP_SCALAR_LHS(<=)
+DERIVE_OP_SCALAR_LHS(>=)
+DERIVE_OP_SCALAR_RHS(+)
+DERIVE_OP_SCALAR_RHS(-)
+DERIVE_OP_SCALAR_RHS(*)
+DERIVE_OP_SCALAR_RHS(/)
+DERIVE_OP_SCALAR_RHS(==)
+DERIVE_OP_SCALAR_RHS(!=)
+DERIVE_OP_SCALAR_RHS(<)
+DERIVE_OP_SCALAR_RHS(>)
+DERIVE_OP_SCALAR_RHS(<=)
+DERIVE_OP_SCALAR_RHS(>=)
 
-template <typename Number>
-auto operator==(dbl const &lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return lhs == dbl(rhs);
-}
-template <typename Number>
-auto operator!=(dbl const &lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return lhs != dbl(rhs);
-}
-template <typename Number>
-auto operator<(dbl const &lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return lhs < dbl(rhs);
-}
-template <typename Number>
-auto operator>(dbl const &lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return lhs > dbl(rhs);
-}
-template <typename Number>
-auto operator<=(dbl const &lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return lhs <= dbl(rhs);
-}
-template <typename Number>
-auto operator>=(dbl const &lhs, Number const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return lhs >= dbl(rhs);
-}
-
-template <typename Number>
-auto operator==(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return rhs == lhs;
-}
-template <typename Number>
-auto operator!=(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return rhs != lhs;
-}
-template <typename Number>
-auto operator<(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return rhs > lhs;
-}
-template <typename Number>
-auto operator>(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return rhs < lhs;
-}
-template <typename Number>
-auto operator<=(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return rhs >= lhs;
-}
-template <typename Number>
-auto operator>=(Number const &lhs, dbl const &rhs) ->
-    typename std::enable_if<std::is_scalar<Number>::val, bool>::type {
-    return rhs <= lhs;
-}
+#undef DERIVE_OP_SCALAR_LHS
+#undef DERIVE_OP_SCALAR_RHS
 
 std::istream &operator>>(std::istream &is, dbl &d) {
     double val;
