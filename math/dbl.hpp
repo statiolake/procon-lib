@@ -52,41 +52,41 @@ dbl operator-(dbl lhs, dbl const &rhs) { return (lhs -= rhs); }
 dbl operator*(dbl lhs, dbl const &rhs) { return (lhs *= rhs); }
 dbl operator/(dbl lhs, dbl const &rhs) { return (lhs /= rhs); }
 
-#define DERIVE_OP_SCALAR_LHS(op)                                            \
-    template <typename Number>                                              \
-    auto operator op(Number const &lhs, dbl const &rhs)                     \
-        ->                                                                  \
-        typename std::enable_if<std::is_scalar<Number>::value, dbl>::type { \
-        return dbl(lhs) op rhs;                                             \
+#define DERIVE_OP_SCALAR_LHS(op, rettype)                        \
+    template <typename Number>                                   \
+    auto operator op(Number const &lhs, dbl const &rhs)          \
+        ->typename std::enable_if<std::is_scalar<Number>::value, \
+                                  rettype>::type {               \
+        return dbl(lhs) op rhs;                                  \
     }
-#define DERIVE_OP_SCALAR_RHS(op)                                            \
-    template <typename Number>                                              \
-    auto operator op(dbl const &lhs, Number const &rhs)                     \
-        ->                                                                  \
-        typename std::enable_if<std::is_scalar<Number>::value, dbl>::type { \
-        return lhs op dbl(rhs);                                             \
+#define DERIVE_OP_SCALAR_RHS(op, rettype)                        \
+    template <typename Number>                                   \
+    auto operator op(dbl const &lhs, Number const &rhs)          \
+        ->typename std::enable_if<std::is_scalar<Number>::value, \
+                                  rettype>::type {               \
+        return lhs op dbl(rhs);                                  \
     }
 
-DERIVE_OP_SCALAR_LHS(+)
-DERIVE_OP_SCALAR_LHS(-)
-DERIVE_OP_SCALAR_LHS(*)
-DERIVE_OP_SCALAR_LHS(/)
-DERIVE_OP_SCALAR_LHS(==)
-DERIVE_OP_SCALAR_LHS(!=)
-DERIVE_OP_SCALAR_LHS(<)
-DERIVE_OP_SCALAR_LHS(>)
-DERIVE_OP_SCALAR_LHS(<=)
-DERIVE_OP_SCALAR_LHS(>=)
-DERIVE_OP_SCALAR_RHS(+)
-DERIVE_OP_SCALAR_RHS(-)
-DERIVE_OP_SCALAR_RHS(*)
-DERIVE_OP_SCALAR_RHS(/)
-DERIVE_OP_SCALAR_RHS(==)
-DERIVE_OP_SCALAR_RHS(!=)
-DERIVE_OP_SCALAR_RHS(<)
-DERIVE_OP_SCALAR_RHS(>)
-DERIVE_OP_SCALAR_RHS(<=)
-DERIVE_OP_SCALAR_RHS(>=)
+DERIVE_OP_SCALAR_LHS(+, dbl)
+DERIVE_OP_SCALAR_LHS(-, dbl)
+DERIVE_OP_SCALAR_LHS(*, dbl)
+DERIVE_OP_SCALAR_LHS(/, dbl)
+DERIVE_OP_SCALAR_LHS(==, bool)
+DERIVE_OP_SCALAR_LHS(!=, bool)
+DERIVE_OP_SCALAR_LHS(<, bool)
+DERIVE_OP_SCALAR_LHS(>, bool)
+DERIVE_OP_SCALAR_LHS(<=, bool)
+DERIVE_OP_SCALAR_LHS(>=, bool)
+DERIVE_OP_SCALAR_RHS(+, dbl)
+DERIVE_OP_SCALAR_RHS(-, dbl)
+DERIVE_OP_SCALAR_RHS(*, dbl)
+DERIVE_OP_SCALAR_RHS(/, dbl)
+DERIVE_OP_SCALAR_RHS(==, bool)
+DERIVE_OP_SCALAR_RHS(!=, bool)
+DERIVE_OP_SCALAR_RHS(<, bool)
+DERIVE_OP_SCALAR_RHS(>, bool)
+DERIVE_OP_SCALAR_RHS(<=, bool)
+DERIVE_OP_SCALAR_RHS(>=, bool)
 
 #undef DERIVE_OP_SCALAR_LHS
 #undef DERIVE_OP_SCALAR_RHS

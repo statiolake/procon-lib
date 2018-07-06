@@ -77,8 +77,8 @@ void _assert_range(T const &begin, char const *mid_str, U const &mid,
                                                    std::cerr << "  | "     \
                                                              << msg        \
                                                              << std::endl; \
-                                           } __FILE__,                     \
-                                           __LINE__),                      \
+                                           },                              \
+                                           __FILE__, __LINE__),            \
                        0))
 #define ASSERT_RANGE(begin, mid, end, msg) \
     pcl::_assert_range(begin, #mid, mid, end, msg, __FILE__, __LINE__)
