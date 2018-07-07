@@ -57,8 +57,8 @@ struct vec : public _vec {
         double a = (*const_cast<vec *>(this))[at];
         return a;
     }
-    double length() const { return std::sqrt(dot(*this, *this)); }
-    vec normalized() const { return *this / length(); }
+    double len() const { return std::sqrt(dot(*this, *this)); }
+    vec normalized() const { return *this / len(); }
 #define DERIVE_OP_COMPOUND_ASSIGN(op)             \
     vec &operator op(vec const &other) {          \
         x op other.x, y op other.y, z op other.z; \
@@ -115,7 +115,7 @@ vec cross(vec const &lhs, vec const &rhs) {
 }
 
 bool is_parallel(vec const &lhs, vec const &rhs) {
-    return eqdbl(cross(lhs, rhs).length(), 0);
+    return eqdbl(cross(lhs, rhs).len(), 0);
 }
 
 std::ostream &operator<<(std::ostream &os, vec const &v) {

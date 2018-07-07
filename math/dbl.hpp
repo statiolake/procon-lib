@@ -1,5 +1,7 @@
-#ifndef E6D6F3A3_3133_EE7A_22DB_4696842CE1C5
-#define E6D6F3A3_3133_EE7A_22DB_4696842CE1C5
+#ifndef DBL_HPP_KWGZXJ7A
+#define DBL_HPP_KWGZXJ7A
+
+#error type `dbl` should not be used
 
 #include <cmath>
 #include <iostream>
@@ -108,4 +110,4 @@ namespace std {
 pcl::dbl sqrt(pcl::dbl a) { return pcl::dbl(sqrt((double)a)); }
 } // namespace std
 
-#endif /* E6D6F3A3_3133_EE7A_22DB_4696842CE1C5 */
+#endif /* end of include guard: DBL_HPP_KWGZXJ7A */
