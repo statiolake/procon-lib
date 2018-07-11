@@ -1,5 +1,5 @@
-#ifndef BCC09B9B_0133_EE7C_AAF9_25F0BA678968
-#define BCC09B9B_0133_EE7C_AAF9_25F0BA678968
+#ifndef ALIAS_HPP_ZFQX8TMN
+#define ALIAS_HPP_ZFQX8TMN
 
 #include <algorithm>
 
@@ -28,4 +28,4 @@ bool ledbl(double a, double b) { return a < b || eqdbl(a, b); }
 bool gtdbl(double a, double b) { return a > b || eqdbl(a, b); }
 } // namespace pcl
 
-#endif /* BCC09B9B_0133_EE7C_AAF9_25F0BA678968 */
+#endif /* end of include guard: ALIAS_HPP_ZFQX8TMN */

@@ -1,5 +1,5 @@
-#ifndef STREAM_HPP_L5EPV267
-#define STREAM_HPP_L5EPV267
+#ifndef STREAM_EMPTY_STREAM_HPP_L5EPV267
+#define STREAM_EMPTY_STREAM_HPP_L5EPV267
 #include <iostream>
 
 namespace pcl {
@@ -21,4 +21,4 @@ public:
 };
 } // namespace pcl
 
-#endif /* end of include guard: STREAM_HPP_L5EPV267 */
+#endif /* end of include guard: STREAM_EMPTY_STREAM_HPP_L5EPV267 */

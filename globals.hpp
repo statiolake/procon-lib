@@ -1,5 +1,5 @@
-#ifndef BD1529BC_6133_EE7C_AB69_94FE525AFC66
-#define BD1529BC_6133_EE7C_AB69_94FE525AFC66
+#ifndef GLOBALS_HPP_PAEGAYRI
+#define GLOBALS_HPP_PAEGAYRI
 
 #include <limits>
 
@@ -12,4 +12,4 @@ constexpr int DX[]   = {1, 0, -1, 0, 1, 1, -1, -1};
 constexpr int DY[]   = {0, 1, 0, -1, -1, 1, 1, -1};
 } // namespace pcl
 
-#endif /* BD1529BC_6133_EE7C_AB69_94FE525AFC66 */
+#endif /* end of include guard: GLOBALS_HPP_PAEGAYRI */

@@ -1,5 +1,5 @@
-#ifndef F8BF9740_A133_EE18_1629_F4FE4326E750
-#define F8BF9740_A133_EE18_1629_F4FE4326E750
+#ifndef ALG_HPP_SX09AGHG
+#define ALG_HPP_SX09AGHG
 
 #include <cmath>
 #include <utility>
@@ -62,4 +62,4 @@ constexpr bool is_prime(T val) {
 }
 } // namespace pcl
 
-#endif /* F8BF9740_A133_EE18_1629_F4FE4326E750 */
+#endif /* end of include guard: ALG_HPP_SX09AGHG */

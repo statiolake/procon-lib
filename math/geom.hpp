@@ -1,5 +1,5 @@
-#ifndef GEOM_HPP
-#define GEOM_HPP
+#ifndef GEOM_HPP_BIAOH5YE
+#define GEOM_HPP_BIAOH5YE
 
 #include <iostream>
 
@@ -192,4 +192,5 @@ coord intersection(segment const &lhs, segment const &rhs) {
 }
 
 } // namespace pcl
-#endif /* GEOM_HPP */
+
+#endif /* end of include guard: GEOM_HPP_BIAOH5YE */

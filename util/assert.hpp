@@ -1,5 +1,5 @@
-#ifndef ASSERT_HPP
-#define ASSERT_HPP
+#ifndef ASSERT_HPP_LEUGNHXR
+#define ASSERT_HPP_LEUGNHXR
 
 #include <iostream>
 #include <string>
@@ -90,4 +90,5 @@ void _assert_range(T const &begin, char const *mid_str, U const &mid,
 #define ASSERT_GE(expr1, expr2, msg) CALL_ASSERT_XX(ge, expr1, expr2, msg)
 #define ASSERT_LE(expr1, expr2, msg) CALL_ASSERT_XX(le, expr1, expr2, msg)
 #endif
-#endif /* ASSERT_HPP */
+
+#endif /* end of include guard: ASSERT_HPP_LEUGNHXR */

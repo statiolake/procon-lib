@@ -1,5 +1,6 @@
-#ifndef B6BA11FA_D133_EE7D_1599_B1BF5D17E883
-#define B6BA11FA_D133_EE7D_1599_B1BF5D17E883
+#ifndef MODINT_HPP_PIWCFQJX
+#define MODINT_HPP_PIWCFQJX
+
 #include "algorithm.hpp"
 namespace pcl {
 template <typename T = ll, T MOD = 1'000'000'007>
@@ -90,4 +91,5 @@ modint<T, MOD> operator/(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
   return lhs /= rhs;
 }
 } // namespace pcl
-#endif /* B6BA11FA_D133_EE7D_1599_B1BF5D17E883 */
+
+#endif /* end of include guard: MODINT_HPP_PIWCFQJX */

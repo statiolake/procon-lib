@@ -1,5 +1,5 @@
-#ifndef INF_HPP
-#define INF_HPP
+#ifndef INF_HPP_UB6YNGVE
+#define INF_HPP_UB6YNGVE
 
 #include <type_traits>
 
@@ -105,4 +105,4 @@ DEFINE_OP_BOTH(-) DEFINE_OP_BOTH(*) DEFINE_OP_BOTH(/)
 #undef DEFINE_OP
 #undef DEFINE_OP_BOTH
 
-#endif /* INF_HPP */
+#endif /* end of include guard: INF_HPP_UB6YNGVE */

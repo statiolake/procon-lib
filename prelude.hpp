@@ -1,5 +1,5 @@
-#ifndef PRELUDE_H
-#define PRELUDE_H
+#ifndef PRELUDE_HPP
+#define PRELUDE_HPP
 
 using ll = long long;
 
@@ -9,4 +9,4 @@ using ll = long long;
 #include "util/debug.hpp"
 #include "util/stream/overloads.hpp"
 
-#endif /* PRELUDE_H */
+#endif /* end of include guard: PRELUDE_HPP */
