@@ -3,8 +3,8 @@
 
 #include "../../prelude.hpp"
 
-#include <iterator>
 #include <functional>
+#include <iterator>
 
 namespace pcl {
 template <typename Input, typename Output>
