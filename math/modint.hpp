@@ -1,7 +1,7 @@
 #ifndef MODINT_HPP_PIWCFQJX
 #define MODINT_HPP_PIWCFQJX
 
-#include "algorithm.hpp"
+#include "alg.hpp"
 namespace pcl {
 template <typename T = ll, T MOD = 1'000'000'007>
 class modint {
