@@ -14,9 +14,9 @@ private:
   std::vector<T> data;
 
 public:
-  fenwick_tree(int n, T init = 0)
+  fenwick_tree(int n)
       : n(n)
-      , data(n, init) {}
+      , data(n) {}
 
   void add(int i, T const &x) {
     assert(0 <= i && i < n);
