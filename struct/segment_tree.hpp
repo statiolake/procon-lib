@@ -13,17 +13,18 @@ public:
   using value_type = typename Monoid::value_type;
 
 private:
-  int const sz, n;
+  ll const sz, n;
   std::vector<value_type> data;
 
   /// n is the first integer that satisfies 2^n >= sz
-  int calc_n(int sz) {
+  ll calc_n(ll sz) {
     sz--;
     sz |= sz >> 1;
     sz |= sz >> 2;
     sz |= sz >> 4;
     sz |= sz >> 8;
     sz |= sz >> 16;
+    sz |= sz >> 32;
     return sz + 1;
   }
 
@@ -33,21 +34,21 @@ public:
       , n(calc_n(sz))
       , data(n * 2, Monoid::id()) {
     std::copy(init.begin(), init.end(), data.begin() + n);
-    for (int i = n - 1; i >= 0; i--) {
+    for (ll i = n - 1; i >= 0; i--) {
       data[i] = Monoid::op(data[i * 2], data[i * 2 + 1]);
     }
   }
 
-  segment_tree(int sz, value_type init = Monoid::id())
+  segment_tree(ll sz, value_type init = Monoid::id())
       : segment_tree(std::vector<value_type>(sz, init)) {}
 
-  void update(int i, int x) {
+  void update(ll i, ll x) {
     assert(0 <= i && i <= sz);
     data[i += n] = x;
     while (i /= 2) data[i] = Monoid::op(data[i * 2], data[i * 2 + 1]);
   }
 
-  value_type find(int l, int r) const {
+  value_type find(ll l, ll r) const {
     assert(0 <= l && l <= r && r <= sz);
     l += n, r += n;
     value_type res1 = Monoid::id(), res2 = Monoid::id();
@@ -59,7 +60,7 @@ public:
     return Monoid::op(res1, res2);
   }
 
-  value_type const &get(int i) const { return data[i + n]; }
+  value_type const &get(ll i) const { return data[i + n]; }
 };
 
 template <typename T, T inf>
