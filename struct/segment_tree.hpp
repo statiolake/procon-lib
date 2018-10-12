@@ -58,6 +58,8 @@ public:
     }
     return Monoid::op(res1, res2);
   }
+
+  value_type const &get(int i) const { return data[i + n]; }
 };
 
 template <typename T, T inf>
