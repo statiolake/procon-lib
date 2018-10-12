@@ -16,9 +16,8 @@ private:
   int const sz, n;
   std::vector<value_type> data;
 
-  /// n は 2^n >= sz を満たす最初の整数
+  /// n is the first integer that satisfies 2^n >= sz
   int calc_n(int sz) {
-    // 参考: http://marupeke296.com/TIPS_No17_Bit.html
     sz--;
     sz |= sz >> 1;
     sz |= sz >> 2;
@@ -44,7 +43,6 @@ public:
 
   void update(int i, int x) {
     assert(0 <= i && i <= sz);
-    // data の中では 1-indexed のように扱っている
     data[i += n] = x;
     while (i /= 2) data[i] = Monoid::op(data[i * 2], data[i * 2 + 1]);
   }
