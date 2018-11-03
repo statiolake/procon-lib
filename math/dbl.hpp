@@ -1,5 +1,4 @@
-#ifndef DBL_HPP_KWGZXJ7A
-#define DBL_HPP_KWGZXJ7A
+#pragma once
 
 #error type `dbl` should not be used
 
@@ -109,5 +108,3 @@ std::ostream &operator<<(std::ostream &os, dbl const &d) {
 namespace std {
 pcl::dbl sqrt(pcl::dbl a) { return pcl::dbl(sqrt((double)a)); }
 } // namespace std
-
-#endif /* end of include guard: DBL_HPP_KWGZXJ7A */

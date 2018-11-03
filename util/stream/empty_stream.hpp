@@ -1,5 +1,5 @@
-#ifndef STREAM_EMPTY_STREAM_HPP_L5EPV267
-#define STREAM_EMPTY_STREAM_HPP_L5EPV267
+#pragma once
+
 #include <iostream>
 
 namespace pcl {
@@ -20,5 +20,3 @@ public:
   empty_stream_buf const *rdbuf() const { return this; }
 };
 } // namespace pcl
-
-#endif /* end of include guard: STREAM_EMPTY_STREAM_HPP_L5EPV267 */

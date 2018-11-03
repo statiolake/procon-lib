@@ -1,5 +1,4 @@
-#ifndef ALIAS_HPP_ZFQX8TMN
-#define ALIAS_HPP_ZFQX8TMN
+#pragma once
 
 #include <algorithm>
 #include <cmath>
@@ -28,5 +27,3 @@ inline bool eqdbl(double a, double b) { return std::abs(a - b) < EPS; }
 inline bool ledbl(double a, double b) { return a < b || eqdbl(a, b); }
 inline bool gtdbl(double a, double b) { return a > b || eqdbl(a, b); }
 } // namespace pcl
-
-#endif /* end of include guard: ALIAS_HPP_ZFQX8TMN */

@@ -1,5 +1,4 @@
-#ifndef ITER_IOTA_HPP_GQIXM5SA
-#define ITER_IOTA_HPP_GQIXM5SA
+#pragma once
 
 #include <cassert>
 
@@ -69,5 +68,3 @@ iota<T> make_descending_iota(T beg, T end) {
 }
 
 } // namespace pcl
-
-#endif /* end of include guard: ITER_IOTA_HPP_GQIXM5SA */

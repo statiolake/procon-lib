@@ -1,5 +1,4 @@
-#ifndef ITER_SAFE_ITER_KZAA4F7K
-#define ITER_SAFE_ITER_KZAA4F7K
+#pragma once
 
 #if __cplusplus >= 201703L
 
@@ -101,5 +100,3 @@ safe_iota<T> make_safe_iota(T beg, T end, T step = 1) {
 } // namespace pcl
 
 #endif
-
-#endif /* end of include guard: ITER_SAFE_ITER_KZAA4F7K */

@@ -1,5 +1,4 @@
-#ifndef ALG_HPP_JEGOXZJG
-#define ALG_HPP_JEGOXZJG
+#pragma once
 
 #include <utility>
 namespace pcl {
@@ -17,5 +16,3 @@ Input binary_search(Input left, Input right, Pred &&pred,
              : mid;
 }
 } // namespace pcl
-
-#endif /* end of include guard: ALG_HPP_JEGOXZJG */

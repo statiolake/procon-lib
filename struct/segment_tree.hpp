@@ -1,5 +1,4 @@
-#ifndef SEGMENT_TREE_HPP_ACMT4Z9H
-#define SEGMENT_TREE_HPP_ACMT4Z9H
+#pragma once
 
 #include <cassert>
 #include <vector>
@@ -73,5 +72,3 @@ struct range_minimum_query {
 };
 
 } // namespace pcl
-
-#endif /* end of include guard: SEGMENT_TREE_HPP_ACMT4Z9H */

@@ -1,5 +1,4 @@
-#ifndef LAMBDA_HPP_PRY0TKQ7
-#define LAMBDA_HPP_PRY0TKQ7
+#pragma once
 
 #include "../../prelude.hpp"
 
@@ -133,5 +132,3 @@ public:
   iterator end() const { return iterator(range_end, func); }
 };
 }; // namespace pcl
-
-#endif /* end of include guard: LAMBDA_HPP_PRY0TKQ7 */

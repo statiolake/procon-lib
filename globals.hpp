@@ -1,5 +1,4 @@
-#ifndef GLOBALS_HPP_PAEGAYRI
-#define GLOBALS_HPP_PAEGAYRI
+#pragma once
 
 #include <limits>
 
@@ -11,5 +10,3 @@ constexpr double EPS = 1e-8;
 constexpr int DX[]   = {1, 0, -1, 0, 1, 1, -1, -1};
 constexpr int DY[]   = {0, 1, 0, -1, -1, 1, 1, -1};
 } // namespace pcl
-
-#endif /* end of include guard: GLOBALS_HPP_PAEGAYRI */

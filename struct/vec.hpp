@@ -1,5 +1,4 @@
-#ifndef VEC_HPP_V29P8XGN
-#define VEC_HPP_V29P8XGN
+#pragma once
 
 #include <cassert>
 #include <cmath>
@@ -130,4 +129,3 @@ std::ostream &operator<<(std::ostream &os, vec const &v) {
 }
 using coord = vec;
 } // namespace pcl
-#endif /* end of include guard: VEC_HPP_V29P8XGN */

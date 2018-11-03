@@ -1,5 +1,4 @@
-#ifndef PRELUDE_HPP
-#define PRELUDE_HPP
+#pragma once
 
 using ll = long long;
 
@@ -8,5 +7,3 @@ using ll = long long;
 #include "util/assert.hpp"
 #include "util/debug.hpp"
 #include "util/stream/overloads.hpp"
-
-#endif /* end of include guard: PRELUDE_HPP */

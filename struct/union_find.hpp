@@ -2,8 +2,7 @@
  * union_find.hpp - union-find tree.
  * verifyed with aoj:DSL_1_A
  */
-#ifndef UNION_FIND_HPP_OXVELNTB
-#define UNION_FIND_HPP_OXVELNTB
+#pragma once
 
 #include <cassert>
 #include <vector>
@@ -49,5 +48,3 @@ public:
   std::size_t size() const { return size_; }
 };
 } // namespace pcl
-
-#endif /* end of include guard: UNION_FIND_HPP_OXVELNTB */

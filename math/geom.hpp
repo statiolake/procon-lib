@@ -1,5 +1,4 @@
-#ifndef GEOM_HPP_BIAOH5YE
-#define GEOM_HPP_BIAOH5YE
+#pragma once
 
 #include <iostream>
 
@@ -164,5 +163,3 @@ std::ostream &operator<<(std::ostream &os, sphere const &sph) {
 }
 
 } // namespace pcl
-
-#endif /* end of include guard: GEOM_HPP_BIAOH5YE */

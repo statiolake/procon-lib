@@ -1,5 +1,4 @@
-#ifndef MODINT_HPP_PIWCFQJX
-#define MODINT_HPP_PIWCFQJX
+#pragma once
 
 #include "alg.hpp"
 namespace pcl {
@@ -91,5 +90,3 @@ modint<T, MOD> operator/(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
   return lhs /= rhs;
 }
 } // namespace pcl
-
-#endif /* end of include guard: MODINT_HPP_PIWCFQJX */

@@ -1,10 +1,7 @@
 /*
  * iter.hpp - iterator
  */
-#ifndef ITER_HPP_BEJRQD7X
-#define ITER_HPP_BEJRQD7X
+#pragma once
 
 #include "iter/iota.hpp"
 #include "iter/safe_iota.hpp"
-
-#endif /* end of include guard: ITER_HPP_BEJRQD7X */

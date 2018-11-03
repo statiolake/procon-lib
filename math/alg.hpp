@@ -1,5 +1,4 @@
-#ifndef ALG_HPP_SX09AGHG
-#define ALG_HPP_SX09AGHG
+#pragma once
 
 #include <cmath>
 #include <utility>
@@ -61,5 +60,3 @@ constexpr bool is_prime(T val) {
   return true;
 }
 } // namespace pcl
-
-#endif /* end of include guard: ALG_HPP_SX09AGHG */

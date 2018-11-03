@@ -1,5 +1,4 @@
-#ifndef STREAM_OVERLOADS_HPP_DNIKPKZJ
-#define STREAM_OVERLOADS_HPP_DNIKPKZJ
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -21,5 +20,3 @@ std::istream &operator>>(std::istream &is, std::vector<T> &v) {
   return is;
 }
 } // namespace pcl
-
-#endif /* end of include guard: STREAM_OVERLOADS_HPP_DNIKPKZJ */

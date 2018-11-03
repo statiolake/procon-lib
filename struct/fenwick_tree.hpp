@@ -1,5 +1,4 @@
-#ifndef FENWICK_TREE_HPP_BXZMBQU9
-#define FENWICK_TREE_HPP_BXZMBQU9
+#pragma once
 
 #include <cassert>
 #include <vector>
@@ -37,5 +36,3 @@ public:
 };
 
 } // namespace pcl
-
-#endif /* end of include guard: FENWICK_TREE_HPP_BXZMBQU9 */

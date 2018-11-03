@@ -1,5 +1,4 @@
-#ifndef MAT_HPP_CRL39OJX
-#define MAT_HPP_CRL39OJX
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -153,5 +152,3 @@ std::ostream &operator<<(std::ostream &os, mat<T> const &m) {
   return os;
 }
 } // namespace pcl
-
-#endif /* end of include guard: MAT_HPP_CRL39OJX */
