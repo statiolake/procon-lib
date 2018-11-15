@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <iostream>
 
 #include "../struct/vec.hpp"
@@ -86,8 +87,8 @@ bool has_intersection(segment const &lhs, segment const &rhs) {
     auto c1   = cross(base.dir, rela);
     auto c2   = cross(base.dir, relb);
 
-    ASSERT(is_parallel(c1, c2),
-           "cross product not returned parallel vectors.");
+    // cross product haven't returned parallel vectors.
+    assert(is_parallel(c1, c2));
 
     for (std::size_t i = 0; i < 3; i++)
       if (c1[i] * c2[i] > 0) return false;
@@ -125,16 +126,19 @@ bool has_intersection(sphere const &lhs, segment const &rhs) {
 }
 
 coord intersection(segment const &lhs, segment const &rhs) {
-  ASSERT(has_intersection(lhs, rhs), "these segments have no intersection.");
+  // these segments have no intersection.
+  assert(has_intersection(lhs, rhs));
   coord result;
   segment const *base   = &lhs;
   segment const *target = &rhs;
 
   if (base->is_line() && target->is_line()) {
-    ASSERT(false, "line-line intersection is not yet implemented.");
+    // line-line intersection is not yet implemented.
+    assert(false);
   } else {
     if (target->is_line()) {
-      ASSERT(!base->is_line(), "base must not be line here.");
+      // base must not be line here.
+      assert(!base->is_line());
       std::swap(base, target);
     }
     double d1 = base->distance_from(target->start);
