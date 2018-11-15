@@ -44,13 +44,16 @@ struct vec : public _vec {
     return *this;
   }
   double &operator[](std::size_t at) {
-    ASSERT_RANGE(0u, at, 3u, "vec subscription out of range.");
+    // check vector subscription.
+    assert(0u <= at && at < 3u);
+
     switch (at) {
       case 0: return x;
       case 1: return y;
       case 2: return z;
     }
-    return x; // unreachable, but stop warning.
+
+    return 0.0; // unreachable, but stop warning.
   }
   double at(std::size_t at) const {
     double a = (*const_cast<vec *>(this))[at];
@@ -117,7 +120,8 @@ bool is_parallel(vec const &lhs, vec const &rhs) {
 }
 
 bool is_parallel_vecs_same_direction(vec const &lhs, vec const &rhs) {
-  ASSERT(is_parallel(lhs, rhs), "only for parallel vecs.");
+  // this function can only be applied with parallel vecs.
+  assert(is_parallel(lhs, rhs));
   for (std::size_t i = 0; i < 3; i++) {
     if (!ledbl(lhs.at(i) * rhs.at(i), 0)) return false;
   }
