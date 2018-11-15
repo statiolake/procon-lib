@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cassert>
 #include <iostream>
 #include <vector>
+
 namespace pcl {
 template <typename T>
 struct mat {
@@ -12,22 +14,28 @@ struct mat {
       : n(n)
       , m(m)
       , val(n, std::vector<T>(m)) {
-    ASSERT_GT(n, 0u, "the dimension of matrix must be positive.");
-    ASSERT_GT(m, 0u, "the dimension of matrix must be positive.");
+    // the dimension of matrix must be positive.
+    assert(n >= 0u);
+    assert(m >= 0u);
   }
 
   mat(std::initializer_list<std::initializer_list<T>> init) {
     for (auto row : std::move(init)) { val.emplace_back(row); }
-    ASSERT_GT(n = val.size(), 0u,
-              "matrix initializer must have positive number of rows.");
+    n = val.size();
+
+    // matrix initializer must have positive number of rows.
+    assert(n >= 0u);
+
     for (std::size_t i = 0; i < n; i++) {
       if (i == 0) {
-        ASSERT_GT(m = val[0].size(), 0u,
-                  "matrix initializer must have positive number of cols.");
+        m = val[0].size();
+
+        // matrix initializer must have positive number of cols.
+        assert(m >= 0u);
       }
-      ASSERT_EQ(m, val[i].size(),
-                "matrix initializer has incompatible size: the number "
-                "of cols differs row by row.");
+
+      // matrix initializer has incompatible size: the number of cols differs row by row.
+      assert(m == val[i].size());
     }
   }
 
@@ -49,16 +57,18 @@ struct mat {
     return result;
   }
   mat &operator+=(mat const &other) {
-    ASSERT_EQ(n, other.n, "these matrices have incompatible size with +=.");
-    ASSERT_EQ(m, other.m, "these matrices have incompatible size with +=.");
+    // assert size restriction: otherwise they're incompatible for +=.
+    assert(n == other.n);
+    assert(m == other.m);
 
     for (std::size_t i = 0; i < n; i++) {
       for (std::size_t j = 0; j < m; j++) { val[i][j] += other.val[i][j]; }
     }
   }
   mat &operator-=(mat const &other) {
-    ASSERT_EQ(n, other.n, "these matrices have incompatible size with -=.");
-    ASSERT_EQ(m, other.m, "these matrices have incompatible size with -=.");
+    // assert size restriction: otherwise they're incompatible for -=.
+    assert(n == other.n);
+    assert(m == other.m);
 
     for (std::size_t i = 0; i < n; i++) {
       for (std::size_t j = 0; j < m; j++) { val[i][j] -= other.val[i][j]; }
@@ -66,10 +76,10 @@ struct mat {
   }
 
   mat removed(std::size_t row, std::size_t col) const {
-    ASSERT_GT(n, 1u,
-              "more than or equal to 2 rows are needed to remove row.");
-    ASSERT_GT(m, 1u,
-              "more than or equal to 2 cols are needed to remove row.");
+    // the number of rows / cols must be >= 2 to remove row.
+    assert(n >= 1u);
+    assert(m >= 1u);
+
     mat result(n - 1, m - 1);
     for (std::size_t i = 0; i < n; i++) {
       if (i == row) continue;
@@ -85,7 +95,9 @@ struct mat {
   }
 
   T det() const {
-    ASSERT_EQ(n, m, "cannot calculate determinant of non-square matrix.");
+    // if non-square matrix, cannot calculate determinant.
+    assert(n == m);
+
     if (n == 1) return val[n][m];
     if (n == 2) return val[0][0] * val[1][1] - val[0][1] * val[1][0];
     T val_det{};
@@ -108,7 +120,8 @@ mat<T> operator-(mat<T> lhs, mat<T> const &rhs) {
 
 template <typename T>
 mat<T> operator*(mat<T> const &lhs, mat<T> const &rhs) {
-  ASSERT_EQ(lhs.m, rhs.n, "these matrices have incompatible size with *.");
+  // assert size restriction: otherwise they're incompatible for *.
+  assert(lhs.m == rhs.n);
 
   mat<T> result(lhs.n, rhs.m);
   for (std::size_t i = 0; i < lhs.n; i++) {
