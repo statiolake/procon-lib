@@ -50,8 +50,8 @@ public:
       : m_beg(beg)
       , m_end(end)
       , m_step(step) {
-    ASSERT(m_step == 1 || m_step == -1,
-           "supported steps for iota are 1 or -1.");
+    // check whether step is supported or not.
+    assert(m_step == 1 || m_step == -1);
   }
   iota_iterator begin() { return iota_iterator(m_beg, m_step); }
   iota_iterator end() { return iota_iterator(m_end, 0); }
