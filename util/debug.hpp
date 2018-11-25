@@ -1,13 +1,13 @@
 #pragma once
 
 #ifdef PA_DEBUG
-#define PD(stmt) stmt
+#define PD if (true)
 #else
-#define PD(stmt)
+#define PD if (false)
 #endif
 
 #ifdef PA_DEBUG_LIB
-#define PD_LIB(stmt) stmt
+#define PD_LIB if (true)
 #else
-#define PD_LIB(stmt)
+#define PD_LIB if (false)
 #endif
