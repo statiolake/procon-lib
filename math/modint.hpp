@@ -2,63 +2,90 @@
 
 #include "alg.hpp"
 namespace pcl {
+
 template <typename T = ll, T MOD = 1'000'000'007>
 class modint {
 private:
   T value;
+
   static inline T inv(T a) { return inv_impl(a, MOD); }
-  static T inv_impl(T a, T b) {
+  static inline T inv_impl(T a, T b) {
     return (a == 1 ? 1 : (1 - b * inv_impl(b % a, a)) / a + b);
+  }
+
+  inline void canonicalize() {
+    while (value < 0) value += MOD;
+    value %= MOD;
   }
 
 public:
   modint()
       : value() {}
 
-  template <typename U>
-  modint(U &&init)
-      : value(std::forward<U>(init)) {
-    if (value < 0) value += MOD;
+  modint(modint const &init)
+      : value(init.value) {}
+
+  modint(T init)
+      : value(init) {
+    canonicalize();
   }
 
-  explicit operator T() const { return value; }
+  operator T() const { return value; }
 
   modint &operator+=(modint const &other) {
     value += other.value;
     if (value >= MOD) value -= MOD;
     return *this;
   }
+
+  modint &operator+=(T other) { return *this += modint(other); }
+
   modint &operator-=(modint const &other) {
     if (value < other.value) value += MOD;
     value -= other.value;
     return *this;
   }
+
+  modint &operator-=(T other) { return *this -= modint(other); }
+
   modint &operator*=(modint const &other) {
     value *= other.value;
     value %= MOD;
     return *this;
   }
+
+  modint &operator*=(T other) { return *this *= modint(other); }
+
   modint &operator/=(modint const &other) {
-    auto i = inv(other.value);
+    T i = inv(other.value);
     *this *= i;
     return *this;
   }
-  modint operator==(modint const &other) const {
-    return value == other.value;
-  }
-  modint operator!=(modint const &other) const { return !(*this == other); }
-  modint operator<(modint const &other) const { return value < other.value; }
-  modint operator>(modint const &other) const { return other < *this; }
+
+  modint &operator/=(T other) { return *this /= modint(other); }
+
+  bool operator==(modint const &other) const { return value == other.value; }
+  bool operator==(T other) const { return *this == modint(other); };
+  bool operator!=(modint const &other) const { return !(*this == other); }
+  bool operator!=(T other) const { return *this != modint(other); };
+  bool operator<(modint const &other) const { return value < other.value; }
+  bool operator<(T other) const { return *this < modint(other); };
+  bool operator>(modint const &other) const { return other < *this; }
+  bool operator>(T other) const { return *this > modint(other); };
+
   bool operator<=(modint const &other) const {
     return *this < other || *this == other;
   }
+  bool operator<=(T other) const { return *this <= modint(other); }
   bool operator>=(modint const &other) const { return other <= *this; }
+  bool operator>=(T other) const { return *this >= modint(other); }
 
-  template <typename U>
-  modint &operator=(U &&v) {
-    if ((value = std::forward<U>(v)) < 0) value += MOD;
+  modint &operator=(modint const &other) {
+    value = other.value;
     return *this;
   }
+
+  modint &operator=(T other) { return *this = modint(other); }
 
   modint &operator++() {
     value++;
@@ -77,16 +104,93 @@ template <typename T, T MOD>
 modint<T, MOD> operator+(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
   return lhs += rhs;
 }
+
+template <typename T, T MOD, typename U,
+          typename std::enable_if<std::is_convertible<U, T>::value,
+                                  nullptr_t>::type = nullptr>
+modint<T, MOD> operator+(modint<T, MOD> lhs, U rhs) {
+  return lhs += rhs;
+}
+
+template <typename T, T MOD, typename U,
+          typename std::enable_if<std::is_convertible<U, T>::value,
+                                  nullptr_t>::type = nullptr>
+modint<T, MOD> operator+(U lhs, modint<T, MOD> rhs) {
+  return rhs += lhs;
+}
+
 template <typename T, T MOD>
 modint<T, MOD> operator-(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
   return lhs -= rhs;
 }
+
+template <typename T, T MOD, typename U,
+          typename std::enable_if<std::is_convertible<U, T>::value,
+                                  nullptr_t>::type = nullptr>
+modint<T, MOD> operator-(modint<T, MOD> lhs, U rhs) {
+  return lhs -= rhs;
+}
+
+template <typename T, T MOD, typename U,
+          typename std::enable_if<std::is_convertible<U, T>::value,
+                                  nullptr_t>::type = nullptr>
+modint<T, MOD> operator-(U lhs, modint<T, MOD> const &rhs) {
+  return modint<T, MOD>(lhs) -= rhs;
+}
+
 template <typename T, T MOD>
 modint<T, MOD> operator*(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
   return lhs *= rhs;
 }
+
+template <typename T, T MOD, typename U,
+          typename std::enable_if<std::is_convertible<U, T>::value,
+                                  nullptr_t>::type = nullptr>
+modint<T, MOD> operator*(modint<T, MOD> lhs, U rhs) {
+  return lhs *= rhs;
+}
+
+template <typename T, T MOD, typename U,
+          typename std::enable_if<std::is_convertible<U, T>::value,
+                                  nullptr_t>::type = nullptr>
+modint<T, MOD> operator*(U lhs, modint<T, MOD> rhs) {
+  return rhs *= lhs;
+}
+
 template <typename T, T MOD>
 modint<T, MOD> operator/(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
   return lhs /= rhs;
 }
+
+template <typename T, T MOD, typename U,
+          typename std::enable_if<std::is_convertible<U, T>::value,
+                                  nullptr_t>::type = nullptr>
+modint<T, MOD> operator/(modint<T, MOD> lhs, U rhs) {
+  return lhs /= rhs;
+}
+
+template <typename T, T MOD, typename U,
+          typename std::enable_if<std::is_convertible<U, T>::value,
+                                  nullptr_t>::type = nullptr>
+modint<T, MOD> operator/(U lhs, modint<T, MOD> const &rhs) {
+  return modint<T, MOD>(lhs) /= rhs;
+}
+
+template <typename T, T MOD>
+std::ostream &operator<<(std::ostream &os, modint<T, MOD> const &x) {
+  return os << static_cast<T>(x);
+}
+
+template <typename T, T MOD>
+std::istream &operator>>(std::istream &is, modint<T, MOD> &x) {
+  T v;
+  is >> v, x = v;
+  return is;
+}
+
+using mint  = modint<ll, 1'000'000'007>;
+using mint9 = modint<ll, 1'000'000'009>;
+
 } // namespace pcl
+
+// vim: set sw=2 ts=2 sts=2:
