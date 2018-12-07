@@ -8,31 +8,31 @@ namespace pcl {
 /// verified with: aoj:DSL_2_B
 template <typename T>
 class fenwick_tree {
-private:
-  const int n;
-  std::vector<T> data;
+  private:
+    const int n;
+    std::vector<T> data;
 
-public:
-  fenwick_tree(int n)
-      : n(n)
-      , data(n) {}
+  public:
+    fenwick_tree(int n)
+        : n(n)
+        , data(n) {}
 
-  void add(int i, T const &x) {
-    assert(0 <= i && i < n);
-    for (; i < n; i |= i + 1) data[i] += x;
-  }
+    void add(int i, T const &x) {
+        assert(0 <= i && i < n);
+        for (; i < n; i |= i + 1) data[i] += x;
+    }
 
-  T sum(int i) const {
-    assert(0 <= i && i <= n);
-    T res = 0;
-    for (i--; i >= 0; i = (i & (i + 1)) - 1) res += data[i];
-    return res;
-  }
+    T sum(int i) const {
+        assert(0 <= i && i <= n);
+        T res = 0;
+        for (i--; i >= 0; i = (i & (i + 1)) - 1) res += data[i];
+        return res;
+    }
 
-  T sum(int l, int r) const {
-    assert(0 <= l && l <= r && r <= n);
-    return sum(r) - sum(l);
-  }
+    T sum(int l, int r) const {
+        assert(0 <= l && l <= r && r <= n);
+        return sum(r) - sum(l);
+    }
 };
 
 } // namespace pcl
