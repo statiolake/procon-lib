@@ -76,6 +76,7 @@ decompose_impl(graph_t const &rg,
     int v = p.second;
     if (scc_of[v] == -1) dfs(v, num++);
   }
+
   return strongly_connected_components_t(scc_of, num);
 }
 
@@ -85,4 +86,30 @@ strongly_connected_components_t decompose_into_sccs(graph_t const &g) {
             std::greater<std::pair<int, int>>());
   return decompose_impl(reverse_graph(g), numbering);
 }
+
+graph_t make_scc_graph(graph_t const &g_ind,
+                       strongly_connected_components_t const &sccs) {
+  graph_t g_scc(sccs.size());
+  for (int i = 0; i < static_cast<int>(g_ind.size()); i++) {
+    auto &v = g_scc[sccs.scc_of(i)];
+    for (int to : g_ind[i]) {
+      if (sccs.scc_of(i) == sccs.scc_of(to)) continue;
+      if (find(v.begin(), v.end(), sccs.scc_of(to)) != v.end()) continue;
+      v.push_back(sccs.scc_of(to));
+    }
+  }
+  return g_scc;
 }
+
+vgrp_t find_roots(std::vector<vgrp_t> const &g) {
+  std::vector<bool> pointed(g.size(), false);
+  for (auto const &v : g)
+    for (auto x : v) pointed[x] = true;
+
+  vgrp_t roots;
+  for (int i = 0; i < static_cast<int>(g.size()); i++)
+    if (!pointed[i]) roots.push_back(i);
+
+  return roots;
+}
+} // namespace pcl
