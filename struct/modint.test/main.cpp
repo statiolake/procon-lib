@@ -1,6 +1,6 @@
 #include "prelude.hpp"
 
-#include "math/modint.hpp"
+#include "struct/modint.hpp"
 
 #include <bits/stdc++.h>
 using namespace std;
