@@ -1,135 +1,157 @@
 #pragma once
 
+#include "../../prelude.hpp"
+
+#include "../util/alias.hpp"
+
+#include <array>
 #include <cassert>
 #include <cmath>
 #include <type_traits>
-#include <valarray>
 
 namespace pcl {
 
-struct _vec {};
+template <int DIM>
+class vec_t {
+  private:
+    std::array<double, DIM> arr;
 
-struct vec;
+  public:
+    vec_t()
+        : arr({0.0}) {}
 
-double dot(vec const &lhs, vec const &rhs);
-vec cross(vec const &lhs, vec const &rhs);
-bool is_parallel(vec const &lhs, vec const &rhs);
-vec operator+(vec lhs, vec const &rhs);
-vec operator-(vec lhs, vec const &rhs);
-vec operator*(vec lhs, vec const &rhs);
-vec operator/(vec lhs, vec const &rhs);
-vec operator*(double lhs, vec rhs);
-vec operator+(vec lhs, double rhs);
-vec operator-(vec lhs, double rhs);
-vec operator*(vec lhs, double rhs);
-vec operator/(vec lhs, double rhs);
+    vec_t(std::initializer_list<double> &&init)
+        : arr(init) {
+        static_assert(init.size() == DIM,
+                      "dimension differs between vec_t and initializer.");
+    }
 
-struct vec : public _vec {
-    double x, y, z;
+    vec_t(vec_t const &other)
+        : arr(other.arr) {}
 
-    vec()
-        : x(0.0)
-        , y(0.0)
-        , z(0.0) {}
-    vec(vec const &other)
-        : x(other.x)
-        , y(other.y)
-        , z(other.z) {}
-    vec(double x, double y, double z = 0.0)
-        : x(x)
-        , y(y)
-        , z(z) {}
-    vec &operator=(vec const &other) {
-        x = other.x, y = other.y, z = other.z;
+    vec_t &operator=(vec_t const &other) { arr = other.arr; }
+
+    double &operator[](int idx) {
+        assert(in_range(0, idx, DIM));
+        return arr[idx];
+    }
+
+    double operator[](int idx) const {
+        assert(in_range(0, idx, DIM));
+        return arr[idx];
+    }
+
+    double length() const {
+        double len = 0;
+        for (double x : *this) len += x * x;
+        return sqrt(len);
+    }
+
+    vec_t normalized() const {
+        vec_t result = *this;
+        double len   = length();
+        for (double &x : result) x /= len;
+        return result;
+    }
+
+    auto begin() { return arr.begin(); }
+    auto end() { return arr.end(); }
+    auto begin() const { return cbegin(); }
+    auto endn() const { return cend(); }
+    auto cbegin() const { return arr.begin(); }
+    auto cend() const { return arr.cend(); }
+
+    vec_t &operator+=(vec_t const &other) {
+        for (int i = 0; i < DIM; i++) arr[i] += other[i];
         return *this;
     }
-    double &operator[](std::size_t at) {
-        // check vector subscription.
-        assert(0u <= at && at < 3u);
 
-        switch (at) {
-            case 0: return x;
-            case 1: return y;
-            case 2: return z;
-        }
+    vec_t &operator-=(vec_t const &other) {
+        for (int i = 0; i < DIM; i++) arr[i] -= other[i];
+        return *this;
+    }
 
-        return 0.0; // unreachable, but stop warning.
+    vec_t &operator*=(double r) {
+        for (double &x : *this) x *= r;
+        return *this;
     }
-    double at(std::size_t at) const {
-        double a = (*const_cast<vec *>(this))[at];
-        return a;
+
+    vec_t &operator/=(double r) {
+        for (double &x : *this) x /= r;
+        return *this;
     }
-    double length() const { return std::sqrt(dot(*this, *this)); }
-    vec normalized() const { return *this / length(); }
-#define DERIVE_OP_COMPOUND_ASSIGN(op)             \
-    vec &operator op(vec const &other) {          \
-        x op other.x, y op other.y, z op other.z; \
-        return *this;                             \
-    }
-#define DERIVE_OP_COMPOUND_ASSIGN_SCALAR(op) \
-    vec &operator op(double const &other) {  \
-        x op other, y op other, z op other;  \
-        return *this;                        \
-    }
-    DERIVE_OP_COMPOUND_ASSIGN(+=)
-    DERIVE_OP_COMPOUND_ASSIGN(-=)
-    DERIVE_OP_COMPOUND_ASSIGN(*=)
-    DERIVE_OP_COMPOUND_ASSIGN(/=)
-    DERIVE_OP_COMPOUND_ASSIGN_SCALAR(+=)
-    DERIVE_OP_COMPOUND_ASSIGN_SCALAR(-=)
-    DERIVE_OP_COMPOUND_ASSIGN_SCALAR(*=)
-    DERIVE_OP_COMPOUND_ASSIGN_SCALAR(/=)
-#undef DERIVE_OP_COMPOUND_ASSIGN
-#undef DERIVE_OP_COMPOUND_ASSIGN_SCALAR
 };
 
-#define DERIVE_OP(op) \
-    vec operator op(vec lhs, vec const &rhs) { return lhs op## = rhs; }
-#define DERIVE_OP_SCALAR_LHS(op) \
-    vec operator op(double lhs, vec rhs) { return rhs op## = lhs; }
-#define DERIVE_OP_SCALAR_RHS(op) \
-    vec operator op(vec lhs, double rhs) { return lhs op## = rhs; }
-DERIVE_OP(+)
-DERIVE_OP(-)
-DERIVE_OP(*)
-DERIVE_OP(/)
-DERIVE_OP_SCALAR_LHS(*)
-DERIVE_OP_SCALAR_RHS(+)
-DERIVE_OP_SCALAR_RHS(-)
-DERIVE_OP_SCALAR_RHS(*)
-DERIVE_OP_SCALAR_RHS(/)
-#undef DERIVE_OP
-#undef DERIVE_OP_SCALAR_LHS
-#undef DERIVE_OP_SCALAR_RHS
-
-bool operator==(vec const &lhs, vec const &rhs) {
-    return eqdbl(lhs.x, rhs.x) && eqdbl(lhs.y, rhs.y) && eqdbl(lhs.z, rhs.z);
-}
-bool operator!=(vec const &lhs, vec const &rhs) { return !(lhs == rhs); }
-
-double dot(vec const &lhs, vec const &rhs) {
-    return (lhs.x * rhs.x) + (lhs.y * rhs.y) + (lhs.z * rhs.z);
+template <int DIM>
+vec_t<DIM> operator+(vec_t<DIM> lhs, vec_t<DIM> const &rhs) {
+    return lhs += rhs;
 }
 
-return {lhs.y * rhs.z - lhs.z * rhs.y, lhs.z *rhs.x - lhs.x *rhs.z,
-        lhs.x *rhs.y - lhs.y *rhs.x};
-} // namespace pcl
-
-bool is_parallel(vec const &lhs, vec const &rhs) {
-    return eqdbl(cross(lhs, rhs).length(), 0);
+vec_t<DIM> operator-(vec_t<DIM> lhs, vec_t<DIM> const &rhs) {
+    return lhs -= rhs;
 }
 
-bool is_parallel_vecs_same_direction(vec const &lhs, vec const &rhs) {
-    // this function can only be applied with parallel vecs.
-    assert(is_parallel(lhs, rhs));
-    for (std::size_t i = 0; i < 3; i++) {
-        if (!ledbl(lhs.at(i) * rhs.at(i), 0)) return false;
-    }
+vec_t<DIM> operator*(vec_t<DIM> lhs, double rhs) { return lhs *= rhs; }
+vec_t<DIM> operator*(double lhs, vec_t<DIM> rhs) { return rhs *= lhs; }
+vec_t<DIM> operator/(vec_t<DIM> lhs, double rhs) { return lhs /= rhs; }
+
+template <int DIM>
+bool operator==(vec_t<DIM> const &lhs, vec_t<DIM> const &rhs) {
+    for (int i = 0; i < DIM; i++)
+        if (nedbl(lhs[i], rhs[i])) return false;
     return true;
 }
 
-std::ostream &operator<<(std::ostream &os, vec const &v) {
-    return (os << "(" << v.x << ", " << v.y << ", " << v.z << ")");
+template <int DIM>
+inline bool operator!=(vec_t<DIM> const &lhs, vec_t<DIM> const &rhs) {
+    return !(lhs == rhs);
 }
-using coord = vec;
+
+template <int DIM>
+double dot(vec_t<DIM> const &lhs, vec_t<DIM> const &rhs) {
+    double result = 0.0;
+    for (int i = 0; i < DIM; i++) result += lhs[i] * rhs[i];
+    return result;
+}
+
+double cross(vec_t<3> const &lhs, vec_t<3> const &rhs) {
+    return {lhs[1] * rhs[2] - lhs[2] * rhs[1],
+            lhs[2] * rhs[0] - lhs[0] * rhs[2],
+            lhs[0] * rhs[1] - lhs[1] * rhs[0]};
+}
+
+template <int DIM>
+bool is_parallel(vec_t<DIM> const &lhs, vec_t<DIM> const &rhs) {
+    return eqdbl(cross(lhs, rhs).length(), 0);
+}
+
+// @brief check if the two parallel vectors directs the same direction. this
+//        means that the sign of each element is the same
+template <int DIM>
+bool is_parallel_vec_same_direction(vec_t<DIM> const &lhs,
+                                    vec_t<DIM> const &rhs) {
+    // this function can only be applied with parallel vecs.
+    assert(is_parallel(lhs, rhs));
+
+    for (std::size_t i = 0; i < DIM; i++)
+        // lhs[i] * rhs[i] < 0 means lhs[i] and rhs[i] has the opposite sign.
+        if (ltdbl(lhs[i] * rhs[i], 0)) return false;
+
+    return true;
+}
+
+template <int DIM>
+std::ostream &operator<<(std::ostream &os, vec_t const &v) {
+    os << '(';
+    for (int i = 0; i < DIM; i++) {
+        if (i != 0) cout << ", ";
+        cout << v[i];
+    }
+    os << ')' << endl;
+}
+
+using vec2_t = vec_t<2>;
+using vec3_t = vec_t<3>;
+
+using coord_t = vec_t<2>;
 } // namespace pcl
