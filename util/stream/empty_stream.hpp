@@ -19,4 +19,6 @@ struct empty_stream : private empty_stream_buf, public std::ostream {
         : std::ostream(this) {}
     empty_stream_buf const *rdbuf() const { return this; }
 };
+
+empty_stream es;
 } // namespace pcl
