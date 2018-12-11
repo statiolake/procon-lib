@@ -33,7 +33,7 @@ class modint_t {
         canonicalize();
     }
 
-    operator T() const { return value; }
+    explicit operator T() const { return value; }
 
     modint_t &operator+=(modint_t const &other) {
         value += other.value;
