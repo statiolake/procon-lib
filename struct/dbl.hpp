@@ -12,8 +12,11 @@ class dbl {
     double val;
 
     friend bool operator==(dbl const &lhs, dbl const &rhs);
+    friend bool operator!=(dbl const &lhs, dbl const &rhs);
     friend bool operator<(dbl const &lhs, dbl const &rhs);
+    friend bool operator>(dbl const &lhs, dbl const &rhs);
     friend bool operator<=(dbl const &lhs, dbl const &rhs);
+    friend bool operator>=(dbl const &lhs, dbl const &rhs);
 
   public:
     dbl()
@@ -56,22 +59,28 @@ dbl operator*(dbl lhs, dbl const &rhs) { return (lhs *= rhs); }
 dbl operator/(dbl lhs, dbl const &rhs) { return (lhs /= rhs); }
 
 bool operator==(dbl const &lhs, dbl const &rhs) {
-    return std::abs(lhs.val - rhs.val) < EPS;
+    return eqdbl(lhs.val, rhs.val);
 }
 
-bool operator!=(dbl const &lhs, dbl const &rhs) { return !(lhs == rhs); }
+bool operator!=(dbl const &lhs, dbl const &rhs) {
+    return nedbl(lhs.val, rhs.val);
+}
 
 bool operator<(dbl const &lhs, dbl const &rhs) {
-    return lhs.val < rhs.val && lhs != rhs;
+    return ltdbl(lhs.val, rhs.val);
 }
 
-bool operator>(dbl const &lhs, dbl const &rhs) { return rhs < lhs; }
+bool operator>(dbl const &lhs, dbl const &rhs) {
+    return gtdbl(lhs.val, rhs.val);
+}
 
 bool operator<=(dbl const &lhs, dbl const &rhs) {
-    return lhs < rhs || lhs == rhs;
+    return ledbl(lhs.val, rhs.val);
 }
 
-bool operator>=(dbl const &lhs, dbl const &rhs) { return rhs <= lhs; }
+bool operator>=(dbl const &lhs, dbl const &rhs) {
+    return gedbl(lhs.val, rhs.val);
+}
 
 dbl operator+(dbl const &lhs, double rhs) { return lhs + dbl(rhs); }
 dbl operator-(dbl const &lhs, double rhs) { return lhs - dbl(rhs); }
