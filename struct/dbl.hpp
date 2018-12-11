@@ -25,7 +25,7 @@ class dbl {
         : val(init) {}
     dbl(dbl const &other)
         : val(other.val) {}
-    explicit explicit operator double() const { return val; }
+    explicit operator double() const { return val; }
 
     dbl &operator+=(dbl const &other) {
         val += other.val;
