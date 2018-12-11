@@ -1,10 +1,12 @@
 #pragma once
 
-#include <cassert>
-#include <iostream>
+#include "../prelude.hpp"
 
 #include "../struct/vec.hpp"
 #include "mat.hpp"
+
+#include <cassert>
+#include <iostream>
 
 namespace pcl {
 class segment {

@@ -2,6 +2,8 @@
 
 #error type `dbl` should not be used
 
+#include "../prelude.hpp"
+
 #include <cmath>
 #include <iostream>
 #include <type_traits>

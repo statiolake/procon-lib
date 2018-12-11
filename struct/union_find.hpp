@@ -4,6 +4,8 @@
  */
 #pragma once
 
+#include "../prelude.hpp"
+
 #include <cassert>
 #include <vector>
 

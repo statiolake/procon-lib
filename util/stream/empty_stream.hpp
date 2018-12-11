@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../prelude.hpp"
+
 #include <iostream>
 
 namespace pcl {
