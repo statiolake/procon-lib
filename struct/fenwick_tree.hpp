@@ -8,32 +8,49 @@
 namespace pcl {
 
 /// verified with: aoj:DSL_2_B
-template <typename T>
+template <typename Group>
 class fenwick_tree {
+  public:
+    using value_type = typename Group::value_type;
+
   private:
-    const int n;
-    std::vector<T> data;
+    int const sz;
+    std::vector<value_type> data;
 
   public:
-    fenwick_tree(int n)
-        : n(n)
-        , data(n) {}
+    fenwick_tree(int sz)
+        : sz(sz)
+        , data(sz, Group::id()) {}
 
-    void add(int i, T const &x) {
-        assert(0 <= i && i < n);
-        for (; i < n; i |= i + 1) data[i] += x;
+    void add(int i, value_type const &x) {
+        assert(in_range(0, i, sz));
+        for (; i < sz; i |= i + 1) data[i] = Group::op(data[i], x);
     }
 
-    T sum(int i) const {
-        assert(0 <= i && i <= n);
-        T res = 0;
-        for (i--; i >= 0; i = (i & (i + 1)) - 1) res += data[i];
+    value_type sum(int i) const {
+        // since sum(i) is sum of 0..i, i can be sz.
+        assert(in_range(0, i, sz + 1));
+        value_type res = Group::id();
+        for (i--; i >= 0; i = (i & (i + 1)) - 1)
+            res = Group::op(res, data[i]);
         return res;
     }
 
-    T sum(int l, int r) const {
-        assert(0 <= l && l <= r && r <= n);
-        return sum(r) - sum(l);
+    value_type sum(int l, int r) const {
+        // since sum(i) is sum of l..r, r can be sz.
+        assert(in_range(0, {l, r}, sz + 1));
+        return Group::op(sum(r), Group::inv(sum(l)));
+    }
+};
+
+template <typename T>
+struct range_sum_query {
+    using value_type = T;
+    constexpr static value_type id() { return 0; }
+    constexpr static value_type inv(value_type const &x) { return -x; }
+    constexpr static value_type op(value_type const &lhs,
+                                   value_type const &rhs) {
+        return lhs + rhs;
     }
 };
 
