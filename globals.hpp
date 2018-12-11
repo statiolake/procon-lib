@@ -5,9 +5,14 @@
 #include <limits>
 
 namespace pcl {
-constexpr int INF    = std::numeric_limits<int>::max() / 2;
-constexpr ll LNF     = std::numeric_limits<ll>::max() / 2;
-constexpr double DNF = std::numeric_limits<double>::max() / 2;
+
+template <typename T>
+constexpr T TNF = std::numeric_limits<T>::max() / 2;
+
+constexpr int INF    = TNF<int>;
+constexpr ll LNF     = TNF<ll>;
+constexpr double DNF = TNF<double>;
+
 constexpr double EPS = 1e-8;
 constexpr int DX[]   = {1, 0, -1, 0, 1, 1, -1, -1};
 constexpr int DY[]   = {0, 1, 0, -1, -1, 1, 1, -1};
