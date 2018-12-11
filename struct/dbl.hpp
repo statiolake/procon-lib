@@ -1,7 +1,5 @@
 #pragma once
 
-#error type `dbl` should not be used
-
 #include "../prelude.hpp"
 
 #include <cmath>
@@ -13,6 +11,10 @@ class dbl {
   private:
     double val;
 
+    friend bool operator==(dbl const &lhs, dbl const &rhs);
+    friend bool operator<(dbl const &lhs, dbl const &rhs);
+    friend bool operator<=(dbl const &lhs, dbl const &rhs);
+
   public:
     dbl()
         : val() {}
@@ -20,29 +22,27 @@ class dbl {
         : val(init) {}
     dbl(dbl const &other)
         : val(other.val) {}
-    explicit operator double() const { return val; }
+    explicit explicit operator double() const { return val; }
 
-#define DERIVE_COMPOUND_OP(op)           \
-    dbl &operator op(dbl const &other) { \
-        val op other.val;                \
-        return *this;                    \
+    dbl &operator+=(dbl const &other) {
+        val += other.val;
+        return *this;
     }
-    DERIVE_COMPOUND_OP(+=)
-    DERIVE_COMPOUND_OP(-=)
-    DERIVE_COMPOUND_OP(*=)
-    DERIVE_COMPOUND_OP(/=)
-#undef DERIVE_COMPOUND_OP
 
-    bool operator==(dbl const &other) const {
-        return std::abs(val - other.val) < EPS;
+    dbl &operator-=(dbl const &other) {
+        val -= other.val;
+        return *this;
     }
-    bool operator!=(dbl const &other) const { return !(*this == other); }
-    bool operator<(dbl const &other) const { return val < other.val; }
-    bool operator>(dbl const &other) const { return other < *this; }
-    bool operator<=(dbl const &other) const {
-        return *this < other || *this == other;
+
+    dbl &operator*=(dbl const &other) {
+        val *= other.val;
+        return *this;
     }
-    bool operator>=(dbl const &other) const { return other <= *this; }
+
+    dbl &operator/=(dbl const &other) {
+        val /= other.val;
+        return *this;
+    }
 
     dbl &operator=(dbl const &other) {
         val = other.val;
@@ -55,44 +55,45 @@ dbl operator-(dbl lhs, dbl const &rhs) { return (lhs -= rhs); }
 dbl operator*(dbl lhs, dbl const &rhs) { return (lhs *= rhs); }
 dbl operator/(dbl lhs, dbl const &rhs) { return (lhs /= rhs); }
 
-#define DERIVE_OP_SCALAR_LHS(op, rettype)                        \
-    template <typename Number>                                   \
-    auto operator op(Number const &lhs, dbl const &rhs)          \
-        ->typename std::enable_if<std::is_scalar<Number>::value, \
-                                  rettype>::type {               \
-        return dbl(lhs) op rhs;                                  \
-    }
-#define DERIVE_OP_SCALAR_RHS(op, rettype)                        \
-    template <typename Number>                                   \
-    auto operator op(dbl const &lhs, Number const &rhs)          \
-        ->typename std::enable_if<std::is_scalar<Number>::value, \
-                                  rettype>::type {               \
-        return lhs op dbl(rhs);                                  \
-    }
+bool operator==(dbl const &lhs, dbl const &rhs) {
+    return std::abs(lhs.val - rhs.val) < EPS;
+}
 
-DERIVE_OP_SCALAR_LHS(+, dbl)
-DERIVE_OP_SCALAR_LHS(-, dbl)
-DERIVE_OP_SCALAR_LHS(*, dbl)
-DERIVE_OP_SCALAR_LHS(/, dbl)
-DERIVE_OP_SCALAR_LHS(==, bool)
-DERIVE_OP_SCALAR_LHS(!=, bool)
-DERIVE_OP_SCALAR_LHS(<, bool)
-DERIVE_OP_SCALAR_LHS(>, bool)
-DERIVE_OP_SCALAR_LHS(<=, bool)
-DERIVE_OP_SCALAR_LHS(>=, bool)
-DERIVE_OP_SCALAR_RHS(+, dbl)
-DERIVE_OP_SCALAR_RHS(-, dbl)
-DERIVE_OP_SCALAR_RHS(*, dbl)
-DERIVE_OP_SCALAR_RHS(/, dbl)
-DERIVE_OP_SCALAR_RHS(==, bool)
-DERIVE_OP_SCALAR_RHS(!=, bool)
-DERIVE_OP_SCALAR_RHS(<, bool)
-DERIVE_OP_SCALAR_RHS(>, bool)
-DERIVE_OP_SCALAR_RHS(<=, bool)
-DERIVE_OP_SCALAR_RHS(>=, bool)
+bool operator!=(dbl const &lhs, dbl const &rhs) { return !(lhs == rhs); }
 
-#undef DERIVE_OP_SCALAR_LHS
-#undef DERIVE_OP_SCALAR_RHS
+bool operator<(dbl const &lhs, dbl const &rhs) {
+    return lhs.val < rhs.val && lhs != rhs;
+}
+
+bool operator>(dbl const &lhs, dbl const &rhs) { return rhs < lhs; }
+
+bool operator<=(dbl const &lhs, dbl const &rhs) {
+    return lhs < rhs || lhs == rhs;
+}
+
+bool operator>=(dbl const &lhs, dbl const &rhs) { return rhs <= lhs; }
+
+dbl operator+(dbl const &lhs, double rhs) { return lhs + dbl(rhs); }
+dbl operator-(dbl const &lhs, double rhs) { return lhs - dbl(rhs); }
+dbl operator*(dbl const &lhs, double rhs) { return lhs * dbl(rhs); }
+dbl operator/(dbl const &lhs, double rhs) { return lhs / dbl(rhs); }
+bool operator==(dbl const &lhs, double rhs) { return lhs == dbl(rhs); }
+bool operator!=(dbl const &lhs, double rhs) { return lhs != dbl(rhs); }
+bool operator<(dbl const &lhs, double rhs) { return lhs < dbl(rhs); }
+bool operator>(dbl const &lhs, double rhs) { return lhs > dbl(rhs); }
+bool operator<=(dbl const &lhs, double rhs) { return lhs <= dbl(rhs); }
+bool operator>=(dbl const &lhs, double rhs) { return lhs >= dbl(rhs); }
+
+dbl operator+(double lhs, dbl const &rhs) { return dbl(lhs) + rhs; }
+dbl operator-(double lhs, dbl const &rhs) { return dbl(lhs) - rhs; }
+dbl operator*(double lhs, dbl const &rhs) { return dbl(lhs) * rhs; }
+dbl operator/(double lhs, dbl const &rhs) { return dbl(lhs) / rhs; }
+bool operator==(double lhs, dbl const &rhs) { return dbl(lhs) == rhs; }
+bool operator!=(double lhs, dbl const &rhs) { return dbl(lhs) != rhs; }
+bool operator<(double lhs, dbl const &rhs) { return dbl(lhs) < rhs; }
+bool operator>(double lhs, dbl const &rhs) { return dbl(lhs) > rhs; }
+bool operator<=(double lhs, dbl const &rhs) { return dbl(lhs) <= rhs; }
+bool operator>=(double lhs, dbl const &rhs) { return dbl(lhs) >= rhs; }
 
 std::istream &operator>>(std::istream &is, dbl &d) {
     double val;
@@ -108,5 +109,5 @@ std::ostream &operator<<(std::ostream &os, dbl const &d) {
 } // namespace pcl
 
 namespace std {
-pcl::dbl sqrt(pcl::dbl a) { return pcl::dbl(sqrt((double)a)); }
+pcl::dbl sqrt(pcl::dbl const &a) { return pcl::dbl(sqrt((double)a)); }
 } // namespace std
