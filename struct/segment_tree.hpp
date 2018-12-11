@@ -64,10 +64,10 @@ class segment_tree {
     value_type const &get(ll i) const { return data[i + n]; }
 };
 
-template <typename T, T inf>
+template <typename T>
 struct range_minimum_query {
     using value_type = T;
-    constexpr static T id() { return inf; }
+    constexpr static T id() { return TNF<T>; }
     constexpr static T op(T const &lhs, T const &rhs) {
         return std::min(lhs, rhs);
     }
