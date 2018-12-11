@@ -3,6 +3,7 @@
 #include "../prelude.hpp"
 
 #include <cmath>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -18,14 +19,15 @@ constexpr T lcm(T a, T b) {
 }
 
 template <typename T>
-constexpr T extgcd(T a, T b, T &xd, T &yd) {
+// tuple<x, y, gcd>
+constexpr std::tuple<T, T, T> extgcd(T a, T b) {
     if (b == 0) {
-        xd = 1, yd = 0;
-        return a;
+        return std::make_tuple(a, 1, 0);
+    } else {
+        T gcd, xd, yd;
+        std::tie(gcd, xd, yd) = extgcd(b, a % b);
+        return std::make_tuple(gcd, yd, xd - (a / b) * yd);
     }
-    T gcd = extgcd(b, a % b, yd, xd);
-    yd -= (a / b) * xd;
-    return gcd;
 }
 
 /// verified with aoj:0009
