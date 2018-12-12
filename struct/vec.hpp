@@ -3,6 +3,7 @@
 #include "../prelude.hpp"
 
 #include "../util/alias.hpp"
+#include "dbl.hpp"
 
 #include <array>
 #include <cassert>
@@ -12,43 +13,43 @@
 namespace pcl {
 
 template <int DIM>
-class vec_t {
+class vec {
   private:
-    std::array<double, DIM> arr;
+    std::array<dbl, DIM> arr;
 
   public:
-    vec_t()
+    vec()
         : arr({0.0}) {}
 
     template <typename... Args>
-    vec_t(Args... args)
+    vec(Args... args)
         : arr({args...}) {}
 
-    vec_t(vec_t const &other)
+    vec(vec const &other)
         : arr(other.arr) {}
 
-    vec_t &operator=(vec_t const &other) { arr = other.arr; }
+    vec &operator=(vec const &other) { arr = other.arr; }
 
-    double &operator[](int idx) {
+    dbl &operator[](int idx) {
         assert(in_range(0, idx, DIM));
         return arr[idx];
     }
 
-    double operator[](int idx) const {
+    dbl operator[](int idx) const {
         assert(in_range(0, idx, DIM));
         return arr[idx];
     }
 
-    double length() const {
-        double len = 0;
-        for (double x : *this) len += x * x;
+    dbl length() const {
+        dbl len = 0;
+        for (dbl x : *this) len += x * x;
         return sqrt(len);
     }
 
-    vec_t normalized() const {
-        vec_t result = *this;
-        double len   = length();
-        for (double &x : result) x /= len;
+    vec normalized() const {
+        vec result = *this;
+        dbl len    = length();
+        for (dbl &x : result) x /= len;
         return result;
     }
 
@@ -59,105 +60,105 @@ class vec_t {
     auto cbegin() const { return arr.begin(); }
     auto cend() const { return arr.cend(); }
 
-    vec_t &operator+=(vec_t const &other) {
+    vec &operator+=(vec const &other) {
         for (int i = 0; i < DIM; i++) arr[i] += other[i];
         return *this;
     }
 
-    vec_t &operator-=(vec_t const &other) {
+    vec &operator-=(vec const &other) {
         for (int i = 0; i < DIM; i++) arr[i] -= other[i];
         return *this;
     }
 
-    vec_t &operator*=(double r) {
-        for (double &x : *this) x *= r;
+    vec &operator*=(dbl r) {
+        for (dbl &x : *this) x *= r;
         return *this;
     }
 
-    vec_t &operator/=(double r) {
-        for (double &x : *this) x /= r;
+    vec &operator/=(dbl r) {
+        for (dbl &x : *this) x /= r;
         return *this;
     }
 };
 
 template <int DIM>
-vec_t<DIM> operator+(vec_t<DIM> lhs, vec_t<DIM> const &rhs) {
+vec<DIM> operator+(vec<DIM> lhs, vec<DIM> const &rhs) {
     return lhs += rhs;
 }
 
 template <int DIM>
-vec_t<DIM> operator-(vec_t<DIM> lhs, vec_t<DIM> const &rhs) {
+vec<DIM> operator-(vec<DIM> lhs, vec<DIM> const &rhs) {
     return lhs -= rhs;
 }
 
 template <int DIM>
-vec_t<DIM> operator*(vec_t<DIM> lhs, double rhs) {
+vec<DIM> operator*(vec<DIM> lhs, dbl rhs) {
     return lhs *= rhs;
 }
 
 template <int DIM>
-vec_t<DIM> operator*(double lhs, vec_t<DIM> rhs) {
+vec<DIM> operator*(dbl lhs, vec<DIM> rhs) {
     return rhs *= lhs;
 }
 
 template <int DIM>
-vec_t<DIM> operator/(vec_t<DIM> lhs, double rhs) {
+vec<DIM> operator/(vec<DIM> lhs, dbl rhs) {
     return lhs /= rhs;
 }
 
 template <int DIM>
-bool operator==(vec_t<DIM> const &lhs, vec_t<DIM> const &rhs) {
+bool operator==(vec<DIM> const &lhs, vec<DIM> const &rhs) {
     for (int i = 0; i < DIM; i++)
-        if (nedbl(lhs[i], rhs[i])) return false;
+        if (lhs[i] != rhs[i]) return false;
     return true;
 }
 
 template <int DIM>
-inline bool operator!=(vec_t<DIM> const &lhs, vec_t<DIM> const &rhs) {
+inline bool operator!=(vec<DIM> const &lhs, vec<DIM> const &rhs) {
     return !(lhs == rhs);
 }
 
 template <int DIM>
-double dot(vec_t<DIM> const &lhs, vec_t<DIM> const &rhs) {
-    double result = 0.0;
+dbl dot(vec<DIM> const &lhs, vec<DIM> const &rhs) {
+    dbl result = 0.0;
     for (int i = 0; i < DIM; i++) result += lhs[i] * rhs[i];
     return result;
 }
 
-vec_t<3> cross(vec_t<3> const &lhs, vec_t<3> const &rhs) {
+vec<3> cross(vec<3> const &lhs, vec<3> const &rhs) {
     return {lhs[1] * rhs[2] - lhs[2] * rhs[1],
             lhs[2] * rhs[0] - lhs[0] * rhs[2],
             lhs[0] * rhs[1] - lhs[1] * rhs[0]};
 }
 
 template <int DIM>
-bool is_parallel(vec_t<DIM> const &lhs, vec_t<DIM> const &rhs) {
-    return eqdbl(cross(lhs, rhs).length(), 0);
+bool is_parallel(vec<DIM> const &lhs, vec<DIM> const &rhs) {
+    return cross(lhs, rhs).length() == 0;
 }
 
 // @brief check if the two parallel vectors directs the same direction. this
 //        means that the sign of each element is the same
 template <int DIM>
-bool is_parallel_vecs_same_direction(vec_t<DIM> const &lhs,
-                                     vec_t<DIM> const &rhs) {
+bool is_parallel_vecs_same_direction(vec<DIM> const &lhs,
+                                     vec<DIM> const &rhs) {
     // this function can only be applied with parallel vecs.
     assert(is_parallel(lhs, rhs));
 
     for (std::size_t i = 0; i < DIM; i++)
         // lhs[i] * rhs[i] < 0 means lhs[i] and rhs[i] has the opposite sign.
-        if (ltdbl(lhs[i] * rhs[i], 0)) return false;
+        if (lhs[i] * rhs[i] < 0) return false;
 
     return true;
 }
 
 template <int DIM>
-std::istream &operator>>(std::istream &is, vec_t<DIM> &v) {
+std::istream &operator>>(std::istream &is, vec<DIM> &v) {
     for (int i = 0; i < DIM; i++) is >> v[i];
     return is;
 }
 
 template <int DIM>
-std::ostream &operator<<(std::ostream &os, vec_t<DIM> const &v) {
+std::ostream &operator<<(std::ostream &os, vec<DIM> const &v) {
     for (int i = 0; i < DIM; i++) {
         if (i != 0) os << ' ';
         os << v[i];
@@ -165,8 +166,12 @@ std::ostream &operator<<(std::ostream &os, vec_t<DIM> const &v) {
     return os;
 }
 
-using vec2_t = vec_t<2>;
-using vec3_t = vec_t<3>;
+using vec2 = vec<2>;
+using vec3 = vec<3>;
 
-using coord_t = vec_t<2>;
+template <int DIM>
+using coord = vec<DIM>;
+
+using coord2 = vec<2>;
+using coord3 = vec<3>;
 } // namespace pcl

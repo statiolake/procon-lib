@@ -15,7 +15,7 @@ int main() {
     double r;
     cin >> r;
 
-    vec3_t x(a, b, c), y(d, e, f);
+    vec3 x(a, b, c), y(d, e, f);
 
     cout << setprecision(9);
 
