@@ -25,10 +25,4 @@ bool in_range(T const &begin, std::initializer_list<U> list, V const &end) {
     auto p = std::minmax_element(list.begin(), list.end());
     return begin <= *p.first && *p.second < end;
 }
-inline bool eqdbl(double a, double b) { return std::abs(a - b) < EPS; }
-inline bool nedbl(double a, double b) { return !eqdbl(a, b); }
-inline bool ledbl(double a, double b) { return a < b || eqdbl(a, b); }
-inline bool gedbl(double a, double b) { return a > b || eqdbl(a, b); }
-inline bool ltdbl(double a, double b) { return !gedbl(a, b); }
-inline bool gtdbl(double a, double b) { return !ledbl(a, b); }
 } // namespace pcl

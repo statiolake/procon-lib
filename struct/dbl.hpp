@@ -27,82 +27,82 @@ class dbl {
         : val(other.val) {}
     explicit operator double() const { return val; }
 
-    dbl &operator+=(dbl const &other) {
+    inline dbl &operator+=(dbl const &other) {
         val += other.val;
         return *this;
     }
 
-    dbl &operator-=(dbl const &other) {
+    inline dbl &operator-=(dbl const &other) {
         val -= other.val;
         return *this;
     }
 
-    dbl &operator*=(dbl const &other) {
+    inline dbl &operator*=(dbl const &other) {
         val *= other.val;
         return *this;
     }
 
-    dbl &operator/=(dbl const &other) {
+    inline dbl &operator/=(dbl const &other) {
         val /= other.val;
         return *this;
     }
 
-    dbl &operator=(dbl const &other) {
+    inline dbl &operator=(dbl const &other) {
         val = other.val;
         return *this;
     }
 };
 
-dbl operator+(dbl lhs, dbl const &rhs) { return (lhs += rhs); }
-dbl operator-(dbl lhs, dbl const &rhs) { return (lhs -= rhs); }
-dbl operator*(dbl lhs, dbl const &rhs) { return (lhs *= rhs); }
-dbl operator/(dbl lhs, dbl const &rhs) { return (lhs /= rhs); }
+inline dbl operator+(dbl lhs, dbl const &rhs) { return (lhs += rhs); }
+inline dbl operator-(dbl lhs, dbl const &rhs) { return (lhs -= rhs); }
+inline dbl operator*(dbl lhs, dbl const &rhs) { return (lhs *= rhs); }
+inline dbl operator/(dbl lhs, dbl const &rhs) { return (lhs /= rhs); }
 
-bool operator==(dbl const &lhs, dbl const &rhs) {
-    return eqdbl(lhs.val, rhs.val);
+inline bool operator==(dbl const &lhs, dbl const &rhs) {
+    return std::abs(lhs.val - rhs.val) < EPS;
 }
 
-bool operator!=(dbl const &lhs, dbl const &rhs) {
-    return nedbl(lhs.val, rhs.val);
+inline bool operator!=(dbl const &lhs, dbl const &rhs) {
+    return !(lhs == rhs);
 }
 
-bool operator<(dbl const &lhs, dbl const &rhs) {
-    return ltdbl(lhs.val, rhs.val);
+inline bool operator<=(dbl const &lhs, dbl const &rhs) {
+    return lhs.val < rhs.val || lhs == rhs;
 }
 
-bool operator>(dbl const &lhs, dbl const &rhs) {
-    return gtdbl(lhs.val, rhs.val);
+inline bool operator>=(dbl const &lhs, dbl const &rhs) {
+    return lhs.val > rhs.val || lhs == rhs;
 }
 
-bool operator<=(dbl const &lhs, dbl const &rhs) {
-    return ledbl(lhs.val, rhs.val);
+inline bool operator<(dbl const &lhs, dbl const &rhs) {
+    return !(lhs >= rhs);
 }
 
-bool operator>=(dbl const &lhs, dbl const &rhs) {
-    return gedbl(lhs.val, rhs.val);
+inline bool operator>(dbl const &lhs, dbl const &rhs) {
+    return !(lhs <= rhs);
 }
 
-dbl operator+(dbl const &lhs, double rhs) { return lhs + dbl(rhs); }
-dbl operator-(dbl const &lhs, double rhs) { return lhs - dbl(rhs); }
-dbl operator*(dbl const &lhs, double rhs) { return lhs * dbl(rhs); }
-dbl operator/(dbl const &lhs, double rhs) { return lhs / dbl(rhs); }
-bool operator==(dbl const &lhs, double rhs) { return lhs == dbl(rhs); }
-bool operator!=(dbl const &lhs, double rhs) { return lhs != dbl(rhs); }
-bool operator<(dbl const &lhs, double rhs) { return lhs < dbl(rhs); }
-bool operator>(dbl const &lhs, double rhs) { return lhs > dbl(rhs); }
-bool operator<=(dbl const &lhs, double rhs) { return lhs <= dbl(rhs); }
-bool operator>=(dbl const &lhs, double rhs) { return lhs >= dbl(rhs); }
+inline dbl operator+(dbl const &lhs, double rhs) { return lhs + dbl(rhs); }
+inline dbl operator-(dbl const &lhs, double rhs) { return lhs - dbl(rhs); }
+inline dbl operator*(dbl const &lhs, double rhs) { return lhs * dbl(rhs); }
+inline dbl operator/(dbl const &lhs, double rhs) { return lhs / dbl(rhs); }
+inline bool operator==(dbl const &lhs, double rhs) { return lhs == dbl(rhs); }
+inline bool operator!=(dbl const &lhs, double rhs) { return lhs != dbl(rhs); }
+inline bool operator<(dbl const &lhs, double rhs) { return lhs < dbl(rhs); }
+inline bool operator>(dbl const &lhs, double rhs) { return lhs > dbl(rhs); }
+inline bool operator<=(dbl const &lhs, double rhs) { return lhs <= dbl(rhs); }
+inline bool operator>=(dbl const &lhs, double rhs) { return lhs >= dbl(rhs); }
 
-dbl operator+(double lhs, dbl const &rhs) { return dbl(lhs) + rhs; }
-dbl operator-(double lhs, dbl const &rhs) { return dbl(lhs) - rhs; }
-dbl operator*(double lhs, dbl const &rhs) { return dbl(lhs) * rhs; }
-dbl operator/(double lhs, dbl const &rhs) { return dbl(lhs) / rhs; }
-bool operator==(double lhs, dbl const &rhs) { return dbl(lhs) == rhs; }
-bool operator!=(double lhs, dbl const &rhs) { return dbl(lhs) != rhs; }
-bool operator<(double lhs, dbl const &rhs) { return dbl(lhs) < rhs; }
-bool operator>(double lhs, dbl const &rhs) { return dbl(lhs) > rhs; }
-bool operator<=(double lhs, dbl const &rhs) { return dbl(lhs) <= rhs; }
-bool operator>=(double lhs, dbl const &rhs) { return dbl(lhs) >= rhs; }
+inline dbl operator+(double lhs, dbl const &rhs) { return dbl(lhs) + rhs; }
+inline dbl operator-(double lhs, dbl const &rhs) { return dbl(lhs) - rhs; }
+inline dbl operator*(double lhs, dbl const &rhs) { return dbl(lhs) * rhs; }
+inline dbl operator/(double lhs, dbl const &rhs) { return dbl(lhs) / rhs; }
+inline bool operator==(double lhs, dbl const &rhs) { return dbl(lhs) == rhs; }
+inline bool operator!=(double lhs, dbl const &rhs) { return dbl(lhs) != rhs; }
+inline bool operator<(double lhs, dbl const &rhs) { return dbl(lhs) < rhs; }
+inline bool operator>(double lhs, dbl const &rhs) { return dbl(lhs) > rhs; }
+inline bool operator<=(double lhs, dbl const &rhs) { return dbl(lhs) <= rhs; }
+inline bool operator>=(double lhs, dbl const &rhs) { return dbl(lhs) >= rhs; }
 
 std::istream &operator>>(std::istream &is, dbl &d) {
     double val;
