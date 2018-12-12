@@ -24,4 +24,7 @@ int main() {
         }
         cout << endl;
     }
+
+    assert(n == l);
+    cout << C.det() << endl;
 }
