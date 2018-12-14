@@ -36,26 +36,8 @@ int main() {
     }
 
     for (int i = 0; i < 2; i++) {
-        double a, b, r = 0.0;
-        int n;
-        cin >> a >> n >> b;
-        for (int i = 0; i < n; i++) r += a;
-        cout << eqdbl(r, b) << endl;
-    }
-
-    for (int i = 0; i < 2; i++) {
-        double a, b, r = 0.0;
-        int n;
-        cin >> a >> n >> b;
-        for (int i = 0; i < n; i++) r += a;
-        cout << ledbl(r, b) << endl;
-    }
-
-    for (int i = 0; i < 2; i++) {
-        double a, b, r = 0.0;
-        int n;
-        cin >> a >> n >> b;
-        for (int i = 0; i < n; i++) r += a;
-        cout << gedbl(r, b) << endl;
+        int a, b, c, d, e;
+        cin >> a >> b >> c >> d >> e;
+        cout << strict_in_range(a, {b, c, d}, e) << endl;
     }
 }
