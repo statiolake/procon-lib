@@ -10,22 +10,19 @@ using namespace pcl;
 
 int main() {
     for (int i = 0; i < 2; i++) {
-        int a, b;
-        cin >> a >> b;
+        auto a = cget<int>(), b = cget<int>();
         updmax(a, b);
         cout << a << endl;
     }
 
     for (int i = 0; i < 2; i++) {
-        int a, b;
-        cin >> a >> b;
+        auto a = cget<int>(), b = cget<int>();
         updmin(a, b);
         cout << a << endl;
     }
 
     for (int i = 0; i < 2; i++) {
-        int a, b, c;
-        cin >> a >> b >> c;
+        auto a = cget<int>(), b = cget<int>(), c = cget<int>();
         cout << in_range(a, b, c) << endl;
     }
 
