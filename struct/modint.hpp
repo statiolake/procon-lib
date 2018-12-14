@@ -6,8 +6,8 @@
 
 namespace pcl {
 
-template <typename T = ll, T MOD = 1'000'000'007>
-class modint_t {
+template <typename T, T MOD>
+class modint {
   private:
     T value;
 
@@ -22,85 +22,83 @@ class modint_t {
     }
 
   public:
-    modint_t()
+    modint()
         : value() {}
 
-    modint_t(modint_t const &init)
+    modint(modint const &init)
         : value(init.value) {}
 
-    modint_t(T init)
+    modint(T init)
         : value(init) {
         canonicalize();
     }
 
     explicit operator T() const { return value; }
 
-    modint_t &operator+=(modint_t const &other) {
+    modint &operator+=(modint const &other) {
         value += other.value;
         if (value >= MOD) value -= MOD;
         return *this;
     }
 
-    modint_t &operator+=(T other) { return *this += modint_t(other); }
+    modint &operator+=(T other) { return *this += modint(other); }
 
-    modint_t &operator-=(modint_t const &other) {
+    modint &operator-=(modint const &other) {
         if (value < other.value) value += MOD;
         value -= other.value;
         return *this;
     }
 
-    modint_t &operator-=(T other) { return *this -= modint_t(other); }
+    modint &operator-=(T other) { return *this -= modint(other); }
 
-    modint_t &operator*=(modint_t const &other) {
+    modint &operator*=(modint const &other) {
         value *= other.value;
         value %= MOD;
         return *this;
     }
 
-    modint_t &operator*=(T other) { return *this *= modint_t(other); }
+    modint &operator*=(T other) { return *this *= modint(other); }
 
-    modint_t &operator/=(modint_t const &other) {
+    modint &operator/=(modint const &other) {
         T i = inv(other.value);
         *this *= i;
         return *this;
     }
 
-    modint_t &operator/=(T other) { return *this /= modint_t(other); }
+    modint &operator/=(T other) { return *this /= modint(other); }
 
-    bool operator==(modint_t const &other) const {
+    bool operator==(modint const &other) const {
         return value == other.value;
     }
-    bool operator==(T other) const { return *this == modint_t(other); };
-    bool operator!=(modint_t const &other) const { return !(*this == other); }
-    bool operator!=(T other) const { return *this != modint_t(other); };
-    bool operator<(modint_t const &other) const {
-        return value < other.value;
-    }
-    bool operator<(T other) const { return *this < modint_t(other); };
-    bool operator>(modint_t const &other) const { return other < *this; }
-    bool operator>(T other) const { return *this > modint_t(other); };
+    bool operator==(T other) const { return *this == modint(other); };
+    bool operator!=(modint const &other) const { return !(*this == other); }
+    bool operator!=(T other) const { return *this != modint(other); };
+    bool operator<(modint const &other) const { return value < other.value; }
+    bool operator<(T other) const { return *this < modint(other); };
+    bool operator>(modint const &other) const { return other < *this; }
+    bool operator>(T other) const { return *this > modint(other); };
 
-    bool operator<=(modint_t const &other) const {
+    bool operator<=(modint const &other) const {
         return *this < other || *this == other;
     }
-    bool operator<=(T other) const { return *this <= modint_t(other); }
-    bool operator>=(modint_t const &other) const { return other <= *this; }
-    bool operator>=(T other) const { return *this >= modint_t(other); }
+    bool operator<=(T other) const { return *this <= modint(other); }
+    bool operator>=(modint const &other) const { return other <= *this; }
+    bool operator>=(T other) const { return *this >= modint(other); }
 
-    modint_t &operator=(modint_t const &other) {
+    modint &operator=(modint const &other) {
         value = other.value;
         return *this;
     }
 
-    modint_t &operator=(T other) { return *this = modint_t(other); }
+    modint &operator=(T other) { return *this = modint(other); }
 
-    modint_t &operator++() {
+    modint &operator++() {
         value++;
         if (value == MOD) value = 0;
         return *this;
     }
 
-    modint_t &operator--() {
+    modint &operator--() {
         if (value == 0) value = MOD;
         value--;
         return *this;
@@ -108,98 +106,95 @@ class modint_t {
 };
 
 template <typename T, T MOD>
-modint_t<T, MOD> operator+(modint_t<T, MOD> lhs,
-                           modint_t<T, MOD> const &rhs) {
+modint<T, MOD> operator+(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
     return lhs += rhs;
 }
 
 template <typename T, T MOD, typename U,
           typename std::enable_if<std::is_convertible<U, T>::value,
-                                  nullptr_t>::type = nullptr>
-modint_t<T, MOD> operator+(modint_t<T, MOD> lhs, U rhs) {
+                                  std::nullptr_t>::type = nullptr>
+modint<T, MOD> operator+(modint<T, MOD> lhs, U rhs) {
     return lhs += rhs;
 }
 
 template <typename T, T MOD, typename U,
           typename std::enable_if<std::is_convertible<U, T>::value,
-                                  nullptr_t>::type = nullptr>
-modint_t<T, MOD> operator+(U lhs, modint_t<T, MOD> rhs) {
+                                  std::nullptr_t>::type = nullptr>
+modint<T, MOD> operator+(U lhs, modint<T, MOD> rhs) {
     return rhs += lhs;
 }
 
 template <typename T, T MOD>
-modint_t<T, MOD> operator-(modint_t<T, MOD> lhs,
-                           modint_t<T, MOD> const &rhs) {
+modint<T, MOD> operator-(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
     return lhs -= rhs;
 }
 
 template <typename T, T MOD, typename U,
           typename std::enable_if<std::is_convertible<U, T>::value,
-                                  nullptr_t>::type = nullptr>
-modint_t<T, MOD> operator-(modint_t<T, MOD> lhs, U rhs) {
+                                  std::nullptr_t>::type = nullptr>
+modint<T, MOD> operator-(modint<T, MOD> lhs, U rhs) {
     return lhs -= rhs;
 }
 
 template <typename T, T MOD, typename U,
           typename std::enable_if<std::is_convertible<U, T>::value,
-                                  nullptr_t>::type = nullptr>
-modint_t<T, MOD> operator-(U lhs, modint_t<T, MOD> const &rhs) {
-    return modint_t<T, MOD>(lhs) -= rhs;
+                                  std::nullptr_t>::type = nullptr>
+modint<T, MOD> operator-(U lhs, modint<T, MOD> const &rhs) {
+    return modint<T, MOD>(lhs) -= rhs;
 }
 
 template <typename T, T MOD>
-modint_t<T, MOD> operator*(modint_t<T, MOD> lhs,
-                           modint_t<T, MOD> const &rhs) {
+modint<T, MOD> operator*(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
     return lhs *= rhs;
 }
 
 template <typename T, T MOD, typename U,
           typename std::enable_if<std::is_convertible<U, T>::value,
-                                  nullptr_t>::type = nullptr>
-modint_t<T, MOD> operator*(modint_t<T, MOD> lhs, U rhs) {
+                                  std::nullptr_t>::type = nullptr>
+modint<T, MOD> operator*(modint<T, MOD> lhs, U rhs) {
     return lhs *= rhs;
 }
 
 template <typename T, T MOD, typename U,
           typename std::enable_if<std::is_convertible<U, T>::value,
-                                  nullptr_t>::type = nullptr>
-modint_t<T, MOD> operator*(U lhs, modint_t<T, MOD> rhs) {
+                                  std::nullptr_t>::type = nullptr>
+modint<T, MOD> operator*(U lhs, modint<T, MOD> rhs) {
     return rhs *= lhs;
 }
 
 template <typename T, T MOD>
-modint_t<T, MOD> operator/(modint_t<T, MOD> lhs,
-                           modint_t<T, MOD> const &rhs) {
+modint<T, MOD> operator/(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
     return lhs /= rhs;
 }
 
 template <typename T, T MOD, typename U,
           typename std::enable_if<std::is_convertible<U, T>::value,
-                                  nullptr_t>::type = nullptr>
-modint_t<T, MOD> operator/(modint_t<T, MOD> lhs, U rhs) {
+                                  std::nullptr_t>::type = nullptr>
+modint<T, MOD> operator/(modint<T, MOD> lhs, U rhs) {
     return lhs /= rhs;
 }
 
 template <typename T, T MOD, typename U,
           typename std::enable_if<std::is_convertible<U, T>::value,
-                                  nullptr_t>::type = nullptr>
-modint_t<T, MOD> operator/(U lhs, modint_t<T, MOD> const &rhs) {
-    return modint_t<T, MOD>(lhs) /= rhs;
+                                  std::nullptr_t>::type = nullptr>
+modint<T, MOD> operator/(U lhs, modint<T, MOD> const &rhs) {
+    return modint<T, MOD>(lhs) /= rhs;
 }
 
 template <typename T, T MOD>
-std::ostream &operator<<(std::ostream &os, modint_t<T, MOD> const &x) {
+std::ostream &operator<<(std::ostream &os, modint<T, MOD> const &x) {
     return os << static_cast<T>(x);
 }
 
 template <typename T, T MOD>
-std::istream &operator>>(std::istream &is, modint_t<T, MOD> &x) {
+std::istream &operator>>(std::istream &is, modint<T, MOD> &x) {
     T v;
     is >> v, x = v;
     return is;
 }
 
-using mint_t  = modint_t<ll, 1'000'000'007>;
-using mint9_t = modint_t<ll, 1'000'000'009>;
+using mint7 = modint<ll, 1'000'000'007>;
+using mint9 = modint<ll, 1'000'000'009>;
+using mint  = mint7;
 
 } // namespace pcl
