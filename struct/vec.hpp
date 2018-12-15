@@ -43,7 +43,7 @@ class vec {
     dbl length() const {
         dbl len = 0;
         for (dbl x : *this) len += x * x;
-        return sqrt(len);
+        return std::sqrt(len);
     }
 
     vec normalized() const {
