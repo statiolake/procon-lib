@@ -53,7 +53,7 @@ class mat {
         for (int i = 0; i < h_; i++) {
             // matrix initializer has incompatible size: the number of cols
             // differs row by row.
-            assert(w_ == val_[i].size());
+            assert(w_ == static_cast<int>(val_[i].size()));
         }
     }
 
@@ -65,7 +65,7 @@ class mat {
 
         this->h_ = h_, this->w_ = w_;
         val_.resize(h_);
-        for (int i = 0; i < h_; i++) { val_.resize(w_); }
+        for (int i = 0; i < h_; i++) val_.resize(w_);
     }
 
     int height() const { return h_; }
