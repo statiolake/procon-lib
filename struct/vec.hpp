@@ -125,6 +125,10 @@ dbl dot(vec<DIM> const &lhs, vec<DIM> const &rhs) {
     return result;
 }
 
+vec<3> cross(vec<2> const &lhs, vec<2> const &rhs) {
+    return {0, 0, lhs[0] * rhs[1] - lhs[1] * rhs[0]};
+}
+
 vec<3> cross(vec<3> const &lhs, vec<3> const &rhs) {
     return {lhs[1] * rhs[2] - lhs[2] * rhs[1],
             lhs[2] * rhs[0] - lhs[0] * rhs[2],
