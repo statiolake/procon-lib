@@ -166,10 +166,12 @@ std::istream &operator>>(std::istream &is, vec<DIM> &v) {
 
 template <int DIM>
 std::ostream &operator<<(std::ostream &os, vec<DIM> const &v) {
+    os << '(';
     for (int i = 0; i < DIM; i++) {
-        if (i != 0) os << ' ';
+        if (i != 0) os << ',';
         os << v[i];
     }
+    os << ')';
     return os;
 }
 
