@@ -1,7 +1,0 @@
-[
-    {
-        "directory": ".",
-        "command": "clang++ -std=c++14 -IC:\\Users\\dicen\\procon-lib -Wno-old-style-cast",
-        "file": "main.cpp"
-    }
-]
