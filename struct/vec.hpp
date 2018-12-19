@@ -28,7 +28,10 @@ class vec {
     vec(vec const &other)
         : arr(other.arr) {}
 
-    vec &operator=(vec const &other) { arr = other.arr; }
+    vec &operator=(vec const &other) {
+        arr = other.arr;
+        return *this;
+    }
 
     dbl &operator[](int idx) {
         assert(in_range(0, idx, DIM));
