@@ -119,4 +119,12 @@ std::ostream &operator<<(std::ostream &os, dbl const &d) {
 
 namespace std {
 pcl::dbl sqrt(pcl::dbl const &a) { return pcl::dbl(sqrt((double)a)); }
+
+pcl::dbl min(pcl::dbl const &lhs, pcl::dbl const &rhs) {
+    return lhs < rhs ? lhs : rhs;
+}
+
+pcl::dbl max(pcl::dbl const &lhs, pcl::dbl const &rhs) {
+    return lhs < rhs ? rhs : lhs;
+}
 } // namespace std
