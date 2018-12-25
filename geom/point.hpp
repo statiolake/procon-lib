@@ -43,27 +43,17 @@ vec_argument vec_argument_of_vecs(vec<DIM> const &a, vec<DIM> const &b) {
 }
 
 template <int DIM>
-vec_argument vec_argument_of_points(point<DIM> const &base,
-                                    point<DIM> const &a,
-                                    point<DIM> const &b) {
+vec_argument vec_argument_of_points(point<DIM> const &base, point<DIM> const &a, point<DIM> const &b) {
     return vec_argument_of_vecs(a - base, b - base);
 }
 
-bool is_opposite_rotation(vec_argument a, vec_argument b) {
-    return static_cast<int>(a) * static_cast<int>(b) == -1;
-}
+bool is_opposite_rotation(vec_argument a, vec_argument b) { return static_cast<int>(a) * static_cast<int>(b) == -1; }
 
-bool is_same_rotation(vec_argument a, vec_argument b) {
-    return static_cast<int>(a) * static_cast<int>(b) == 1;
-}
+bool is_same_rotation(vec_argument a, vec_argument b) { return static_cast<int>(a) * static_cast<int>(b) == 1; }
 
-bool on_the_same_plane(point<2> const &, point<2> const &, point<2> const &,
-                       point<2> const &) {
-    return true;
-}
+bool on_the_same_plane(point<2> const &, point<2> const &, point<2> const &, point<2> const &) { return true; }
 
-bool on_the_same_plane(point<3> const &a, point<3> b, point<3> c,
-                       point<3> d) {
+bool on_the_same_plane(point<3> const &a, point<3> b, point<3> c, point<3> d) {
     b -= a, c -= a, d -= a;
 
     mat<dbl> coords = {

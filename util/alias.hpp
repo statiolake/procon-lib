@@ -71,8 +71,7 @@ bool in_range(T const &begin, std::initializer_list<U> list, V const &end) {
  * @details 配列の添字アクセス演算子などで範囲内アクセスを判定するのに使える。
  */
 template <typename T, typename U, typename V>
-bool strict_in_range(T const &begin, std::initializer_list<U> list,
-                     V const &end) {
+bool strict_in_range(T const &begin, std::initializer_list<U> list, V const &end) {
     if (!std::is_sorted(list.begin(), list.end())) return false;
     return in_range(begin, list, end);
 }

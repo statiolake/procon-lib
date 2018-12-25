@@ -21,8 +21,7 @@ class sphere {
 
 template <int DIM>
 std::ostream &operator<<(std::ostream &os, sphere<DIM> const &sph) {
-    os << "sphere { center: " << sph.center() << ", radius: " << sph.radius()
-       << " }";
+    os << "sphere { center: " << sph.center() << ", radius: " << sph.radius() << " }";
     return os;
 }
 

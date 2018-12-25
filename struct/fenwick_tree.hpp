@@ -31,8 +31,7 @@ class fenwick_tree {
         // since sum(i) is sum of 0..i, i can be sz.
         assert(in_range(0, i, sz + 1));
         value_type res = Group::id();
-        for (i--; i >= 0; i = (i & (i + 1)) - 1)
-            res = Group::op(res, data[i]);
+        for (i--; i >= 0; i = (i & (i + 1)) - 1) res = Group::op(res, data[i]);
         return res;
     }
 
@@ -48,10 +47,7 @@ struct range_sum_query {
     using value_type = T;
     constexpr static value_type id() { return T{}; }
     constexpr static value_type inv(value_type const &x) { return -x; }
-    constexpr static value_type op(value_type const &lhs,
-                                   value_type const &rhs) {
-        return lhs + rhs;
-    }
+    constexpr static value_type op(value_type const &lhs, value_type const &rhs) { return lhs + rhs; }
 };
 
 } // namespace pcl

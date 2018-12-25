@@ -6,8 +6,7 @@
 namespace pcl {
 
 template <typename Input, typename Pred>
-Input binary_search_count(Input left, Input right, Pred const &pred,
-                          int last = 64) {
+Input binary_search_count(Input left, Input right, Pred const &pred, int last = 64) {
     Input mid = left + (right - left) / 2.0;
 
     (pred(mid) ? left : right) = mid;

@@ -12,8 +12,7 @@
 namespace pcl {
 class union_find {
   private:
-    std::vector<int>
-        parent_or_rank_of; // positive: parent, negative: (rank + 1)
+    std::vector<int> parent_or_rank_of; // positive: parent, negative: (rank + 1)
     std::size_t size_;
 
   public:

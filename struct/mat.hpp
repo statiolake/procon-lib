@@ -147,9 +147,7 @@ class mat {
         if (h_ == 2) return val_[0][0] * val_[1][1] - val_[0][1] * val_[1][0];
 
         T val_det{};
-        for (int i = 0; i < h_; i++)
-            val_det +=
-                removed(i, 0).det() * val_[i][0] * (i % 2 == 0 ? 1 : -1);
+        for (int i = 0; i < h_; i++) val_det += removed(i, 0).det() * val_[i][0] * (i % 2 == 0 ? 1 : -1);
 
         return val_det;
     }
@@ -191,8 +189,7 @@ mat<T> operator*(mat<T> const &lhs, mat<T> const &rhs) {
     mat<T> result(n, l);
     for (int i = 0; i < n; i++)
         for (int j = 0; j < l; j++)
-            for (int k = 0; k < m; k++)
-                result.at(i, j) += lhs.at(i, k) * rhs.at(k, j);
+            for (int k = 0; k < m; k++) result.at(i, j) += lhs.at(i, k) * rhs.at(k, j);
 
     return result;
 }

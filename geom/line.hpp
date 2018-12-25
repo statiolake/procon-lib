@@ -28,9 +28,7 @@ class line {
     coord<DIM> const &end() const { return end_; }
     coord<DIM> const &dir() const { return dir_; }
 
-    dbl distance_from(point<DIM> const &from) const {
-        return cross(from - start(), dir()).length();
-    }
+    dbl distance_from(point<DIM> const &from) const { return cross(from - start(), dir()).length(); }
 
     vec<DIM> normal_from(point<DIM> const &from) const {
         assert(!has(from));
@@ -38,9 +36,7 @@ class line {
         return start() + t * dir() - from;
     }
 
-    bool has(point<DIM> const &p) const {
-        return is_parallel(start() - p, end() - p);
-    }
+    bool has(point<DIM> const &p) const { return is_parallel(start() - p, end() - p); }
 };
 
 template <int DIM>
@@ -58,8 +54,7 @@ class segment : public line<DIM> {
     // intended to hide line's has() function.
     bool has(point<DIM> const &p) const {
         // triangle inequality
-        return length() ==
-               (p - this->start()).length() + (p - this->end()).length();
+        return length() == (p - this->start()).length() + (p - this->end()).length();
     }
 };
 
@@ -97,15 +92,13 @@ bool have_intersection(line<DIM> const &lhs, line<DIM> const &rhs) {
 
     // if lhs and rhs is parallel AND lhs and rhs are NOT the same line, they
     // have intersection.
-    if (lhs.dir() == rhs.dir() && lhs.distance_from(rhs.start()) == 0)
-        return false;
+    if (lhs.dir() == rhs.dir() && lhs.distance_from(rhs.start()) == 0) return false;
 
     return true;
 }
 
 template <int DIM>
-bool have_intersection(line<DIM> const &l, segment<DIM> const &s,
-                       bool endpoints) {
+bool have_intersection(line<DIM> const &l, segment<DIM> const &s, bool endpoints) {
     if (!on_the_same_plane(l, s)) return false;
 
     auto ds = vec_argument_of_points(l.start(), l.end(), s.start());
@@ -131,19 +124,15 @@ bool have_intersection(line<DIM> const &l, segment<DIM> const &s,
 }
 
 template <int DIM>
-bool have_intersection(segment<DIM> const &lhs, line<DIM> const &rhs,
-                       bool endpoints) {
+bool have_intersection(segment<DIM> const &lhs, line<DIM> const &rhs, bool endpoints) {
     return have_intersection(rhs, lhs, endpoints);
 }
 
 template <int DIM>
-bool have_intersection(segment<DIM> const &lhs, segment<DIM> const &rhs,
-                       bool endpoints) {
+bool have_intersection(segment<DIM> const &lhs, segment<DIM> const &rhs, bool endpoints) {
     line<DIM> const &llhs = lhs;
     line<DIM> const &rrhs = rhs;
-    return on_the_same_plane(lhs, rhs) &&
-           have_intersection(llhs, rhs, endpoints) &&
-           have_intersection(lhs, rrhs, endpoints);
+    return on_the_same_plane(lhs, rhs) && have_intersection(llhs, rhs, endpoints) && have_intersection(lhs, rrhs, endpoints);
 }
 
 template <int DIM>
@@ -153,8 +142,7 @@ coord<DIM> intersection(line<DIM> const &, line<DIM> const &, bool) {
 }
 
 template <int DIM>
-coord<DIM> intersection(line<DIM> const &lhs, segment<DIM> const &rhs,
-                        bool endpoints) {
+coord<DIM> intersection(line<DIM> const &lhs, segment<DIM> const &rhs, bool endpoints) {
     // assert these segments have an intersection.
     assert(have_intersection(lhs, rhs, endpoints));
 
@@ -172,14 +160,12 @@ coord<DIM> intersection(line<DIM> const &lhs, segment<DIM> const &rhs,
 }
 
 template <int DIM>
-coord<DIM> intersection(segment<DIM> const &lhs, line<DIM> const &rhs,
-                        bool endpoints) {
+coord<DIM> intersection(segment<DIM> const &lhs, line<DIM> const &rhs, bool endpoints) {
     return intersection(rhs, lhs, endpoints);
 }
 
 template <int DIM>
-coord<DIM> intersection(segment<DIM> const &lhs, segment<DIM> const &rhs,
-                        bool endpoints) {
+coord<DIM> intersection(segment<DIM> const &lhs, segment<DIM> const &rhs, bool endpoints) {
     assert(have_intersection(lhs, rhs, endpoints));
 
     return intersection(static_cast<line<DIM> const &>(lhs), rhs, endpoints);
@@ -187,8 +173,7 @@ coord<DIM> intersection(segment<DIM> const &lhs, segment<DIM> const &rhs,
 
 template <int DIM>
 std::ostream &operator<<(std::ostream &os, segment<DIM> const &seg) {
-    os << "segment { start: " << seg.start() << ", end: " << seg.end()
-       << ", length: " << seg.length() << " }";
+    os << "segment { start: " << seg.start() << ", end: " << seg.end() << ", length: " << seg.length() << " }";
     return os;
 }
 

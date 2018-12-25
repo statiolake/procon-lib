@@ -12,9 +12,7 @@ class modint {
     T value;
 
     static inline T inv(T a) { return inv_impl(a, MOD); }
-    static inline T inv_impl(T a, T b) {
-        return (a == 1 ? 1 : (1 - b * inv_impl(b % a, a)) / a + b);
-    }
+    static inline T inv_impl(T a, T b) { return (a == 1 ? 1 : (1 - b * inv_impl(b % a, a)) / a + b); }
 
     inline void canonicalize() {
         while (value < 0) value += MOD;
@@ -67,9 +65,7 @@ class modint {
 
     modint &operator/=(T other) { return *this /= modint(other); }
 
-    bool operator==(modint const &other) const {
-        return value == other.value;
-    }
+    bool operator==(modint const &other) const { return value == other.value; }
     bool operator==(T other) const { return *this == modint(other); };
     bool operator!=(modint const &other) const { return !(*this == other); }
     bool operator!=(T other) const { return *this != modint(other); };
@@ -78,9 +74,7 @@ class modint {
     bool operator>(modint const &other) const { return other < *this; }
     bool operator>(T other) const { return *this > modint(other); };
 
-    bool operator<=(modint const &other) const {
-        return *this < other || *this == other;
-    }
+    bool operator<=(modint const &other) const { return *this < other || *this == other; }
     bool operator<=(T other) const { return *this <= modint(other); }
     bool operator>=(modint const &other) const { return other <= *this; }
     bool operator>=(T other) const { return *this >= modint(other); }
@@ -110,16 +104,12 @@ modint<T, MOD> operator+(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
     return lhs += rhs;
 }
 
-template <typename T, T MOD, typename U,
-          typename std::enable_if<std::is_convertible<U, T>::value,
-                                  std::nullptr_t>::type = nullptr>
+template <typename T, T MOD, typename U, typename std::enable_if<std::is_convertible<U, T>::value, std::nullptr_t>::type = nullptr>
 modint<T, MOD> operator+(modint<T, MOD> lhs, U rhs) {
     return lhs += rhs;
 }
 
-template <typename T, T MOD, typename U,
-          typename std::enable_if<std::is_convertible<U, T>::value,
-                                  std::nullptr_t>::type = nullptr>
+template <typename T, T MOD, typename U, typename std::enable_if<std::is_convertible<U, T>::value, std::nullptr_t>::type = nullptr>
 modint<T, MOD> operator+(U lhs, modint<T, MOD> rhs) {
     return rhs += lhs;
 }
@@ -129,16 +119,12 @@ modint<T, MOD> operator-(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
     return lhs -= rhs;
 }
 
-template <typename T, T MOD, typename U,
-          typename std::enable_if<std::is_convertible<U, T>::value,
-                                  std::nullptr_t>::type = nullptr>
+template <typename T, T MOD, typename U, typename std::enable_if<std::is_convertible<U, T>::value, std::nullptr_t>::type = nullptr>
 modint<T, MOD> operator-(modint<T, MOD> lhs, U rhs) {
     return lhs -= rhs;
 }
 
-template <typename T, T MOD, typename U,
-          typename std::enable_if<std::is_convertible<U, T>::value,
-                                  std::nullptr_t>::type = nullptr>
+template <typename T, T MOD, typename U, typename std::enable_if<std::is_convertible<U, T>::value, std::nullptr_t>::type = nullptr>
 modint<T, MOD> operator-(U lhs, modint<T, MOD> const &rhs) {
     return modint<T, MOD>(lhs) -= rhs;
 }
@@ -148,16 +134,12 @@ modint<T, MOD> operator*(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
     return lhs *= rhs;
 }
 
-template <typename T, T MOD, typename U,
-          typename std::enable_if<std::is_convertible<U, T>::value,
-                                  std::nullptr_t>::type = nullptr>
+template <typename T, T MOD, typename U, typename std::enable_if<std::is_convertible<U, T>::value, std::nullptr_t>::type = nullptr>
 modint<T, MOD> operator*(modint<T, MOD> lhs, U rhs) {
     return lhs *= rhs;
 }
 
-template <typename T, T MOD, typename U,
-          typename std::enable_if<std::is_convertible<U, T>::value,
-                                  std::nullptr_t>::type = nullptr>
+template <typename T, T MOD, typename U, typename std::enable_if<std::is_convertible<U, T>::value, std::nullptr_t>::type = nullptr>
 modint<T, MOD> operator*(U lhs, modint<T, MOD> rhs) {
     return rhs *= lhs;
 }
@@ -167,16 +149,12 @@ modint<T, MOD> operator/(modint<T, MOD> lhs, modint<T, MOD> const &rhs) {
     return lhs /= rhs;
 }
 
-template <typename T, T MOD, typename U,
-          typename std::enable_if<std::is_convertible<U, T>::value,
-                                  std::nullptr_t>::type = nullptr>
+template <typename T, T MOD, typename U, typename std::enable_if<std::is_convertible<U, T>::value, std::nullptr_t>::type = nullptr>
 modint<T, MOD> operator/(modint<T, MOD> lhs, U rhs) {
     return lhs /= rhs;
 }
 
-template <typename T, T MOD, typename U,
-          typename std::enable_if<std::is_convertible<U, T>::value,
-                                  std::nullptr_t>::type = nullptr>
+template <typename T, T MOD, typename U, typename std::enable_if<std::is_convertible<U, T>::value, std::nullptr_t>::type = nullptr>
 modint<T, MOD> operator/(U lhs, modint<T, MOD> const &rhs) {
     return modint<T, MOD>(lhs) /= rhs;
 }

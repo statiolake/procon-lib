@@ -69,10 +69,8 @@ class suffix_array {
     }
 
     bool matches(std::string const &s) {
-        auto cmp = [&](int a, std::string const &b) {
-            return s_.compare(a, b.size(), b) < 0;
-        };
-        auto it = std::lower_bound(a_.begin(), a_.end(), s, cmp);
+        auto cmp = [&](int a, std::string const &b) { return s_.compare(a, b.size(), b) < 0; };
+        auto it  = std::lower_bound(a_.begin(), a_.end(), s, cmp);
         if (it == a_.end()) return false;
 
         // check if it really matches:

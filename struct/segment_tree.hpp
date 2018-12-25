@@ -35,9 +35,7 @@ class segment_tree {
         , n(calc_n(sz))
         , data(n * 2, Monoid::id()) {
         std::copy(init.begin(), init.end(), data.begin() + n);
-        for (ll i = n - 1; i >= 0; i--) {
-            data[i] = Monoid::op(data[i * 2], data[i * 2 + 1]);
-        }
+        for (ll i = n - 1; i >= 0; i--) { data[i] = Monoid::op(data[i * 2], data[i * 2 + 1]); }
     }
 
     segment_tree(ll sz, value_type init = Monoid::id())
@@ -68,10 +66,7 @@ template <typename T>
 struct range_minimum_query {
     using value_type = T;
     constexpr static value_type id() { return TNF<T>; }
-    constexpr static value_type op(value_type const &lhs,
-                                   value_type const &rhs) {
-        return std::min(lhs, rhs);
-    }
+    constexpr static value_type op(value_type const &lhs, value_type const &rhs) { return std::min(lhs, rhs); }
 };
 
 } // namespace pcl

@@ -13,7 +13,7 @@ BreakBeforeBraces: Attach
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakStringLiterals: true
-ColumnLimit: 78
+ColumnLimit: 9999
 CompactNamespaces: true
 IncludeBlocks: Preserve
 IndentCaseLabels: true
