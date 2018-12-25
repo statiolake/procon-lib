@@ -1,5 +1,3 @@
-# procon-lib: library for competitive programming
+# procon-lib: 競技プログラミングライブラリ
 
-* graph
-    * union_find
-        union-find tree.
+doc/index.html に Doxygen によるドキュメントがあります。
