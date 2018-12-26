@@ -195,7 +195,7 @@ mat<T> operator*(mat<T> const &a, mat<T> const &b) {
     // assert size restriction: otherwise they're incompatible for *.
     assert(m == b.height());
 
-    mat<T> res(n, a);
+    mat<T> res(n, l);
     for (int i = 0; i < n; i++)
         for (int j = 0; j < l; j++)
             for (int k = 0; k < m; k++)

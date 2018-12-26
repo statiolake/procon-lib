@@ -25,13 +25,13 @@ int main() {
     cout << x * r << endl;
     cout << x / r << endl;
     cout << x.normalized() << endl;
-    cout << y.length() << endl;
+    cout << y.len() << endl;
     cout << dot(x, y) << endl;
     cout << cross(x, y) << endl;
 
     for (int i = 0; i < 2; i++) {
         cin >> x >> y;
-        cout << is_parallel(x, y) << endl;
-        cout << is_parallel_vecs_same_direction(x, y) << endl;
+        cout << is_par(x, y) << endl;
+        cout << is_same_dir(x, y) << endl;
     }
 }

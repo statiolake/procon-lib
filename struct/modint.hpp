@@ -24,12 +24,23 @@ class modint {
         while (v_ >= MOD) v_ -= MOD;
     }
 
-    friend bool operator==(modint const &a, modint const &b);
-    friend bool operator!=(modint const &a, modint const &b);
-    friend bool operator<(modint const &a, modint const &b);
-    friend bool operator>(modint const &a, modint const &b);
-    friend bool operator<=(modint const &a, modint const &b);
-    friend bool operator>=(modint const &a, modint const &b);
+    template <ll MOD_>
+    friend bool operator==(modint<MOD_> const &a, modint<MOD_> const &b);
+
+    template <ll MOD_>
+    friend bool operator!=(modint<MOD_> const &a, modint<MOD_> const &b);
+
+    template <ll MOD_>
+    friend bool operator<(modint<MOD_> const &a, modint<MOD_> const &b);
+
+    template <ll MOD_>
+    friend bool operator>(modint<MOD_> const &a, modint<MOD_> const &b);
+
+    template <ll MOD_>
+    friend bool operator<=(modint<MOD_> const &a, modint<MOD_> const &b);
+
+    template <ll MOD_>
+    friend bool operator>=(modint<MOD_> const &a, modint<MOD_> const &b);
 
   public:
     modint()
@@ -125,32 +136,32 @@ class modint {
  */
 template <ll MOD>
 bool operator==(modint<MOD> const &a, modint<MOD> const &b) {
-    return v_ == o.v_;
+    return a.v_ == b.v_;
 }
 
 template <ll MOD>
 bool operator!=(modint<MOD> const &a, modint<MOD> const &b) {
-    return !(*this == o);
+    return !(a == b);
 }
 
 template <ll MOD>
 bool operator<(modint<MOD> const &a, modint<MOD> const &b) {
-    return v_ < o.v_;
+    return a.v_ < b.v_;
 }
 
 template <ll MOD>
 bool operator>(modint<MOD> const &a, modint<MOD> const &b) {
-    return o < *this;
+    return b < a;
 }
 
 template <ll MOD>
 bool operator<=(modint<MOD> const &a, modint<MOD> const &b) {
-    return *this < o || *this == o;
+    return a < b || a == b;
 }
 
 template <ll MOD>
 bool operator>=(modint<MOD> const &a, modint<MOD> const &b) {
-    return o <= *this;
+    return b <= a;
 }
 
 /**
@@ -296,12 +307,12 @@ modint<MOD> operator/(ll a, modint<MOD> const &b) {
 
 template <ll MOD>
 std::ostream &operator<<(std::ostream &os, modint<MOD> const &x) {
-    return os << static_cast<T>(x);
+    return os << static_cast<ll>(x);
 }
 
 template <ll MOD>
 std::istream &operator>>(std::istream &is, modint<MOD> &x) {
-    T v;
+    ll v;
     is >> v, x = v;
     return is;
 }

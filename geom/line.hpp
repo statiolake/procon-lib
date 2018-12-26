@@ -112,8 +112,8 @@ template <int DIM>
 bool have_itsc(line<DIM> const &a, segment<DIM> const &s, bool inclusive) {
     if (!on_plane(a, s)) return false;
 
-    auto ds = vecarg::of_points(a.beg(), a.end(), s.beg());
-    auto de = vecarg::of_points(a.beg(), a.end(), s.end());
+    auto ds = vecarg_of_points(a.beg(), a.end(), s.beg());
+    auto de = vecarg_of_points(a.beg(), a.end(), s.end());
 
     if (is_rot_rev(ds, de)) return true;
 

@@ -35,6 +35,6 @@ int main() {
     for (int i = 0; i < 2; i++) {
         int a, b, c, d, e;
         cin >> a >> b >> c >> d >> e;
-        cout << strict_in_range(a, {b, c, d}, e) << endl;
+        cout << in_range_strict(a, {b, c, d}, e) << endl;
     }
 }

@@ -37,9 +37,9 @@ void aoj2003() {
             int o, l;
             cin >> s >> t >> o >> l;
             segment<2> road(s, t);
-            if (!have_intersection(new_road, road, false)) continue;
-            ents.push_back(make_pair(o == 1 ? l == 1 : l == 0,
-                                     intersection(new_road, road, false)));
+            if (!have_itsc(new_road, road, false)) continue;
+            ents.push_back(make_pair(o == 1 ? (l == 1) : (l == 0),
+                                     itsc(new_road, road, false)));
         }
 
         for (auto const &ent : ents) {
@@ -58,7 +58,7 @@ void aoj2003() {
             return a.first == b.first;
         };
 
-        auto numof_ents = static_cast<int>(dist(
+        auto numof_ents = static_cast<int>(distance(
             ents.begin(), unique(ents.begin(), ents.end(), same_height_p)));
         cout << max(0, numof_ents - 1) << endl;
     }
@@ -83,8 +83,7 @@ void aoj2641() {
 
         ll mp = 0;
         for (int i = 0; i < N; i++) {
-            if (have_intersection(seg, obs[i].first, true))
-                mp += obs[i].second;
+            if (have_itsc(seg, obs[i].first, true)) mp += obs[i].second;
         }
         cout << mp << endl;
     }

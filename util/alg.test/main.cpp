@@ -19,6 +19,6 @@ int main() {
         return A * t + B * sin(C * t * 3.14159265358979) < 100;
     };
 
-    cout << fixed << setprecision(12) << binary_search_count(0.0, T, pred)
+    cout << fixed << setprecision(12) << binary_search_n(0.0, T, pred)
          << endl;
 }

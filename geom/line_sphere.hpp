@@ -16,16 +16,16 @@ bool have_itsc(segment<DIM> const &seg, sphere<DIM> const &sph,
         // if pos is on the segment, if either beg or end is out of
         // sphere, then they have intersection.
         if (seg.has(sph.pos())) {
-            dbl dist = std::max(dist(sph.pos(), seg.beg()),
-                                dist(sph.pos(), seg.end()));
-            return inclusive ? dist >= sph.rad() : dist > sph.rad();
+            dbl d = std::max(dist(sph.pos(), seg.beg()),
+                             dist(sph.pos(), seg.end()));
+            return inclusive ? d >= sph.rad() : d > sph.rad();
         } else {
             // now segment's inclusive are the same direction from the pos
             // of sphere. so, dist from beg or from end is smaller than
             // rad, the segment pierce the sphere.
-            dbl dist = std::min(dist(sph.pos(), seg.beg()),
-                                dist(sph.pos(), seg.end()));
-            return inclusive ? dist <= sph.rad() : dist < sph.rad();
+            dbl d = std::min(dist(sph.pos(), seg.beg()),
+                             dist(sph.pos(), seg.end()));
+            return inclusive ? d <= sph.rad() : d < sph.rad();
         }
     } else {
         auto vec_normal = seg.normal_from(sph.pos());

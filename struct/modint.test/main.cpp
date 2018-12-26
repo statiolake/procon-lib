@@ -6,7 +6,7 @@
 using namespace std;
 using namespace pcl;
 int main() {
-    modint<int, 5> x, y;
+    modint<5> x, y;
     cin >> x >> y;
 
     cout << x + y << endl;

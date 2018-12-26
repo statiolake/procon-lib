@@ -160,7 +160,7 @@ bool is_par(vec<DIM> const &a, vec<DIM> const &b) {
 // @brief check if the two parallel vectors directs the same direction. this
 //        means that the sign of each element is the same
 template <int DIM>
-bool is_par_vecs_same_direction(vec<DIM> const &a, vec<DIM> const &b) {
+bool is_same_dir(vec<DIM> const &a, vec<DIM> const &b) {
     // this function can only be applied with parallel vecs.
     assert(is_par(a, b));
 

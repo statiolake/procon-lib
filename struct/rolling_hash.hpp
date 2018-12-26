@@ -9,7 +9,7 @@
 namespace pcl {
 
 template <ull b = 100'000'007>
-class rolling_hash_ {
+class rolling_hash {
   private:
     int size_;
     std::vector<ull> hash_, pow_;

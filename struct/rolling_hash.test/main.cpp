@@ -24,7 +24,7 @@ int main() {
         if (q == "L--") l--;
         if (q == "R++") r++;
         if (q == "R--") r--;
-        hashes.insert(rh.range(l, r));
+        hashes.insert(rh.of_range(l, r));
     }
     cout << hashes.size() << endl;
 }
