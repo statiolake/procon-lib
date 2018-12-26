@@ -7,7 +7,10 @@
  */
 #pragma once
 
-using ll  = long long;
+/// @brief long long 型のエイリアス。多くの箇所で使われる。
+using ll = long long;
+
+/// @brief unsigned long long 型のエイリアス。多くの箇所で使われる。
 using ull = unsigned long long;
 
 #include "globals.hpp"
