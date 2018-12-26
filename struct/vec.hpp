@@ -19,7 +19,7 @@ class vec {
 
   public:
     vec()
-        : elems_({0.0}) {
+        : elems_({}) {
     }
 
     template <typename... Args>
