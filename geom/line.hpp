@@ -2,7 +2,7 @@
 
 #include "../prelude.hpp"
 
-#include "../struct/dbl.hpp"
+#include "../wrapper/../wrapper/dbl.hpp"
 #include "../struct/mat.hpp"
 #include "../struct/vec.hpp"
 #include "point.hpp"

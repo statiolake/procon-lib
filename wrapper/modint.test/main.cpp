@@ -1,6 +1,6 @@
 #include "prelude.hpp"
 
-#include "struct/modint.hpp"
+#include "wrapper/../wrapper/modint.hpp"
 
 #include <bits/stdc++.h>
 using namespace std;

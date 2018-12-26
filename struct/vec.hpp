@@ -3,7 +3,7 @@
 #include "../prelude.hpp"
 
 #include "../util/alias.hpp"
-#include "dbl.hpp"
+#include "../wrapper/dbl.hpp"
 
 #include <array>
 #include <cassert>
