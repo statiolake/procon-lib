@@ -40,7 +40,7 @@ void updmin(T &a, T const &b) {
  * @param[in] begin 最小値
  * @param[in] mid 中間値
  * @param[in] end 最大値
- * @return bool begin <= mid < end かどうか
+ * @return begin <= mid < end なら true
  * @details 配列の添字アクセス演算子などで範囲内アクセスを判定するのに使える。
  */
 template <typename T, typename U, typename V>
@@ -53,7 +53,7 @@ bool in_range(T const &begin, U const &mid, V const &end) {
  * @param[in] begin 最小値
  * @param[in] list 中間値たち
  * @param[in] end 最大値
- * @return bool 任意の l in list について begin <= l < end かどうか
+ * @return list 内の任意の要素 l について begin <= l < end なら true
  * @details 配列の添字アクセス演算子などで範囲内アクセスを判定するのに使える。
  */
 template <typename T, typename U, typename V>
@@ -67,7 +67,7 @@ bool in_range(T const &begin, std::initializer_list<U> list, V const &end) {
  * @param[in] begin 最小値
  * @param[in] list 中間値たち
  * @param[in] end 最大値
- * @return bool list がソートされていてかつ begin <= list < end かどうか
+ * @return list がソートされていてかつ begin <= list < end なら true
  * @details 配列の添字アクセス演算子などで範囲内アクセスを判定するのに使える。
  */
 template <typename T, typename U, typename V>
@@ -79,7 +79,7 @@ bool in_range_strict(T const &begin, std::initializer_list<U> list,
 
 /**
  * @brief 型 T の入力を std::cin から取る。
- * @return T 得られた入力値
+ * @return 得られた入力値
  * @details 一々宣言してから std::cin >> x するのが面倒なので、 int x =
  * cget<int>(); のように使いたい。Rust のように戻り値推論が効いて int x =
  * cget(); とできると便利なのだが...

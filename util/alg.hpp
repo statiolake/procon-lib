@@ -18,7 +18,7 @@ namespace pcl {
  * pred はある値を境に、それより左側が true 、右側が false
  * となっていなければならない。
  * @param[in] last 二分探索の回数
- * @return Input 範囲のうち pred の true と false の境目に近い値。
+ * @return 範囲のうち pred の true と false の境目に近い値。
  * @details
  * 二分探索だが、その終了条件を一定回数にするもの。浮動小数点数など誤差が生じてしまうもので用いる。二分探索は毎回範囲が半分に狭まるため、一見少ない回数でも非常に精度がよい。
  */
