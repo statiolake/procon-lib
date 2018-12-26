@@ -18,8 +18,11 @@ struct empty_stream_buf : public std::streambuf {
 struct empty_stream : private empty_stream_buf, public std::ostream {
   public:
     empty_stream()
-        : std::ostream(this) {}
-    empty_stream_buf const *rdbuf() const { return this; }
+        : std::ostream(this) {
+    }
+    empty_stream_buf const *rdbuf() const {
+        return this;
+    }
 };
 
 empty_stream es;

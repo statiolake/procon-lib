@@ -12,13 +12,15 @@
 namespace pcl {
 class union_find {
   private:
-    std::vector<int> parent_or_rank_of; // positive: parent, negative: (rank + 1)
+    std::vector<int>
+        parent_or_rank_of; // positive: parent, negative: (rank + 1)
     std::size_t size_;
 
   public:
     union_find(int n)
         : parent_or_rank_of(n, -1)
-        , size_(n) {}
+        , size_(n) {
+    }
 
     void unite(int a, int b) {
         int pa = find(a), pb = find(b);
@@ -46,6 +48,8 @@ class union_find {
         return parent_or_rank_of[a] = find(parent_or_rank_of[a]);
     }
 
-    std::size_t size() const { return size_; }
+    std::size_t size() const {
+        return size_;
+    }
 };
 } // namespace pcl

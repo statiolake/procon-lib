@@ -5,4 +5,5 @@
 using namespace std;
 using namespace pcl;
 
-int main() {}
+int main() {
+}

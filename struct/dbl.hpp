@@ -9,93 +9,155 @@
 namespace pcl {
 class dbl {
   private:
-    double val;
+    double v;
 
-    friend bool operator==(dbl const &lhs, dbl const &rhs);
-    friend bool operator!=(dbl const &lhs, dbl const &rhs);
-    friend bool operator<(dbl const &lhs, dbl const &rhs);
-    friend bool operator>(dbl const &lhs, dbl const &rhs);
-    friend bool operator<=(dbl const &lhs, dbl const &rhs);
-    friend bool operator>=(dbl const &lhs, dbl const &rhs);
+    friend bool operator==(dbl const &a, dbl const &b);
+    friend bool operator!=(dbl const &a, dbl const &b);
+    friend bool operator<(dbl const &a, dbl const &b);
+    friend bool operator>(dbl const &a, dbl const &b);
+    friend bool operator<=(dbl const &a, dbl const &b);
+    friend bool operator>=(dbl const &a, dbl const &b);
 
   public:
     dbl()
-        : val() {}
+        : v() {
+    }
     dbl(double init)
-        : val(init) {}
-    dbl(dbl const &other)
-        : val(other.val) {}
-    explicit operator double() const { return val; }
+        : v(init) {
+    }
+    dbl(dbl const &o)
+        : v(o.v) {
+    }
+    explicit operator double() const {
+        return v;
+    }
 
-    inline dbl &operator+=(dbl const &other) {
-        val += other.val;
+    inline dbl &operator+=(dbl const &o) {
+        v += o.v;
         return *this;
     }
 
-    inline dbl &operator-=(dbl const &other) {
-        val -= other.val;
+    inline dbl &operator-=(dbl const &o) {
+        v -= o.v;
         return *this;
     }
 
-    inline dbl &operator*=(dbl const &other) {
-        val *= other.val;
+    inline dbl &operator*=(dbl const &o) {
+        v *= o.v;
         return *this;
     }
 
-    inline dbl &operator/=(dbl const &other) {
-        val /= other.val;
+    inline dbl &operator/=(dbl const &o) {
+        v /= o.v;
         return *this;
     }
 
-    inline dbl &operator=(dbl const &other) {
-        val = other.val;
+    inline dbl &operator=(dbl const &o) {
+        v = o.v;
         return *this;
     }
 };
 
-inline dbl operator+(dbl lhs, dbl const &rhs) { return (lhs += rhs); }
-inline dbl operator-(dbl lhs, dbl const &rhs) { return (lhs -= rhs); }
-inline dbl operator*(dbl lhs, dbl const &rhs) { return (lhs *= rhs); }
-inline dbl operator/(dbl lhs, dbl const &rhs) { return (lhs /= rhs); }
+inline dbl operator+(dbl a, dbl const &b) {
+    return (a += b);
+}
+inline dbl operator-(dbl a, dbl const &b) {
+    return (a -= b);
+}
+inline dbl operator*(dbl a, dbl const &b) {
+    return (a *= b);
+}
+inline dbl operator/(dbl a, dbl const &b) {
+    return (a /= b);
+}
 
-inline bool operator==(dbl const &lhs, dbl const &rhs) { return std::abs(lhs.val - rhs.val) < EPS; }
+inline bool operator==(dbl const &a, dbl const &b) {
+    return std::abs(a.v - b.v) < EPS;
+}
+inline bool operator!=(dbl const &a, dbl const &b) {
+    return !(a == b);
+}
+inline bool operator<=(dbl const &a, dbl const &b) {
+    return a.v < b.v || a == b;
+}
+inline bool operator>=(dbl const &a, dbl const &b) {
+    return a.v > b.v || a == b;
+}
+inline bool operator<(dbl const &a, dbl const &b) {
+    return !(a >= b);
+}
+inline bool operator>(dbl const &a, dbl const &b) {
+    return !(a <= b);
+}
 
-inline bool operator!=(dbl const &lhs, dbl const &rhs) { return !(lhs == rhs); }
+inline dbl operator+(dbl const &a, double b) {
+    return a + dbl(b);
+}
+inline dbl operator-(dbl const &a, double b) {
+    return a - dbl(b);
+}
+inline dbl operator*(dbl const &a, double b) {
+    return a * dbl(b);
+}
+inline dbl operator/(dbl const &a, double b) {
+    return a / dbl(b);
+}
 
-inline bool operator<=(dbl const &lhs, dbl const &rhs) { return lhs.val < rhs.val || lhs == rhs; }
+inline bool operator==(dbl const &a, double b) {
+    return a == dbl(b);
+}
+inline bool operator!=(dbl const &a, double b) {
+    return a != dbl(b);
+}
+inline bool operator<(dbl const &a, double b) {
+    return a < dbl(b);
+}
+inline bool operator>(dbl const &a, double b) {
+    return a > dbl(b);
+}
+inline bool operator<=(dbl const &a, double b) {
+    return a <= dbl(b);
+}
+inline bool operator>=(dbl const &a, double b) {
+    return a >= dbl(b);
+}
 
-inline bool operator>=(dbl const &lhs, dbl const &rhs) { return lhs.val > rhs.val || lhs == rhs; }
+inline dbl operator+(double a, dbl const &b) {
+    return dbl(a) + b;
+}
+inline dbl operator-(double a, dbl const &b) {
+    return dbl(a) - b;
+}
+inline dbl operator*(double a, dbl const &b) {
+    return dbl(a) * b;
+}
+inline dbl operator/(double a, dbl const &b) {
+    return dbl(a) / b;
+}
 
-inline bool operator<(dbl const &lhs, dbl const &rhs) { return !(lhs >= rhs); }
-
-inline bool operator>(dbl const &lhs, dbl const &rhs) { return !(lhs <= rhs); }
-
-inline dbl operator+(dbl const &lhs, double rhs) { return lhs + dbl(rhs); }
-inline dbl operator-(dbl const &lhs, double rhs) { return lhs - dbl(rhs); }
-inline dbl operator*(dbl const &lhs, double rhs) { return lhs * dbl(rhs); }
-inline dbl operator/(dbl const &lhs, double rhs) { return lhs / dbl(rhs); }
-inline bool operator==(dbl const &lhs, double rhs) { return lhs == dbl(rhs); }
-inline bool operator!=(dbl const &lhs, double rhs) { return lhs != dbl(rhs); }
-inline bool operator<(dbl const &lhs, double rhs) { return lhs < dbl(rhs); }
-inline bool operator>(dbl const &lhs, double rhs) { return lhs > dbl(rhs); }
-inline bool operator<=(dbl const &lhs, double rhs) { return lhs <= dbl(rhs); }
-inline bool operator>=(dbl const &lhs, double rhs) { return lhs >= dbl(rhs); }
-
-inline dbl operator+(double lhs, dbl const &rhs) { return dbl(lhs) + rhs; }
-inline dbl operator-(double lhs, dbl const &rhs) { return dbl(lhs) - rhs; }
-inline dbl operator*(double lhs, dbl const &rhs) { return dbl(lhs) * rhs; }
-inline dbl operator/(double lhs, dbl const &rhs) { return dbl(lhs) / rhs; }
-inline bool operator==(double lhs, dbl const &rhs) { return dbl(lhs) == rhs; }
-inline bool operator!=(double lhs, dbl const &rhs) { return dbl(lhs) != rhs; }
-inline bool operator<(double lhs, dbl const &rhs) { return dbl(lhs) < rhs; }
-inline bool operator>(double lhs, dbl const &rhs) { return dbl(lhs) > rhs; }
-inline bool operator<=(double lhs, dbl const &rhs) { return dbl(lhs) <= rhs; }
-inline bool operator>=(double lhs, dbl const &rhs) { return dbl(lhs) >= rhs; }
+inline bool operator==(double a, dbl const &b) {
+    return dbl(a) == b;
+}
+inline bool operator!=(double a, dbl const &b) {
+    return dbl(a) != b;
+}
+inline bool operator<(double a, dbl const &b) {
+    return dbl(a) < b;
+}
+inline bool operator>(double a, dbl const &b) {
+    return dbl(a) > b;
+}
+inline bool operator<=(double a, dbl const &b) {
+    return dbl(a) <= b;
+}
+inline bool operator>=(double a, dbl const &b) {
+    return dbl(a) >= b;
+}
 
 std::istream &operator>>(std::istream &is, dbl &d) {
-    double val;
-    is >> val;
-    d = val;
+    double v;
+    is >> v;
+    d = v;
     return is;
 }
 
@@ -106,9 +168,13 @@ std::ostream &operator<<(std::ostream &os, dbl const &d) {
 } // namespace pcl
 
 namespace std {
-pcl::dbl sqrt(pcl::dbl const &a) { return pcl::dbl(sqrt((double)a)); }
-
-pcl::dbl min(pcl::dbl const &lhs, pcl::dbl const &rhs) { return lhs < rhs ? lhs : rhs; }
-
-pcl::dbl max(pcl::dbl const &lhs, pcl::dbl const &rhs) { return lhs < rhs ? rhs : lhs; }
+pcl::dbl sqrt(pcl::dbl const &a) {
+    return pcl::dbl(sqrt(static_cast<double>(a)));
+}
+pcl::dbl min(pcl::dbl const &a, pcl::dbl const &b) {
+    return a < b ? a : b;
+}
+pcl::dbl max(pcl::dbl const &a, pcl::dbl const &b) {
+    return a < b ? b : a;
+}
 } // namespace std

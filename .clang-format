@@ -3,9 +3,9 @@ AlignAfterOpenBracket: true
 AlignConsecutiveAssignments: true
 AlignEscapedNewlines: Left
 AlignOperands: true
-AllowShortBlocksOnASingleLine: true
+AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: true
 AlwaysBreakTemplateDeclarations: true
@@ -13,7 +13,7 @@ BreakBeforeBraces: Attach
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakStringLiterals: true
-ColumnLimit: 9999
+ColumnLimit: 78
 CompactNamespaces: true
 IncludeBlocks: Preserve
 IndentCaseLabels: true

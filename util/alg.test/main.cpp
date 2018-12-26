@@ -15,7 +15,10 @@ int main() {
     cin >> A >> B >> C;
 
     double T  = 1000;
-    auto pred = [&](double t) { return A * t + B * sin(C * t * 3.14159265358979) < 100; };
+    auto pred = [&](double t) {
+        return A * t + B * sin(C * t * 3.14159265358979) < 100;
+    };
 
-    cout << fixed << setprecision(12) << binary_search_count(0.0, T, pred) << endl;
+    cout << fixed << setprecision(12) << binary_search_count(0.0, T, pred)
+         << endl;
 }

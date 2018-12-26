@@ -14,40 +14,52 @@ class fenwick_tree {
     using value_type = typename Group::value_type;
 
   private:
-    int const sz;
-    std::vector<value_type> data;
+    int const size_;
+    std::vector<value_type> data_;
 
   public:
-    fenwick_tree(int sz)
-        : sz(sz)
-        , data(sz, Group::id()) {}
+    fenwick_tree(int size)
+        : size_(size)
+        , data_(size, Group::id()) {
+    }
+
+    int size() const {
+        return size_;
+    }
 
     void add(int i, value_type const &x) {
-        assert(in_range(0, i, sz));
-        for (; i < sz; i |= i + 1) data[i] = Group::op(data[i], x);
+        assert(in_range(0, i, size()));
+        for (; i < size(); i |= i + 1) data_[i] = Group::op(data_[i], x);
     }
 
     value_type sum(int i) const {
-        // since sum(i) is sum of 0..i, i can be sz.
-        assert(in_range(0, i, sz + 1));
+        // since sum(i) is sum of 0..i, i can be size.
+        assert(in_range(0, i, size() + 1));
         value_type res = Group::id();
-        for (i--; i >= 0; i = (i & (i + 1)) - 1) res = Group::op(res, data[i]);
+        for (i--; i >= 0; i = (i & (i + 1)) - 1)
+            res = Group::op(res, data_[i]);
         return res;
     }
 
-    value_type sum(int l, int r) const {
-        // since sum(i) is sum of l..r, r can be sz.
-        assert(in_range(0, {l, r}, sz + 1));
-        return Group::op(sum(r), Group::inv(sum(l)));
+    value_type sum(int a, int b) const {
+        // since sum(i) is sum of a..b, b can be size.
+        assert(in_range(0, {a, b}, size() + 1));
+        return Group::op(sum(b), Group::inv(sum(a)));
     }
 };
 
 template <typename T>
 struct range_sum_query {
     using value_type = T;
-    constexpr static value_type id() { return T{}; }
-    constexpr static value_type inv(value_type const &x) { return -x; }
-    constexpr static value_type op(value_type const &lhs, value_type const &rhs) { return lhs + rhs; }
+    constexpr static value_type id() {
+        return T{};
+    }
+    constexpr static value_type inv(value_type const &x) {
+        return -x;
+    }
+    constexpr static value_type op(value_type const &a, value_type const &b) {
+        return a + b;
+    }
 };
 
 } // namespace pcl

@@ -33,25 +33,25 @@ constexpr std::tuple<T, T, T> extgcd(T a, T b) {
 /// verified with aoj:0009
 template <typename T>
 std::vector<T> sieve(T N) {
-    std::vector<T> result;
+    std::vector<T> res;
     std::vector<bool> is_not_prime(N);
     for (T i = 2; i <= N; i++) {
         if (is_not_prime[i]) continue;
-        result.push_back(i);
+        res.push_back(i);
         for (T j = i + i; j <= N; j += i) is_not_prime[j] = true;
     }
-    return result;
+    return res;
 }
 
 template <typename T>
 constexpr T pow(T x, int n) {
-    T result = 1;
+    T res = 1;
     while (n > 0) {
-        if (n & 1) result *= x;
+        if (n & 1) res *= x;
         x *= x;
         n >>= 1;
     }
-    return result;
+    return res;
 }
 
 template <typename T>

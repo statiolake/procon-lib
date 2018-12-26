@@ -5,7 +5,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 using namespace pcl;
-vector<double> calc_prob_scc(strongly_connected_components_t const &sccs, int N, vector<double> const &p_ind) {
+vector<double> calc_prob_scc(strongly_connected_components_t const &sccs,
+                             int N, vector<double> const &p_ind) {
     vector<double> p_scc(sccs.size(), 1.0);
     for (int ind = 0; ind < N; ind++) {
         int scc = sccs.scc_of(ind);

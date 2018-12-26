@@ -14,59 +14,68 @@ class segment_tree {
     using value_type = typename Monoid::value_type;
 
   private:
-    ll const sz, n;
-    std::vector<value_type> data;
+    ll const size_, n_;
+    std::vector<value_type> data_;
 
-    /// n is the first integer that satisfies 2^n >= sz
-    ll calc_n(ll sz) {
-        sz--;
-        sz |= sz >> 1;
-        sz |= sz >> 2;
-        sz |= sz >> 4;
-        sz |= sz >> 8;
-        sz |= sz >> 16;
-        sz |= sz >> 32;
-        return sz + 1;
+    /// n_ is the first integer that satisfies 2^n_ >= size
+    ll calc_n(ll size) {
+        size--;
+        size |= size >> 1;
+        size |= size >> 2;
+        size |= size >> 4;
+        size |= size >> 8;
+        size |= size >> 16;
+        size |= size >> 32;
+        return size + 1;
     }
 
   public:
     segment_tree(std::vector<value_type> const &init)
-        : sz(init.size())
-        , n(calc_n(sz))
-        , data(n * 2, Monoid::id()) {
-        std::copy(init.begin(), init.end(), data.begin() + n);
-        for (ll i = n - 1; i >= 0; i--) { data[i] = Monoid::op(data[i * 2], data[i * 2 + 1]); }
+        : size_(init.size())
+        , n_(calc_n(size_))
+        , data_(n_ * 2, Monoid::id()) {
+        std::copy(init.begin(), init.end(), data_.begin() + n_);
+        for (ll i = n_ - 1; i >= 0; i--) {
+            data_[i] = Monoid::op(data_[i * 2], data_[i * 2 + 1]);
+        }
     }
 
-    segment_tree(ll sz, value_type init = Monoid::id())
-        : segment_tree(std::vector<value_type>(sz, init)) {}
+    segment_tree(ll size_, value_type init = Monoid::id())
+        : segment_tree(std::vector<value_type>(size_, init)) {
+    }
 
     void update(ll i, ll x) {
-        assert(0 <= i && i <= sz);
-        data[i += n] = x;
-        while (i /= 2) data[i] = Monoid::op(data[i * 2], data[i * 2 + 1]);
+        assert(0 <= i && i <= size_);
+        data_[i += n_] = x;
+        while (i /= 2) data_[i] = Monoid::op(data_[i * 2], data_[i * 2 + 1]);
     }
 
-    value_type find(ll l, ll r) const {
-        assert(0 <= l && l <= r && r <= sz);
-        l += n, r += n;
+    value_type find(ll a, ll b) const {
+        assert(0 <= a && a <= b && b <= size_);
+        a += n_, b += n_;
         value_type res1 = Monoid::id(), res2 = Monoid::id();
-        while (l < r) {
-            if (l & 1) res1 = Monoid::op(res1, data[l++]);
-            if (r & 1) res2 = Monoid::op(data[--r], res2);
-            l >>= 1, r >>= 1;
+        while (a < b) {
+            if (a & 1) res1 = Monoid::op(res1, data_[a++]);
+            if (b & 1) res2 = Monoid::op(data_[--b], res2);
+            a >>= 1, b >>= 1;
         }
         return Monoid::op(res1, res2);
     }
 
-    value_type const &get(ll i) const { return data[i + n]; }
+    value_type const &get(ll i) const {
+        return data_[i + n_];
+    }
 };
 
 template <typename T>
 struct range_minimum_query {
     using value_type = T;
-    constexpr static value_type id() { return TNF<T>; }
-    constexpr static value_type op(value_type const &lhs, value_type const &rhs) { return std::min(lhs, rhs); }
+    constexpr static value_type id() {
+        return TNF<T>;
+    }
+    constexpr static value_type op(value_type const &a, value_type const &b) {
+        return std::min(a, b);
+    }
 };
 
 } // namespace pcl

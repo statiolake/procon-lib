@@ -15,138 +15,158 @@ namespace pcl {
 template <int DIM>
 class vec {
   private:
-    std::array<dbl, DIM> arr;
+    std::array<dbl, DIM> elems_;
 
   public:
     vec()
-        : arr({0.0}) {}
+        : elems_({0.0}) {
+    }
 
     template <typename... Args>
     vec(Args... args)
-        : arr({args...}) {}
+        : elems_({args...}) {
+    }
 
     vec(vec const &other)
-        : arr(other.arr) {}
+        : elems_(other.elems_) {
+    }
 
     vec &operator=(vec const &other) {
-        arr = other.arr;
+        elems_ = other.elems_;
         return *this;
     }
 
-    dbl &operator[](int idx) {
-        assert(in_range(0, idx, DIM));
-        return arr[idx];
+    dbl &operator[](int i) {
+        assert(in_range(0, i, DIM));
+        return elems_[i];
     }
 
-    dbl operator[](int idx) const {
-        assert(in_range(0, idx, DIM));
-        return arr[idx];
+    dbl operator[](int i) const {
+        assert(in_range(0, i, DIM));
+        return elems_[i];
     }
 
-    dbl length() const {
+    dbl len() const {
         dbl len = 0;
         for (dbl x : *this) len += x * x;
         return std::sqrt(len);
     }
 
     vec normalized() const {
-        vec result = *this;
-        dbl len    = length();
-        for (dbl &x : result) x /= len;
-        return result;
+        vec res = *this;
+        dbl l   = len();
+        for (dbl &x : res) x /= l;
+        return res;
     }
 
-    auto begin() { return arr.begin(); }
-    auto end() { return arr.end(); }
-    auto begin() const { return cbegin(); }
-    auto end() const { return cend(); }
-    auto cbegin() const { return arr.begin(); }
-    auto cend() const { return arr.cend(); }
+    auto begin() {
+        return elems_.begin();
+    }
+    auto end() {
+        return elems_.end();
+    }
+    auto begin() const {
+        return cbegin();
+    }
+    auto end() const {
+        return cend();
+    }
+    auto cbegin() const {
+        return elems_.begin();
+    }
+    auto cend() const {
+        return elems_.cend();
+    }
 
     vec &operator+=(vec const &other) {
-        for (int i = 0; i < DIM; i++) arr[i] += other[i];
+        for (int i = 0; i < DIM; i++) elems_[i] += other[i];
         return *this;
     }
 
     vec &operator-=(vec const &other) {
-        for (int i = 0; i < DIM; i++) arr[i] -= other[i];
+        for (int i = 0; i < DIM; i++) elems_[i] -= other[i];
         return *this;
     }
 
-    vec &operator*=(dbl r) {
-        for (dbl &x : *this) x *= r;
+    vec &operator*=(dbl b) {
+        for (dbl &x : *this) x *= b;
         return *this;
     }
 
-    vec &operator/=(dbl r) {
-        for (dbl &x : *this) x /= r;
+    vec &operator/=(dbl b) {
+        for (dbl &x : *this) x /= b;
         return *this;
     }
 };
 
 template <int DIM>
-vec<DIM> operator+(vec<DIM> lhs, vec<DIM> const &rhs) {
-    return lhs += rhs;
+vec<DIM> operator+(vec<DIM> a, vec<DIM> const &b) {
+    return a += b;
 }
 
 template <int DIM>
-vec<DIM> operator-(vec<DIM> lhs, vec<DIM> const &rhs) {
-    return lhs -= rhs;
+vec<DIM> operator-(vec<DIM> a, vec<DIM> const &b) {
+    return a -= b;
 }
 
 template <int DIM>
-vec<DIM> operator*(vec<DIM> lhs, dbl rhs) {
-    return lhs *= rhs;
+vec<DIM> operator*(vec<DIM> a, dbl b) {
+    return a *= b;
 }
 
 template <int DIM>
-vec<DIM> operator*(dbl lhs, vec<DIM> rhs) {
-    return rhs *= lhs;
+vec<DIM> operator*(dbl a, vec<DIM> b) {
+    return b *= a;
 }
 
 template <int DIM>
-vec<DIM> operator/(vec<DIM> lhs, dbl rhs) {
-    return lhs /= rhs;
+vec<DIM> operator/(vec<DIM> a, dbl b) {
+    return a /= b;
 }
 
 template <int DIM>
-bool operator==(vec<DIM> const &lhs, vec<DIM> const &rhs) {
+bool operator==(vec<DIM> const &a, vec<DIM> const &b) {
     for (int i = 0; i < DIM; i++)
-        if (lhs[i] != rhs[i]) return false;
+        if (a[i] != b[i]) return false;
     return true;
 }
 
 template <int DIM>
-inline bool operator!=(vec<DIM> const &lhs, vec<DIM> const &rhs) {
-    return !(lhs == rhs);
+inline bool operator!=(vec<DIM> const &a, vec<DIM> const &b) {
+    return !(a == b);
 }
 
 template <int DIM>
-dbl dot(vec<DIM> const &lhs, vec<DIM> const &rhs) {
-    dbl result = 0.0;
-    for (int i = 0; i < DIM; i++) result += lhs[i] * rhs[i];
-    return result;
+dbl dot(vec<DIM> const &a, vec<DIM> const &b) {
+    dbl res = 0.0;
+    for (int i = 0; i < DIM; i++) res += a[i] * b[i];
+    return res;
 }
 
-vec<3> cross(vec<2> const &lhs, vec<2> const &rhs) { return {0, 0, lhs[0] * rhs[1] - lhs[1] * rhs[0]}; }
+vec<3> cross(vec<2> const &a, vec<2> const &b) {
+    return {0, 0, a[0] * b[1] - a[1] * b[0]};
+}
 
-vec<3> cross(vec<3> const &lhs, vec<3> const &rhs) { return {lhs[1] * rhs[2] - lhs[2] * rhs[1], lhs[2] * rhs[0] - lhs[0] * rhs[2], lhs[0] * rhs[1] - lhs[1] * rhs[0]}; }
+vec<3> cross(vec<3> const &a, vec<3> const &b) {
+    return {a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2],
+            a[0] * b[1] - a[1] * b[0]};
+}
 
 template <int DIM>
-bool is_parallel(vec<DIM> const &lhs, vec<DIM> const &rhs) {
-    return cross(lhs, rhs).length() == 0;
+bool is_par(vec<DIM> const &a, vec<DIM> const &b) {
+    return cross(a, b).len() == 0;
 }
 
 // @brief check if the two parallel vectors directs the same direction. this
 //        means that the sign of each element is the same
 template <int DIM>
-bool is_parallel_vecs_same_direction(vec<DIM> const &lhs, vec<DIM> const &rhs) {
+bool is_par_vecs_same_direction(vec<DIM> const &a, vec<DIM> const &b) {
     // this function can only be applied with parallel vecs.
-    assert(is_parallel(lhs, rhs));
+    assert(is_par(a, b));
 
     for (std::size_t i = 0; i < DIM; i++)
-        // lhs[i] * rhs[i] < 0 means lhs[i] and rhs[i] has the opposite sign.
-        if (lhs[i] * rhs[i] < 0) return false;
+        // a[i] * b[i] < 0 means a[i] and b[i] has the opposite sign.
+        if (a[i] * b[i] < 0) return false;
 
     return true;
 }
@@ -172,8 +192,8 @@ using vec2 = vec<2>;
 using vec3 = vec<3>;
 
 template <int DIM>
-using coord = vec<DIM>;
+using crd = vec<DIM>;
 
-using coord2 = vec<2>;
-using coord3 = vec<3>;
+using crd2 = vec<2>;
+using crd3 = vec<3>;
 } // namespace pcl

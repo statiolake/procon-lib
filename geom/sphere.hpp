@@ -7,21 +7,26 @@ namespace pcl {
 template <int DIM>
 class sphere {
   private:
-    coord<DIM> center_;
-    dbl radius_;
+    crd<DIM> pos_;
+    dbl rad_;
 
   public:
-    sphere(coord<DIM> const &center, dbl radius)
-        : center_(center)
-        , radius_(radius) {}
+    sphere(crd<DIM> const &pos, dbl rad)
+        : pos_(pos)
+        , rad_(rad) {
+    }
 
-    coord<DIM> const &center() const { return center_; }
-    dbl const &radius() const { return radius_; }
+    crd<DIM> const &pos() const {
+        return pos_;
+    }
+    dbl const &rad() const {
+        return rad_;
+    }
 };
 
 template <int DIM>
 std::ostream &operator<<(std::ostream &os, sphere<DIM> const &sph) {
-    os << "sphere { center: " << sph.center() << ", radius: " << sph.radius() << " }";
+    os << "sphere { pos: " << sph.pos() << ", rad: " << sph.rad() << " }";
     return os;
 }
 

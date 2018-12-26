@@ -26,7 +26,8 @@ std::vector<std::pair<int, int>> make_numbering(graph_t const &g) {
     // std::pair<int, int> = { order in postorder DFS, vertex number }
     // order | -1 => not yet visited
     //       | -2 => now searching
-    std::vector<std::pair<int, int>> numbering(g.size(), std::make_pair(-1, 0));
+    std::vector<std::pair<int, int>> numbering(g.size(),
+                                               std::make_pair(-1, 0));
 
     std::function<int(int, int)> dfs = [&](int v, int num) {
         // if v is already visited, do nothing.
@@ -45,20 +46,26 @@ std::vector<std::pair<int, int>> make_numbering(graph_t const &g) {
     return numbering;
 }
 
-class strongly_connected_components_t {
+class scc_decomp {
   private:
     std::vector<int> scc_of_;
     int size_;
 
   public:
-    strongly_connected_components_t(std::vector<int> scc_of, int size)
+    scc_decomp(std::vector<int> scc_of, int size)
         : scc_of_(scc_of)
-        , size_(size) {}
-    int size() const { return size_; }
-    int scc_of(int v) const { return scc_of_[v]; }
+        , size_(size) {
+    }
+    int size() const {
+        return size_;
+    }
+    int scc_of(int v) const {
+        return scc_of_[v];
+    }
 };
 
-strongly_connected_components_t decompose_impl(graph_t const &rg, std::vector<std::pair<int, int>> const &numbering) {
+scc_decomp decompose_impl(graph_t const &rg,
+                          std::vector<std::pair<int, int>> const &numbering) {
     std::vector<int> scc_of(rg.size(), -1);
 
     // mark a strongly connected components beginning from vertex v with
@@ -78,22 +85,24 @@ strongly_connected_components_t decompose_impl(graph_t const &rg, std::vector<st
         if (scc_of[v] == -1) dfs(v, num++);
     }
 
-    return strongly_connected_components_t(scc_of, num);
+    return scc_decomp(scc_of, num);
 }
 
-strongly_connected_components_t decompose_into_sccs(graph_t const &g) {
+scc_decomp decompose_into_sccs(graph_t const &g) {
     auto numbering = make_numbering(g);
-    std::sort(numbering.begin(), numbering.end(), std::greater<std::pair<int, int>>());
+    std::sort(numbering.begin(), numbering.end(),
+              std::greater<std::pair<int, int>>());
     return decompose_impl(reverse_graph(g), numbering);
 }
 
-graph_t make_scc_graph(graph_t const &g_ind, strongly_connected_components_t const &sccs) {
+graph_t make_scc_graph(graph_t const &g_ind, scc_decomp const &sccs) {
     graph_t g_scc(sccs.size());
     for (int i = 0; i < static_cast<int>(g_ind.size()); i++) {
         auto &v = g_scc[sccs.scc_of(i)];
         for (int to : g_ind[i]) {
             if (sccs.scc_of(i) == sccs.scc_of(to)) continue;
-            if (find(v.begin(), v.end(), sccs.scc_of(to)) != v.end()) continue;
+            if (find(v.begin(), v.end(), sccs.scc_of(to)) != v.end())
+                continue;
             v.push_back(sccs.scc_of(to));
         }
     }
