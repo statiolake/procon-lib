@@ -12,7 +12,7 @@ namespace pcl {
 
 /**
  * @brief 自動的に剰余をとる整数型。
- * @detail 自動的に `MOD` で割ったあまりをキープする。 `MOD` は素数であればよ
+ * @details 自動的に `MOD` で割ったあまりをキープする。 `MOD` は素数であればよ
  * い (厳密には割り算をする全ての数字と互いに素であればよい) 。
  */
 template <ll MOD>
@@ -74,8 +74,8 @@ class modint {
     /**
      * @brief 指定された値で初期化するコンストラクタ。
      * @param[in] init 初期化する値
-     * @detail 指定された値は勝手に正規化されるため、 `0 <= init < MOD` を満た
-     * していなくてもよい。
+     * @details 指定された値は勝手に正規化されるため、 `0 <= init < MOD`
+     * を満た していなくてもよい。
      */
     modint(ll init)
         : v_(init) {

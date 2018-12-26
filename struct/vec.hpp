@@ -81,7 +81,7 @@ class vec {
     /**
      * @brief 正規化されたベクトル (同じ向きの単位ベクトル) を作って返す。
      * @return 正規化されたベクトル
-     * @detail コピーを作って返すので自身を破壊しない。 const 使用可能。
+     * @details コピーを作って返すので自身を破壊しない。 const 使用可能。
      */
     vec normalized() const {
         vec res = *this;
