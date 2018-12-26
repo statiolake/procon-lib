@@ -1,5 +1,5 @@
 /**
- * @file alias.hpp
+ * @file util/alias.hpp
  * @brief よく使うけどアルゴリズムというほどでもない便利関数たち。
  */
 #pragma once
@@ -15,8 +15,8 @@ namespace pcl {
  * @brief 最大値なら更新する (緩和) 。
  * @param[inout] a この値を更新する。
  * @param[in] b この値で更新を試みる。
- * @details a と b のうち大きい方を a へ代入する。各種アルゴリズムや動的計画法
- * などで便利。
+ * @details a と b のうち大きい方を a
+ * へ代入する。各種アルゴリズムや動的計画法などで便利。
  */
 template <typename T>
 void updmax(T &a, T const &b) {
@@ -27,8 +27,8 @@ void updmax(T &a, T const &b) {
  * @brief 最小値なら更新する (緩和) 。
  * @param[inout] a この値を更新する。
  * @param[in] b この値で更新を試みる。
- * @details a と b のうち小きい方を a へ代入する。各種アルゴリズムや動的計画法
- * などで便利。
+ * @details a と b のうち小きい方を a
+ * へ代入する。各種アルゴリズムや動的計画法などで便利。
  */
 template <typename T>
 void updmin(T &a, T const &b) {
