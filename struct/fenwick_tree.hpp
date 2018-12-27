@@ -48,18 +48,4 @@ class fenwick_tree {
     }
 };
 
-template <typename T>
-struct range_sum_query {
-    using value_type = T;
-    constexpr static value_type id() {
-        return T{};
-    }
-    constexpr static value_type inv(value_type const &x) {
-        return -x;
-    }
-    constexpr static value_type op(value_type const &a, value_type const &b) {
-        return a + b;
-    }
-};
-
 } // namespace pcl

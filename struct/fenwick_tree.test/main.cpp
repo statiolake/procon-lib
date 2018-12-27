@@ -2,6 +2,7 @@
 
 #include "prelude.hpp"
 
+#include "math/group.hpp"
 #include "struct/fenwick_tree.hpp"
 
 #include <bits/stdc++.h>
@@ -12,7 +13,7 @@ using namespace pcl;
 int main() {
     int n, q;
     cin >> n >> q;
-    fenwick_tree<range_sum_query<int>> ft(n);
+    fenwick_tree<group::range_sum_query<int>> ft(n);
     for (int i = 0; i < q; i++) {
         int com, x, y;
         cin >> com >> x >> y;
