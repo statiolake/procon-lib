@@ -24,7 +24,7 @@ namespace pcl { namespace monoid {
      * - TNF<T> により単位元 (無限大) が得られる。
      */
     template <typename T>
-    struct range_minimum_query {
+    struct min {
         using value_type = T;
         constexpr static value_type id() {
             return TNF<T>;
