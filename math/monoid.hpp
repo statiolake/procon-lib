@@ -5,7 +5,7 @@
  * ある。
  * ```cpp
  * struct {
- *    using value_type;
+ *    using value_type = T;
  *    constexpr static value_type id();
  *    constexpr static value_type op(lhs, rhs);
  * };
@@ -26,9 +26,11 @@ namespace pcl { namespace monoid {
     template <typename T>
     struct min {
         using value_type = T;
+
         constexpr static value_type id() {
             return TNF<T>;
         }
+
         constexpr static value_type op(value_type const &a,
                                        value_type const &b) {
             return std::min(a, b);

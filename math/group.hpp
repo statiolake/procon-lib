@@ -4,7 +4,7 @@
  * @details 群は次のような構造をもつものである。
  * ```cpp
  * struct {
- *    using value_type;
+ *    using value_type = T;
  *    constexpr static value_type id();
  *    constexpr static value_type inv(x);
  *    constexpr static value_type op(lhs, rhs);
@@ -19,7 +19,7 @@ namespace pcl { namespace group {
 
     /**
      * @brief 加算の群。
-     * @details いわゆる (G, +) のような型。 G は次の条件を満たしていればよい:
+     * @details いわゆる (T, +) のような型。 T は次の条件を満たしていればよい:
      * - operator+() が定義されている。
      * - デフォルトコンストラクタが返す値が + の単位元になる (0) 。
      * - x の逆元が単項マイナス演算子を用いて -x で与えられる。
@@ -27,12 +27,15 @@ namespace pcl { namespace group {
     template <typename T>
     struct add {
         using value_type = T;
+
         constexpr static value_type id() {
             return T{};
         }
+
         constexpr static value_type inv(value_type const &x) {
             return -x;
         }
+
         constexpr static value_type op(value_type const &a,
                                        value_type const &b) {
             return a + b;
