@@ -67,15 +67,4 @@ class segment_tree {
     }
 };
 
-template <typename T>
-struct range_minimum_query {
-    using value_type = T;
-    constexpr static value_type id() {
-        return TNF<T>;
-    }
-    constexpr static value_type op(value_type const &a, value_type const &b) {
-        return std::min(a, b);
-    }
-};
-
 } // namespace pcl

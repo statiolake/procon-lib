@@ -1,5 +1,6 @@
 #include "prelude.hpp"
 
+#include "math/monoid.hpp"
 #include "struct/segment_tree.hpp"
 
 #include <bits/stdc++.h>
@@ -11,7 +12,7 @@ int main() {
     int n, q;
     cin >> n >> q;
 
-    segment_tree<range_minimum_query<ll>> st(n, (1ll << 31) - 1);
+    segment_tree<monoid::range_minimum_query<ll>> st(n, (1ll << 31) - 1);
     for (int i = 0; i < q; i++) {
         int com, x, y;
         cin >> com >> x >> y;
