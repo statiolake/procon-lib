@@ -25,7 +25,7 @@ namespace pcl { namespace group {
      * - x の逆元が単項マイナス演算子を用いて -x で与えられる。
      */
     template <typename T>
-    struct range_sum_query {
+    struct add {
         using value_type = T;
         constexpr static value_type id() {
             return T{};
