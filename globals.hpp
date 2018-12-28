@@ -26,6 +26,9 @@ constexpr double DNF = TNF<double>;
 /// double の微小 (これ以下の差異を差異と認めないしきい値)
 constexpr double EPS = 1e-8;
 
+/// よく使う素数 (7)
+constexpr int P7 = 1'000'000'007;
+
 /// X 方向の変化量。 DX[0..4] は上下左右の 4 方向、 DX[0..8] は 8 方向。
 constexpr int DX[] = {1, 0, -1, 0, 1, 1, -1, -1};
 

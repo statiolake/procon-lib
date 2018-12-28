@@ -13,7 +13,7 @@ int main() {
     cget<int>(); // ignore n;
     int m    = cget<int>();
     string s = cget<string>();
-    rolling_hash<> rh(s);
+    rolling_hash<P7> rh(s);
 
     int l = 0, r = 1;
     unordered_set<ull> hashes;

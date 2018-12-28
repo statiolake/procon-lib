@@ -357,13 +357,7 @@ std::istream &operator>>(std::istream &is, modint<MOD> &x) {
  * エイリアス
  */
 
-/// 1,000,000,007 で割った余りに保たれる整数型。
-using mint7 = modint<1'000'000'007>;
-
-/// 1,000,000,009 で割った余りに保たれる整数型。
-using mint9 = modint<1'000'000'009>;
-
-/// `mint7` はよく用いられるため、最も使いやすいエイリアスを設定する。
-using mint = mint7;
+/// P7 (1'000'000'007) で割った余りに保たれる整数型。
+using mint = modint<P7>;
 
 } // namespace pcl

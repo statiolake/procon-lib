@@ -24,7 +24,7 @@ namespace pcl {
  * も、普通の割り算ではなく逆元を計算して積をとる計算になる。一般に ull を自動
  * modint として使うときは除算が不要な場合に限る方がよい。
  */
-template <ull b = 100'000'007>
+template <ull b>
 class rolling_hash {
   private:
     /// Rolling Hash 対象となる文字列の長さ
