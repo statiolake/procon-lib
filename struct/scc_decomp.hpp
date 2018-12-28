@@ -120,4 +120,5 @@ vgrp_t find_roots(std::vector<vgrp_t> const &g) {
 
     return roots;
 }
+
 } // namespace pcl

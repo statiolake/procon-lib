@@ -11,6 +11,7 @@
 #include <iostream>
 
 namespace pcl {
+
 /**
  * @brief 最大値なら更新する (緩和) 。
  * @param[inout] a この値を更新する。
@@ -90,4 +91,5 @@ inline T cget() {
     std::cin >> x;
     return x;
 }
+
 } // namespace pcl

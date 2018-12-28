@@ -63,4 +63,5 @@ constexpr bool is_prime(T val) {
     }
     return true;
 }
+
 } // namespace pcl

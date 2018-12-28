@@ -72,10 +72,10 @@ class vec {
      * @brief ベクトルの長さ。
      * @return 長さ
      */
-    dbl len() const {
-        dbl len = 0;
-        for (dbl x : *this) len += x * x;
-        return std::sqrt(len);
+    dbl length() const {
+        dbl length = 0;
+        for (dbl x : *this) length += x * x;
+        return std::sqrt(length);
     }
 
     /**
@@ -85,7 +85,7 @@ class vec {
      */
     vec normalized() const {
         vec res = *this;
-        dbl l   = len();
+        dbl l   = length();
         for (dbl &x : res) x /= l;
         return res;
     }
@@ -215,8 +215,8 @@ vec<3> cross(vec<3> const &a, vec<3> const &b) {
  * いうもの。
  */
 template <int DIM>
-bool is_par(vec<DIM> const &a, vec<DIM> const &b) {
-    return cross(a, b).len() == 0;
+bool is_parallel(vec<DIM> const &a, vec<DIM> const &b) {
+    return cross(a, b).length() == 0;
 }
 
 /**
@@ -227,9 +227,9 @@ bool is_par(vec<DIM> const &a, vec<DIM> const &b) {
  * び出された場合は assert により強制終了する。
  */
 template <int DIM>
-bool is_same_dir(vec<DIM> const &a, vec<DIM> const &b) {
+bool is_same_direction(vec<DIM> const &a, vec<DIM> const &b) {
     // this function can only be applied with parallel vecs.
-    assert(is_par(a, b));
+    assert(is_parallel(a, b));
 
     for (std::size_t i = 0; i < DIM; i++)
         // a[i] * b[i] < 0 means a[i] and b[i] has the opposite sign.
@@ -265,12 +265,12 @@ using vec3 = vec<3>;
 
 /// 「座標」を表す型 (実体はエイリアス)
 template <int DIM>
-using crd = vec<DIM>;
+using coord = vec<DIM>;
 
 /// 二次元座標の型エイリアス
-using crd2 = vec<2>;
+using coord2 = vec<2>;
 
 /// 二次元座標の型エイリアス
-using crd3 = vec<3>;
+using coord3 = vec<3>;
 
 } // namespace pcl

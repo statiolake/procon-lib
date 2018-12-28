@@ -12,18 +12,19 @@ using namespace std;
 using namespace pcl;
 
 namespace pcl {
-ostream &operator<<(ostream &os, pair<bool, crd<2>> const &v) {
+ostream &operator<<(ostream &os, pair<bool, coord<2>> const &v) {
     os << "(" << v.first << "," << v.second << ")";
     return os;
 }
+
 } // namespace pcl
 
 void aoj2003() {
-    using entrance = pair<bool, crd<2>>;
+    using entrance = pair<bool, coord<2>>;
     int m;
     cin >> m;
     for (int q = 0; q < m; q++) {
-        crd<2> A, B;
+        coord<2> A, B;
         cin >> A >> B;
         segment<2> new_road(A, B);
 
@@ -33,23 +34,23 @@ void aoj2003() {
         int n;
         cin >> n;
         for (int i = 0; i < n; i++) {
-            crd<2> s, t;
+            coord<2> s, t;
             int o, l;
             cin >> s >> t >> o >> l;
             segment<2> road(s, t);
-            if (!have_itsc(new_road, road, false)) continue;
+            if (!have_intersection(new_road, road, false)) continue;
             ents.push_back(make_pair(o == 1 ? (l == 1) : (l == 0),
-                                     itsc(new_road, road, false)));
+                                     intersection_of(new_road, road, false)));
         }
 
         for (auto const &ent : ents) {
-            line<2> const target(new_road.beg(), ent.second);
+            line<2> const target(new_road.start(), ent.second);
             assert(static_cast<line<2> const &>(new_road) == target);
         }
 
         auto nearer = [&](entrance const &a, entrance const &b) {
-            return dist(a.second, new_road.beg()) <
-                   dist(b.second, new_road.beg());
+            return distance(a.second, new_road.start()) <
+                   distance(b.second, new_road.start());
         };
 
         sort(ents.begin(), ents.end(), nearer);
@@ -69,7 +70,7 @@ void aoj2641() {
     cin >> N >> Q;
     vector<pair<sphere<3>, ll>> obs;
     for (int i = 0; i < N; i++) {
-        crd<3> c;
+        coord<3> c;
         dbl r;
         ll l;
         cin >> c >> r >> l;
@@ -77,13 +78,14 @@ void aoj2641() {
     }
 
     for (int i = 0; i < Q; i++) {
-        crd<3> s, e;
+        coord<3> s, e;
         cin >> s >> e;
         segment<3> seg(s, e);
 
         ll mp = 0;
         for (int i = 0; i < N; i++) {
-            if (have_itsc(seg, obs[i].first, true)) mp += obs[i].second;
+            if (have_intersection(seg, obs[i].first, true))
+                mp += obs[i].second;
         }
         cout << mp << endl;
     }

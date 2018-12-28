@@ -23,7 +23,7 @@ class mat {
         , v_(std::move(init)) {
         // the dimension of matrix must be positive.
         // (maybe before approaching this assertion exception is already
-        // triggered when attempted to create vector of negative len)
+        // triggered when attempted to create vector of negative length)
         assert(h_ > 0);
         assert(w_ > 0);
 
@@ -226,4 +226,5 @@ std::istream &operator>>(std::istream &is, mat<T> &m) {
         for (int j = 0; j < m.width(); j++) is >> m.at(i, j);
     return is;
 }
+
 } // namespace pcl

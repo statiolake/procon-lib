@@ -7,16 +7,16 @@ namespace pcl {
 template <int DIM>
 class sphere {
   private:
-    crd<DIM> pos_;
+    coord<DIM> pos_;
     dbl rad_;
 
   public:
-    sphere(crd<DIM> const &pos, dbl rad)
+    sphere(coord<DIM> const &pos, dbl rad)
         : pos_(pos)
         , rad_(rad) {
     }
 
-    crd<DIM> const &pos() const {
+    coord<DIM> const &pos() const {
         return pos_;
     }
     dbl const &rad() const {
