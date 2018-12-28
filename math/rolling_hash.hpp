@@ -1,5 +1,5 @@
 /**
- * @file struct/rolling_hash.hpp
+ * @file math/rolling_hash.hpp
  * @brief Rolling Hash - 区間のハッシュ値を高速に求める。
  */
 #pragma once

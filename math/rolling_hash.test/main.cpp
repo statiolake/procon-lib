@@ -2,7 +2,7 @@
 
 #include "prelude.hpp"
 
-#include "struct/rolling_hash.hpp"
+#include "math/rolling_hash.hpp"
 
 #include <bits/stdc++.h>
 
