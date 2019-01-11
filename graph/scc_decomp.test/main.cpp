@@ -1,6 +1,6 @@
 #include "prelude.hpp"
 
-#include "math/scc_decomp.hpp"
+#include "graph/scc_decomp.hpp"
 
 #include <bits/stdc++.h>
 using namespace std;
