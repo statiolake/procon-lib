@@ -1,0 +1,15 @@
+[
+  {
+    "directory": "C:\\Users\\dicen\\dev\\github\\procon-lib\\graph\\alg.test",
+    "arguments": [
+      "clang++",
+      "-o",
+      "main",
+      "-IC:\\Users\\dicen\\procon-lib",
+      "-std=c++14",
+      "-Wno-old-style-cast",
+      "main.cpp"
+    ],
+    "file": "main.cpp"
+  }
+]
